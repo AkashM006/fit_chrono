@@ -1,8 +1,9 @@
-// database.dart
 import 'dart:io';
 
 import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
+import 'package:fit_chrono/src/features/muscle_map/data/data_sources/local/dao/muscle_maps.dao.dart';
+import 'package:fit_chrono/src/features/muscle_map/data/data_sources/local/schema/muscle_map.schema.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 // ignore: depend_on_referenced_packages
@@ -13,18 +14,17 @@ part 'database.g.dart';
 
 @DriftDatabase(
   tables: [
-    // list of all tables used in the project
+    MuscleMaps,
   ],
   daos: [
-    // list of all daos used in the project
+    MuscleMapsDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion =>
-      1; // the current version of the database, can be incremented when changes made to schema
+  int get schemaVersion => 1;
 
   @override
   MigrationStrategy get migration {
