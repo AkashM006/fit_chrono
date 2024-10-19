@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/core/constants/settings.dart';
+import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
