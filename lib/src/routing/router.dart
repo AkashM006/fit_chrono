@@ -1,5 +1,5 @@
 import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
-import 'package:fit_chrono/src/features/muscle_map/presentation/muscle_maps.screen.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

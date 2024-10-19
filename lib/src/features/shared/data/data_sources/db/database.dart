@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
-import 'package:fit_chrono/src/features/muscle_map/data/data_sources/local/dao/muscle_maps.dao.dart';
-import 'package:fit_chrono/src/features/muscle_map/data/data_sources/local/schema/muscle_map.schema.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/dao/muscle_map.dao.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,7 +18,7 @@ part 'database.g.dart';
     MuscleMaps,
   ],
   daos: [
-    MuscleMapsDao,
+    MuscleMapDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {

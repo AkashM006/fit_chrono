@@ -1,6 +1,6 @@
-import 'package:fit_chrono/src/features/muscle_map/data/data_sources/service/muscle_map.service.dart';
-import 'package:fit_chrono/src/features/muscle_map/data/model/muscle_map.model.dart';
-import 'package:fit_chrono/src/features/muscle_map/domain/repository/muscle_map.repository.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/service/muscle_map.service.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
+import 'package:fit_chrono/src/features/muscle_maps/domain/repository/muscle_map.repository.dart';
 import 'package:fit_chrono/src/features/shared/data/repository/base_db.repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

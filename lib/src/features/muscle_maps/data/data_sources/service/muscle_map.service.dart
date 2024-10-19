@@ -1,4 +1,4 @@
-import 'package:fit_chrono/src/features/muscle_map/data/model/muscle_map.model.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,7 +10,7 @@ class MuscleMapService {
   MuscleMapService(this._appDatabase);
 
   Stream<List<MuscleMapModel>> watchMuscleMaps() {
-    return _appDatabase.muscleMapsDao.watchMuscleMaps().map(
+    return _appDatabase.muscleMapDao.watchMuscleMaps().map(
           (muscleMaps) => muscleMaps
               .map(
                 (muscleMap) => MuscleMapModel(
