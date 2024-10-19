@@ -1,14 +1,20 @@
 import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
+import 'package:fit_chrono/src/features/muscle_map/presentation/muscle_maps.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-enum PAGES { home }
+enum PAGES {
+  home,
+  muscleMaps,
+}
 
 extension AppRoutesExtension on PAGES {
   String get path {
     switch (this) {
       case PAGES.home:
         return '/';
+      case PAGES.muscleMaps:
+        return '/muscle-map';
     }
   }
 
@@ -16,6 +22,8 @@ extension AppRoutesExtension on PAGES {
     switch (this) {
       case PAGES.home:
         return "Home";
+      case PAGES.muscleMaps:
+        return "Muscle Maps";
     }
   }
 
@@ -23,6 +31,8 @@ extension AppRoutesExtension on PAGES {
     switch (this) {
       case PAGES.home:
         return (context, routerState) => const HomeScreen();
+      case PAGES.muscleMaps:
+        return (context, routerState) => const MuscleMapScreen();
     }
   }
 }
