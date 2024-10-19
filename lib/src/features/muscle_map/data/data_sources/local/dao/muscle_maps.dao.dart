@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_map/data/data_sources/local/schema/muscle_map.schema.dart';
-import 'package:fit_chrono/src/features/shared/db/database.dart';
+import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 
 part 'muscle_maps.dao.g.dart';
 

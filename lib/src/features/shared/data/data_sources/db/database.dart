@@ -6,6 +6,7 @@ import 'package:fit_chrono/src/features/muscle_map/data/data_sources/local/dao/m
 import 'package:fit_chrono/src/features/muscle_map/data/data_sources/local/schema/muscle_map.schema.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 // ignore: depend_on_referenced_packages
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
@@ -55,4 +56,9 @@ LazyDatabase _openConnection() {
 
     return NativeDatabase.createInBackground(file);
   });
+}
+
+@riverpod
+AppDatabase db(DbRef ref) {
+  return AppDatabase();
 }
