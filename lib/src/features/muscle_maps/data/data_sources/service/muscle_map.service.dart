@@ -21,6 +21,10 @@ class MuscleMapService {
               .toList(),
         );
   }
+
+  Future<void> addMuscleMap(MuscleMapModel muscleMap) {
+    return _appDatabase.muscleMapDao.addMuscleMap(muscleMap.name);
+  }
 }
 
 @riverpod

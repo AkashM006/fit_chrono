@@ -12,4 +12,12 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
   Stream<List<MuscleMap>> watchMuscleMaps() {
     return select(muscleMaps).watch();
   }
+
+  Future<void> addMuscleMap(String name) async {
+    await into(muscleMaps).insert(
+      MuscleMapsCompanion(
+        name: Value(name),
+      ),
+    );
+  }
 }
