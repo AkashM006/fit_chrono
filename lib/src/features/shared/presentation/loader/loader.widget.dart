@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
+import 'package:fit_chrono/src/features/shared/presentation/custom_spinner/custom_spinner.widget.dart';
 import 'package:flutter/material.dart';
 
 class LoaderWidget extends StatelessWidget {
@@ -18,9 +19,7 @@ class LoaderWidget extends StatelessWidget {
           height: SizeConfig.safeBlockVertical * 3.5,
           child: const AspectRatio(
             aspectRatio: 1,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-            ),
+            child: CustomSpinnerWidget(),
           ),
         ),
         if (text != null)

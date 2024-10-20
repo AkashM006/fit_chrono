@@ -3,5 +3,5 @@ import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.ent
 
 abstract class MuscleMapRepository {
   Stream<List<MuscleMapEntity>> watchMuscleMaps();
-  Future<DataState<void>> addMuscleMap(MuscleMapEntity muscleMap);
+  Future<DataState<void>> addMuscleMap(String name);
 }

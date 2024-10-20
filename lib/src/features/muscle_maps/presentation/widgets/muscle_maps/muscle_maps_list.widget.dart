@@ -29,6 +29,9 @@ class MuscleMapsListWidget extends StatelessWidget {
         ),
       );
     }
-    return Container();
+    return ListView.builder(
+      itemBuilder: (context, index) => Text(muscleMaps[index].name),
+      itemCount: muscleMaps.length,
+    );
   }
 }
