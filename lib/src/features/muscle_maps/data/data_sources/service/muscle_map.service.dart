@@ -25,6 +25,17 @@ class MuscleMapService {
   Future<void> addMuscleMap(String name) {
     return _appDatabase.muscleMapDao.addMuscleMap(name);
   }
+
+  Future<MuscleMapModel?> getMuscleMap(int id) async {
+    final result = await _appDatabase.muscleMapDao.getMuscleMap(id);
+
+    if (result == null) return null;
+
+    return MuscleMapModel(
+      id: id,
+      name: result.name,
+    );
+  }
 }
 
 @riverpod

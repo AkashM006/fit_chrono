@@ -20,4 +20,12 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
       ),
     );
   }
+
+  Future<MuscleMap?> getMuscleMap(int id) async {
+    return (select(muscleMaps)
+          ..where(
+            (tbl) => tbl.id.equals(id),
+          ))
+        .getSingle();
+  }
 }
