@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_detail.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_form.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ enum PAGES {
   home,
   muscleMaps,
   muscleMapForm,
+  muscleMapDetail,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -19,6 +21,8 @@ extension AppRoutesExtension on PAGES {
         return '/muscle-map';
       case PAGES.muscleMapForm:
         return '/muscle-map-form';
+      case PAGES.muscleMapDetail:
+        return '/muscle-map-detail';
     }
   }
 
@@ -30,6 +34,8 @@ extension AppRoutesExtension on PAGES {
         return "Muscle Maps";
       case PAGES.muscleMapForm:
         return "Muscle Map Form";
+      case PAGES.muscleMapDetail:
+        return "Muscle Map Detail";
     }
   }
 
@@ -41,6 +47,17 @@ extension AppRoutesExtension on PAGES {
         return (context, routerState) => const MuscleMapScreen();
       case PAGES.muscleMapForm:
         return (context, routerState) => const MuscleMapFormScreen();
+      case PAGES.muscleMapDetail:
+        return (context, routerState) {
+          final id = routerState.uri.queryParameters['id'];
+          int? resultId;
+
+          if (id != null) resultId = int.tryParse(id);
+
+          return MuscleMapDetailScreen(
+            id: resultId,
+          );
+        };
     }
   }
 }

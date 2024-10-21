@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/constants/settings.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/routing/router.dart';
@@ -10,6 +11,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
+    AppOffsets.init(context);
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

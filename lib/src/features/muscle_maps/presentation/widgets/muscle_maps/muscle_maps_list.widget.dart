@@ -1,6 +1,8 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
+import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MuscleMapsListWidget extends StatelessWidget {
   const MuscleMapsListWidget({
@@ -29,8 +31,18 @@ class MuscleMapsListWidget extends StatelessWidget {
         ),
       );
     }
+
+    void onMuscleMapTapped(int id) {
+      context.pushNamed(PAGES.muscleMapDetail.name, queryParameters: {
+        'id': id.toString(),
+      });
+    }
+
     return ListView.builder(
-      itemBuilder: (context, index) => Text(muscleMaps[index].name),
+      itemBuilder: (context, index) => ListTile(
+        title: Text(muscleMaps[index].name),
+        onTap: () => onMuscleMapTapped(muscleMaps[index].id),
+      ),
       itemCount: muscleMaps.length,
     );
   }

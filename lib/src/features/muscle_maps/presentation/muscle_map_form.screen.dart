@@ -1,6 +1,7 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_description.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,18 +45,7 @@ class MuscleMapFormScreen extends ConsumerWidget {
           constraints: const BoxConstraints(maxWidth: 500),
           child: Column(
             children: [
-              Text(
-                "Muscle Map",
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              SizedBox(
-                height: SizeConfig.safeBlockVertical * 2,
-              ),
-              Text(
-                'Define the muscle groups each exercise will push to the limit. Add the specific muscle your workout is designed to work on and make every rep count!',
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              ),
+              const MuscleMapDescriptionWidget(),
               SizedBox(
                 height: SizeConfig.safeBlockVertical * 4,
               ),
