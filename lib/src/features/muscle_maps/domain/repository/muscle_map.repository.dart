@@ -5,4 +5,5 @@ abstract class MuscleMapRepository {
   Stream<List<MuscleMapEntity>> watchMuscleMaps();
   Future<DataState<void>> addMuscleMap(String name);
   Future<DataState<MuscleMapEntity?>> getMuscleMap(int id);
+  Future<DataState<void>> updateMuscleMap(MuscleMapEntity newMuscleMap);
 }
