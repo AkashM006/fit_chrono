@@ -2,6 +2,7 @@ import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/shared/presentation/custom_spinner/custom_spinner.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,14 +50,12 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   }
 
   void handleSubmit() {
-    // todo: handle form submit, loading and error states
     if (!_formKey.currentState!.validate()) return;
 
     _formKey.currentState!.save();
 
     if (isEditMode) {
-      // todo: Handle logic for editing
-      print("Edit");
+      // ref.read(updateMuscleMapProvider.notifier).go()
       return;
     }
 
@@ -77,10 +76,12 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   @override
   Widget build(BuildContext context) {
     final addMuscleMapStatus = ref.watch(addMuscleMapProvider);
+    final updateMuscleMapStatus = ref.watch(updateMuscleMapProvider);
 
     final isAddLoading = addMuscleMapStatus?.isLoading ?? false;
+    final isUpdateLoading = updateMuscleMapStatus?.isLoading ?? false;
 
-    final isLoading = isAddLoading;
+    final isLoading = isEditMode ? isUpdateLoading : isAddLoading;
 
     return Form(
       key: _formKey,
