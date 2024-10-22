@@ -34,8 +34,10 @@ class MuscleMapImpl extends BaseDbRepository implements MuscleMapRepository {
 
   @override
   Future<DataState<void>> updateMuscleMap(MuscleMapEntity newMuscleMap) {
-    // TODO: implement updateMuscleMap
-    throw UnimplementedError();
+    return safeExecute(
+      () =>
+          _muscleMapService.updateMuscleMap(newMuscleMap.id, newMuscleMap.name),
+    );
   }
 }
 
