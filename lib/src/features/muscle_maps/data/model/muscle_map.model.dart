@@ -22,4 +22,12 @@ class MuscleMapModel extends MuscleMapEntity {
       name: muscleMapEntity.name,
     );
   }
+
+  @override
+  MuscleMapEntity copyWith({int? id, String? name}) {
+    return MuscleMapModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
 }
