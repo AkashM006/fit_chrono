@@ -55,7 +55,10 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     _formKey.currentState!.save();
 
     if (isEditMode) {
-      // ref.read(updateMuscleMapProvider.notifier).go()
+      final newMuscleMap = widget.muscleMap!.copyWith(
+        name: _name,
+      );
+      ref.read(updateMuscleMapProvider.notifier).go(newMuscleMap);
       return;
     }
 
