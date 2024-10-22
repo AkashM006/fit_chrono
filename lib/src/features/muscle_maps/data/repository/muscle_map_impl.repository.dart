@@ -31,6 +31,12 @@ class MuscleMapImpl extends BaseDbRepository implements MuscleMapRepository {
       () => _muscleMapService.getMuscleMap(id),
     );
   }
+
+  @override
+  Future<DataState<void>> updateMuscleMap(MuscleMapEntity newMuscleMap) {
+    // TODO: implement updateMuscleMap
+    throw UnimplementedError();
+  }
 }
 
 @riverpod
