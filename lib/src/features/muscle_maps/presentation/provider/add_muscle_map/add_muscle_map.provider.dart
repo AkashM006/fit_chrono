@@ -1,5 +1,6 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/repository/muscle_map_impl.repository.dart';
+import 'package:fit_chrono/src/features/muscle_maps/domain/usecase/add_muscle_map.usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'add_muscle_map.provider.g.dart';
@@ -16,7 +17,7 @@ class AddMuscleMap extends _$AddMuscleMap {
 
     final muscleMapRepository = ref.read(muscleMapImplProvider);
 
-    final result = await muscleMapRepository.addMuscleMap(name);
+    final result = await AddMuscleMapUsecase(muscleMapRepository)(params: name);
 
     state = result.fold(
       (data) => const DataSuccess<String>(data: 'Added to your muscle maps'),
