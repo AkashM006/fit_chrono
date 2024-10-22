@@ -1,6 +1,5 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
-import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/get_muscle_map/get_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/custom_error/custom_error.widget.dart';

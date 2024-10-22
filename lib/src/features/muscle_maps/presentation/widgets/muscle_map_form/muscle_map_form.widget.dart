@@ -33,7 +33,20 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     ),
   );
 
-  bool get isEditing => widget.muscleMap != null;
+  bool get isEditMode => widget.muscleMap != null;
+  bool get hasEdited {
+    if (!isEditMode) return false;
+
+    return widget.muscleMap!.name != _name;
+  }
+
+  bool get isSubmitEnabled {
+    if (isEditMode) {
+      return hasEdited && _name.isNotEmpty;
+    }
+
+    return _name.isNotEmpty;
+  }
 
   void handleSubmit() {
     // todo: handle form submit, loading and error states
@@ -41,8 +54,9 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
     _formKey.currentState!.save();
 
-    if (isEditing) {
+    if (isEditMode) {
       // todo: Handle logic for editing
+      print("Edit");
       return;
     }
 
@@ -52,7 +66,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   @override
   void initState() {
     super.initState();
-    _name = isEditing ? widget.muscleMap!.name : "";
+    _name = isEditMode ? widget.muscleMap!.name : "";
   }
 
   @override
@@ -75,24 +89,30 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
           TextFormField(
             initialValue: _name,
             decoration: const InputDecoration(
-              border: InputBorder.none,
               label: Text("Enter Name"),
             ),
             onSaved: (newValue) {
               _name = newValue!;
             },
+            onChanged: (value) {
+              setState(() {
+                _name = value;
+              });
+            },
             validator: (value) => cannotBeginWithDigitValidator("Name", value),
             maxLength: 24,
             enabled: !isLoading,
           ),
-          isLoading
-              ? loaderWidget
-              : FilledButton(
-                  onPressed: isLoading ? null : handleSubmit,
-                  child: isLoading
-                      ? const CustomSpinnerWidget()
-                      : const Text("Go"),
-                ),
+          FilledButton(
+            onPressed: isLoading
+                ? null
+                : isSubmitEnabled
+                    ? handleSubmit
+                    : null,
+            child: isLoading
+                ? const CustomSpinnerWidget()
+                : Text(isEditMode ? "Edit" : "Go"),
+          ),
         ],
       ),
     );
