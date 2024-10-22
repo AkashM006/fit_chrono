@@ -28,4 +28,16 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
           ))
         .getSingle();
   }
+
+  Future<void> updateMuscleMap(int id, String name) async {
+    await (update(muscleMaps)
+          ..where(
+            (tbl) => tbl.id.equals(id),
+          ))
+        .write(
+      MuscleMapsCompanion(
+        name: Value(name),
+      ),
+    );
+  }
 }

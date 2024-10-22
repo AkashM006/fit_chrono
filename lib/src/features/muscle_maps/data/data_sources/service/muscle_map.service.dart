@@ -36,6 +36,10 @@ class MuscleMapService {
       name: result.name,
     );
   }
+
+  Future<void> updateMuscleMap(int id, String name) {
+    return _appDatabase.muscleMapDao.updateMuscleMap(id, name);
+  }
 }
 
 @riverpod
