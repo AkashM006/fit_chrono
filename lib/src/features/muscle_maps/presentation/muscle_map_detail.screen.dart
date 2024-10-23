@@ -1,6 +1,9 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
+import 'package:fit_chrono/src/core/utils/data_state.util.dart';
+import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/get_muscle_map/get_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/custom_error/custom_error.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/loader/loader.widget.dart';
@@ -56,6 +59,27 @@ class MuscleMapDetailScreen extends ConsumerWidget {
         ),
       );
     }
+
+    ref.listen(
+      updateMuscleMapProvider,
+      (previous, next) {
+        if (next is DataSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Updated your muscle map"),
+            ),
+          );
+          context.pop();
+        } else if (next is DataFailure) {
+          final msg = somethingWentWrongMsg("updating your muscle map");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(msg),
+            ),
+          );
+        }
+      },
+    );
 
     final muscleMap = ref.watch(muscleMapProvider(id!));
 

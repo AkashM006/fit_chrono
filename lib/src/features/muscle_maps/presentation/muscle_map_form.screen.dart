@@ -1,5 +1,6 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
+import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_description.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
@@ -23,11 +24,10 @@ class MuscleMapFormScreen extends ConsumerWidget {
           );
           context.pop();
         } else if (next is DataFailure) {
+          final msg = somethingWentWrongMsg("adding your muscle map");
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                "Something went wrong when trying to add to your muscle map. Please try again later!",
-              ),
+            SnackBar(
+              content: Text(msg),
             ),
           );
         }

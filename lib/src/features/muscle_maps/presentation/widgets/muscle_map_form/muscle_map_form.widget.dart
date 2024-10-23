@@ -3,9 +3,11 @@ import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form_dialog.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/custom_spinner/custom_spinner.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MuscleMapFormWidget extends ConsumerStatefulWidget {
   const MuscleMapFormWidget({
@@ -86,38 +88,57 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
     final isLoading = isEditMode ? isUpdateLoading : isAddLoading;
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            initialValue: _name,
-            decoration: const InputDecoration(
-              label: Text("Enter Name"),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        if ((!isEditMode && _name.isEmpty) ||
+            (isEditMode && _name == widget.muscleMap!.name)) {
+          context.pop();
+          return;
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => MuscleMapFormDialogWidget(
+            isEditMode: isEditMode,
+          ),
+        );
+      },
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              initialValue: _name,
+              decoration: const InputDecoration(
+                label: Text("Enter Name"),
+              ),
+              onSaved: (newValue) {
+                _name = newValue!;
+              },
+              onChanged: (value) {
+                setState(() {
+                  _name = value;
+                });
+              },
+              validator: (value) =>
+                  cannotBeginWithDigitValidator("Name", value),
+              maxLength: 24,
+              enabled: !isLoading,
             ),
-            onSaved: (newValue) {
-              _name = newValue!;
-            },
-            onChanged: (value) {
-              setState(() {
-                _name = value;
-              });
-            },
-            validator: (value) => cannotBeginWithDigitValidator("Name", value),
-            maxLength: 24,
-            enabled: !isLoading,
-          ),
-          FilledButton(
-            onPressed: isLoading
-                ? null
-                : isSubmitEnabled
-                    ? handleSubmit
-                    : null,
-            child: isLoading
-                ? const CustomSpinnerWidget()
-                : Text(isEditMode ? "Edit" : "Go"),
-          ),
-        ],
+            FilledButton(
+              onPressed: isLoading
+                  ? null
+                  : isSubmitEnabled
+                      ? handleSubmit
+                      : null,
+              child: isLoading
+                  ? const CustomSpinnerWidget()
+                  : Text(isEditMode ? "Edit" : "Go"),
+            ),
+          ],
+        ),
       ),
     );
   }

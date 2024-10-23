@@ -42,6 +42,7 @@ class MuscleMapsListWidget extends StatelessWidget {
       itemBuilder: (context, index) => ListTile(
         title: Text(muscleMaps[index].name),
         onTap: () => onMuscleMapTapped(muscleMaps[index].id),
+        trailing: const Icon(Icons.arrow_right),
       ),
       itemCount: muscleMaps.length,
     );
