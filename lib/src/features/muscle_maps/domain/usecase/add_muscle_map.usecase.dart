@@ -1,14 +1,16 @@
 import 'package:fit_chrono/src/core/usecase/usecase.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
+import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/repository/muscle_map.repository.dart';
 
-class AddMuscleMapUsecase extends Usecase<Future<DataState<void>>, String> {
+class AddMuscleMapUsecase
+    extends Usecase<Future<DataState<void>>, MuscleMapEntity> {
   final MuscleMapRepository _muscleMapRepository;
 
   AddMuscleMapUsecase(this._muscleMapRepository);
 
   @override
-  Future<DataState<void>> call({required String params}) {
+  Future<DataState<void>> call({required MuscleMapEntity params}) {
     return _muscleMapRepository.addMuscleMap(params);
   }
 }

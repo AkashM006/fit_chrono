@@ -8,10 +8,20 @@ class MuscleMapDto {
   String get name => _name;
 
   MuscleMapDto({
-    id = -1,
-    required name,
+    int id = -1,
+    required String name,
   })  : _id = id,
         _name = name;
+
+  MuscleMapDto copyWith({
+    int? id,
+    String? name,
+  }) {
+    return MuscleMapDto(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
 
   factory MuscleMapDto.fromEntity(MuscleMapEntity entity) {
     return MuscleMapDto(

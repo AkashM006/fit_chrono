@@ -66,7 +66,9 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
       return;
     }
 
-    ref.read(addMuscleMapProvider.notifier).go(_name);
+    final newMuscleMap = MuscleMapDto(name: _name);
+
+    ref.read(addMuscleMapProvider.notifier).go(newMuscleMap);
   }
 
   @override

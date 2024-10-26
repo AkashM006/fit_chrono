@@ -1,5 +1,6 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/service/muscle_map.service.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/repository/muscle_map.repository.dart';
 import 'package:fit_chrono/src/features/shared/data/repository/base.repository.dart';
@@ -26,9 +27,10 @@ class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
   }
 
   @override
-  Future<DataState<void>> addMuscleMap(String name) {
+  Future<DataState<void>> addMuscleMap(MuscleMapEntity muscleMap) {
     return safeExecute(
-      () => _muscleMapService.addMuscleMap(name),
+      () =>
+          _muscleMapService.addMuscleMap(MuscleMapModel.fromEntity(muscleMap)),
     );
   }
 
