@@ -1,5 +1,5 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
-import 'package:fit_chrono/src/features/shared/presentation/custom_spinner/custom_spinner.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_spinner/custom_spinner.widget.dart';
 import 'package:flutter/material.dart';
 
 class LoaderWidget extends StatelessWidget {

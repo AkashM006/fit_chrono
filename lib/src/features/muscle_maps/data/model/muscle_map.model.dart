@@ -1,19 +1,17 @@
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 
-class MuscleMapModel extends MuscleMapEntity {
+class MuscleMapModel {
   int _id;
   String _name;
 
   MuscleMapModel({
-    required super.id,
-    required super.name,
+    required id,
+    required name,
   })  : _id = id,
         _name = name;
 
-  @override
   int get id => _id;
 
-  @override
   String get name => _name;
 
   factory MuscleMapModel.fromEntity(MuscleMapEntity muscleMapEntity) {
@@ -23,8 +21,14 @@ class MuscleMapModel extends MuscleMapEntity {
     );
   }
 
-  @override
-  MuscleMapEntity copyWith({int? id, String? name}) {
+  MuscleMapEntity toEntity() {
+    return MuscleMapEntity(
+      id: id,
+      name: name,
+    );
+  }
+
+  MuscleMapModel copyWith({int? id, String? name}) {
     return MuscleMapModel(
       id: id ?? this.id,
       name: name ?? this.name,

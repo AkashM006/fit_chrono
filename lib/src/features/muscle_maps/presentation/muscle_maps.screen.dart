@@ -1,7 +1,7 @@
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/muscle_maps.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_maps/muscle_maps_list.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/custom_error/custom_error.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/loader/loader.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

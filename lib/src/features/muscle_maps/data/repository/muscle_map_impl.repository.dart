@@ -1,21 +1,28 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/service/muscle_map.service.dart';
-import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/repository/muscle_map.repository.dart';
-import 'package:fit_chrono/src/features/shared/data/repository/base_db.repository.dart';
+import 'package:fit_chrono/src/features/shared/data/repository/base.repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'muscle_map_impl.repository.g.dart';
 
-class MuscleMapImpl extends BaseDbRepository implements MuscleMapRepository {
+class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
   final MuscleMapService _muscleMapService;
 
   MuscleMapImpl(this._muscleMapService);
 
   @override
-  Stream<List<MuscleMapModel>> watchMuscleMaps() {
-    return _muscleMapService.watchMuscleMaps();
+  Stream<List<MuscleMapEntity>> watchMuscleMaps() {
+    return _muscleMapService.watchMuscleMaps().map(
+      (muscleMapModelList) {
+        return muscleMapModelList
+            .map(
+              (e) => e.toEntity(),
+            )
+            .toList();
+      },
+    );
   }
 
   @override
@@ -28,7 +35,11 @@ class MuscleMapImpl extends BaseDbRepository implements MuscleMapRepository {
   @override
   Future<DataState<MuscleMapEntity?>> getMuscleMap(int id) {
     return safeExecute(
-      () => _muscleMapService.getMuscleMap(id),
+      () async {
+        final result = await _muscleMapService.getMuscleMap(id);
+
+        return result?.toEntity();
+      },
     );
   }
 

@@ -1,10 +1,7 @@
 import 'package:fit_chrono/src/core/utils/custom_error.util.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
-import 'package:flutter/material.dart';
 
-abstract class BaseDbRepository {
-  const BaseDbRepository();
-  @protected
+abstract class BaseRepository {
   Future<DataState<T>> safeExecute<T>(Future<T> Function() callback) async {
     try {
       final result = await callback();

@@ -1,14 +1,9 @@
-abstract class MuscleMapEntity {
-  int get id;
-  String get name;
+class MuscleMapEntity {
+  final int id;
+  final String name;
 
   const MuscleMapEntity({
-    required int id,
-    required String name,
-  });
-
-  MuscleMapEntity copyWith({
-    int? id,
-    String? name,
+    required this.id,
+    required this.name,
   });
 }

@@ -1,4 +1,4 @@
-import 'package:fit_chrono/src/features/shared/presentation/drawer/drawer.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/drawer/drawer.widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {

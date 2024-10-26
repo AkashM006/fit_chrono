@@ -6,7 +6,7 @@ part of 'update_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateMuscleMapHash() => r'80b04d776ebd21339655fae192b93e4919330234';
+String _$updateMuscleMapHash() => r'1f47b3d40563ca46526433bc175ba9ee1bbe243f';
 
 /// See also [UpdateMuscleMap].
 @ProviderFor(UpdateMuscleMap)
