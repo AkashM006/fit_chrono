@@ -5,10 +5,10 @@ abstract class BaseRepository {
   Future<DataState<T>> safeExecute<T>(Future<T> Function() callback) async {
     try {
       final result = await callback();
-      return DataSuccess(data: result);
+      return DataSuccess(result);
     } catch (e) {
       final error = e as CustomError;
-      return DataFailure(error: error);
+      return DataFailure(error);
     }
   }
 }

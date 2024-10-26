@@ -8,20 +8,20 @@ part 'add_muscle_map.provider.g.dart';
 @riverpod
 class AddMuscleMap extends _$AddMuscleMap {
   @override
-  DataState<void>? build() {
+  DataState<String>? build() {
     return null;
   }
 
   void go(String name) async {
-    state = const DataLoading();
+    state = DataLoading();
 
     final muscleMapRepository = ref.read(muscleMapImplProvider);
 
     final result = await AddMuscleMapUsecase(muscleMapRepository)(params: name);
 
     state = result.fold(
-      (data) => const DataSuccess<String>(data: 'Added to your muscle maps'),
-      (error) => DataFailure(error: error),
+      onSuccess: (data) => DataSuccess<String>("Added your muscle map"),
+      onFailure: (error) => DataFailure(error),
     );
   }
 }

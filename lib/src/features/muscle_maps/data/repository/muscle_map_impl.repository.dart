@@ -33,14 +33,10 @@ class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
   }
 
   @override
-  Future<DataState<MuscleMapEntity?>> getMuscleMap(int id) {
-    return safeExecute(
-      () async {
-        final result = await _muscleMapService.getMuscleMap(id);
+  Future<MuscleMapEntity?> getMuscleMap(int id) async {
+    final result = await _muscleMapService.getMuscleMap(id);
 
-        return result?.toEntity();
-      },
-    );
+    return result?.toEntity();
   }
 
   @override

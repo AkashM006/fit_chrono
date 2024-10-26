@@ -89,7 +89,7 @@ class MuscleMapDetailScreen extends ConsumerWidget {
       ),
       body: muscleMap.when(
         data: (data) {
-          if (data.data != null) {
+          if (data != null) {
             return SingleChildScrollView(
               padding: AppOffsets.screenPadding,
               child: ConstrainedBox(
@@ -97,15 +97,11 @@ class MuscleMapDetailScreen extends ConsumerWidget {
                 child: Column(
                   children: [
                     MuscleMapFormWidget(
-                      muscleMap: data.data!,
+                      muscleMap: data,
                     ),
                   ],
                 ),
               ),
-            );
-          } else if (data.isLoading) {
-            return const Center(
-              child: LoaderWidget(),
             );
           }
           return const Center(

@@ -6,7 +6,7 @@ part of 'get_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$muscleMapHash() => r'd2f44438de7c4a353f6397bb2f4682d67eb741f6';
+String _$muscleMapHash() => r'aba7d5266413722669f2db85a391c3445123d8f0';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const muscleMapProvider = MuscleMapFamily();
 
 /// See also [muscleMap].
-class MuscleMapFamily extends Family<AsyncValue<DataState<MuscleMapEntity?>>> {
+class MuscleMapFamily extends Family<AsyncValue<MuscleMapEntity?>> {
   /// See also [muscleMap].
   const MuscleMapFamily();
 
@@ -72,8 +72,7 @@ class MuscleMapFamily extends Family<AsyncValue<DataState<MuscleMapEntity?>>> {
 }
 
 /// See also [muscleMap].
-class MuscleMapProvider
-    extends AutoDisposeFutureProvider<DataState<MuscleMapEntity?>> {
+class MuscleMapProvider extends AutoDisposeFutureProvider<MuscleMapEntity?> {
   /// See also [muscleMap].
   MuscleMapProvider(
     int id,
@@ -107,8 +106,7 @@ class MuscleMapProvider
 
   @override
   Override overrideWith(
-    FutureOr<DataState<MuscleMapEntity?>> Function(MuscleMapRef provider)
-        create,
+    FutureOr<MuscleMapEntity?> Function(MuscleMapRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -125,8 +123,7 @@ class MuscleMapProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<DataState<MuscleMapEntity?>>
-      createElement() {
+  AutoDisposeFutureProviderElement<MuscleMapEntity?> createElement() {
     return _MuscleMapProviderElement(this);
   }
 
@@ -144,14 +141,13 @@ class MuscleMapProvider
   }
 }
 
-mixin MuscleMapRef
-    on AutoDisposeFutureProviderRef<DataState<MuscleMapEntity?>> {
+mixin MuscleMapRef on AutoDisposeFutureProviderRef<MuscleMapEntity?> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
 class _MuscleMapProviderElement
-    extends AutoDisposeFutureProviderElement<DataState<MuscleMapEntity?>>
+    extends AutoDisposeFutureProviderElement<MuscleMapEntity?>
     with MuscleMapRef {
   _MuscleMapProviderElement(super.provider);
 

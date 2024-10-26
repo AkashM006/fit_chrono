@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
+import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
@@ -84,8 +85,8 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     final addMuscleMapStatus = ref.watch(addMuscleMapProvider);
     final updateMuscleMapStatus = ref.watch(updateMuscleMapProvider);
 
-    final isAddLoading = addMuscleMapStatus?.isLoading ?? false;
-    final isUpdateLoading = updateMuscleMapStatus?.isLoading ?? false;
+    final isAddLoading = addMuscleMapStatus is DataLoading;
+    final isUpdateLoading = updateMuscleMapStatus is DataLoading;
 
     final isLoading = isEditMode ? isUpdateLoading : isAddLoading;
 

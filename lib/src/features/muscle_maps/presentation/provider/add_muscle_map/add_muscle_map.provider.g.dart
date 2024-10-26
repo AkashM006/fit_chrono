@@ -6,12 +6,12 @@ part of 'add_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addMuscleMapHash() => r'f21bfb675f3908ca198c46df44059087b9a8c24d';
+String _$addMuscleMapHash() => r'd8b7909c7e43afa0404777e7e08835c1c67ab265';
 
 /// See also [AddMuscleMap].
 @ProviderFor(AddMuscleMap)
 final addMuscleMapProvider =
-    AutoDisposeNotifierProvider<AddMuscleMap, DataState<void>?>.internal(
+    AutoDisposeNotifierProvider<AddMuscleMap, DataState<String>?>.internal(
   AddMuscleMap.new,
   name: r'addMuscleMapProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final addMuscleMapProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$AddMuscleMap = AutoDisposeNotifier<DataState<void>?>;
+typedef _$AddMuscleMap = AutoDisposeNotifier<DataState<String>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
