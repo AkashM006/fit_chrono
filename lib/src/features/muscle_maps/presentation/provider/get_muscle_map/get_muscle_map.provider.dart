@@ -13,7 +13,7 @@ Future<MuscleMapEntity?> muscleMap(MuscleMapRef ref, int id) async {
 
   try {
     final result = await GetMuscleMapUsecase(muscleMapRepository)(params: id);
-    
+    return result;
   } catch (e) {
     final errorMsg = somethingWentWrongMsg("fetching your muscle maps");
     throw AppError(message: errorMsg);
