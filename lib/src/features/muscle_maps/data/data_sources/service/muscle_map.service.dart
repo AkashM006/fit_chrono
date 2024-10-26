@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,7 +24,11 @@ class MuscleMapService {
   }
 
   Future<void> addMuscleMap(MuscleMapModel muscleMap) {
-    return _appDatabase.muscleMapDao.addMuscleMap(muscleMap);
+    return _appDatabase.muscleMapDao.addMuscleMap(
+      MuscleMapsCompanion(
+        name: Value(muscleMap.name),
+      ),
+    );
   }
 
   Future<MuscleMapModel?> getMuscleMap(int id) async {

@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
-import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 
 part 'muscle_map.dao.g.dart';
@@ -14,12 +13,8 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
     return select(muscleMaps).watch();
   }
 
-  Future<void> addMuscleMap(MuscleMapModel muscleMap) async {
-    await into(muscleMaps).insert(
-      MuscleMapsCompanion(
-        name: Value(muscleMap.name),
-      ),
-    );
+  Future<void> addMuscleMap(MuscleMapsCompanion muscleMap) async {
+    await into(muscleMaps).insert(muscleMap);
   }
 
   Future<MuscleMap?> getMuscleMap(int id) async {
