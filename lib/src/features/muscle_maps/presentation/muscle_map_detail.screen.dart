@@ -8,6 +8,7 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,20 +65,15 @@ class MuscleMapDetailScreen extends ConsumerWidget {
     ref.listen(
       updateMuscleMapProvider,
       (previous, next) {
-        if (next is DataSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Updated your muscle map"),
-            ),
-          );
-          context.pop();
-        } else if (next is DataFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(next.toString()),
-            ),
-          );
-        }
+        next?.fold(
+          onSuccess: (data) {
+            showSnackBar(context, data);
+            context.pop();
+          },
+          onFailure: (error) {
+            showSnackBar(context, error.toString());
+          },
+        );
       },
     );
 
@@ -86,21 +82,11 @@ class MuscleMapDetailScreen extends ConsumerWidget {
       (previous, next) {
         next?.fold(
           onSuccess: (data) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(data),
-              ),
-            );
+            showSnackBar(context, data);
             context.pop();
           },
           onFailure: (error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  error.toString(),
-                ),
-              ),
-            );
+            showSnackBar(context, error.toString());
           },
         );
       },

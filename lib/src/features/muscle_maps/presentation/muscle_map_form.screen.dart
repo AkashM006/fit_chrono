@@ -1,9 +1,9 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
-import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_description.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,21 +16,15 @@ class MuscleMapFormScreen extends ConsumerWidget {
     ref.listen(
       addMuscleMapProvider,
       (previous, next) {
-        if (next is DataSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Added to your muscle map"),
-            ),
-          );
-          context.pop();
-        } else if (next is DataFailure) {
-          final msg = somethingWentWrongMsg("adding your muscle map");
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(msg),
-            ),
-          );
-        }
+        next?.fold(
+          onSuccess: (data) {
+            showSnackBar(context, data);
+            context.pop();
+          },
+          onFailure: (error) {
+            showSnackBar(context, error.toString());
+          },
+        );
       },
     );
 
