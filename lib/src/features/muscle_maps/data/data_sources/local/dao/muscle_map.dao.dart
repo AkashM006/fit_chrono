@@ -73,7 +73,42 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
       );
     } catch (e) {
       if (e is AppError) rethrow;
-      final errorMsg = somethingWentWrongMsg("update your muscle map");
+      final errorMsg = somethingWentWrongMsg("updating your muscle map");
+      throw AppError(message: errorMsg);
+    }
+  }
+
+  Future<void> deleteMuscleMap(int id) async {
+    try {
+      final query = (select(muscleMaps)
+        ..where(
+          (tbl) => tbl.id.equals(id),
+        ));
+
+      final result = await query.getSingleOrNull();
+
+      if (result == null) {
+        final errorMsg = doesNotExistMsg("muscle map you're trying to delete");
+        throw AppError(
+          message: errorMsg,
+        );
+      }
+
+      final rowsAffected = await (delete(muscleMaps)
+            ..where(
+              (tbl) => tbl.id.equals(id),
+            ))
+          .go();
+
+      if (rowsAffected == 0) {
+        final errorMsg = doesNotExistMsg("muscle map you're trying to delete");
+        throw AppError(
+          message: errorMsg,
+        );
+      }
+    } catch (e) {
+      if (e is AppError) rethrow;
+      final errorMsg = somethingWentWrongMsg("deleting your muscle map");
       throw AppError(message: errorMsg);
     }
   }

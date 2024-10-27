@@ -51,6 +51,10 @@ class MuscleMapService {
       newMuscleMap,
     );
   }
+
+  Future<void> deleteMuscleMap(int id) {
+    return _appDatabase.muscleMapDao.deleteMuscleMap(id);
+  }
 }
 
 @riverpod

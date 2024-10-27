@@ -52,8 +52,9 @@ class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
 
   @override
   Future<DataState<void>> deleteMuscleMap(int id) {
-    // TODO: implement deleteMuscleMap
-    throw UnimplementedError();
+    return safeExecute(
+      () => _muscleMapService.deleteMuscleMap(id),
+    );
   }
 }
 
