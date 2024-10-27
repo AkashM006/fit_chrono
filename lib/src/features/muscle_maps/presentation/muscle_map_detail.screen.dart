@@ -1,8 +1,10 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/delete_muscle_map/delete_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/get_muscle_map/get_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map/muscle_map_appbar.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
@@ -79,11 +81,36 @@ class MuscleMapDetailScreen extends ConsumerWidget {
       },
     );
 
+    ref.listen(
+      deleteMuscleMapProvider,
+      (previous, next) {
+        next?.fold(
+          onSuccess: (data) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(data),
+              ),
+            );
+            context.pop();
+          },
+          onFailure: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.toString(),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+
     final muscleMap = ref.watch(muscleMapProvider(id!));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Muscle Map"),
+      appBar: MuscleMapAppbarWidget(
+        muscleMap: muscleMap,
       ),
       body: muscleMap.when(
         data: (data) {
