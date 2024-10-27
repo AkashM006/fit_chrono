@@ -6,4 +6,5 @@ abstract class MuscleMapRepository {
   Future<DataState<void>> addMuscleMap(MuscleMapEntity muscleMap);
   Future<MuscleMapEntity> getMuscleMap(int id);
   Future<DataState<void>> updateMuscleMap(MuscleMapEntity newMuscleMap);
+  Future<DataState<void>> deleteMuscleMap(int id);
 }
