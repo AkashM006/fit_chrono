@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:flutter/material.dart';
 
@@ -13,26 +14,32 @@ class CustomErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final errorColor = Theme.of(context).colorScheme.error;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.warning_rounded,
-          size: SizeConfig.safeBlockVertical * 5,
-          color: errorColor,
-        ),
-        SizedBox(
-          height: SizeConfig.safeBlockVertical * 2,
-        ),
-        Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(color: errorColor),
-        ),
-      ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: AppOffsets.maxFormWidth,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.warning_rounded,
+            size: SizeConfig.safeBlockVertical * 5,
+            color: errorColor,
+          ),
+          SizedBox(
+            height: SizeConfig.safeBlockVertical * 2,
+          ),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: errorColor),
+          ),
+        ],
+      ),
     );
   }
 }

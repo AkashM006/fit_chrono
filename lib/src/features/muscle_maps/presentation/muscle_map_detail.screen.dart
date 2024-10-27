@@ -1,7 +1,6 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
-import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/get_muscle_map/get_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
@@ -71,10 +70,9 @@ class MuscleMapDetailScreen extends ConsumerWidget {
           );
           context.pop();
         } else if (next is DataFailure) {
-          final msg = somethingWentWrongMsg("updating your muscle map");
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(msg),
+              content: Text(next.toString()),
             ),
           );
         }
@@ -89,25 +87,17 @@ class MuscleMapDetailScreen extends ConsumerWidget {
       ),
       body: muscleMap.when(
         data: (data) {
-          if (data != null) {
-            return SingleChildScrollView(
-              padding: AppOffsets.screenPadding,
-              child: ConstrainedBox(
-                constraints: AppOffsets.formWidthConstraint,
-                child: Column(
-                  children: [
-                    MuscleMapFormWidget(
-                      muscleMap: data,
-                    ),
-                  ],
-                ),
+          return SingleChildScrollView(
+            padding: AppOffsets.screenPadding,
+            child: ConstrainedBox(
+              constraints: AppOffsets.formWidthConstraint,
+              child: Column(
+                children: [
+                  MuscleMapFormWidget(
+                    muscleMap: data,
+                  ),
+                ],
               ),
-            );
-          }
-          return const Center(
-            child: CustomErrorWidget(
-              text:
-                  "Something went wrong when trying to get your muscle map. Please try again later",
             ),
           );
         },

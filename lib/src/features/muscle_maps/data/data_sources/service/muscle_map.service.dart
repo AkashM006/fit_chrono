@@ -31,10 +31,8 @@ class MuscleMapService {
     );
   }
 
-  Future<MuscleMapModel?> getMuscleMap(int id) async {
+  Future<MuscleMapModel> getMuscleMap(int id) async {
     final result = await _appDatabase.muscleMapDao.getMuscleMap(id);
-
-    if (result == null) return null;
 
     return MuscleMapModel(
       id: id,
@@ -42,13 +40,13 @@ class MuscleMapService {
     );
   }
 
-  Future<void> updateMuscleMap(MuscleMapModel muscleMap) {
+  Future<void> updateMuscleMap(MuscleMapModel muscleMap) async {
     final newMuscleMap = MuscleMapsCompanion(
       name: Value(
         muscleMap.name,
       ),
     );
-    return _appDatabase.muscleMapDao.updateMuscleMap(
+    await _appDatabase.muscleMapDao.updateMuscleMap(
       muscleMap.id,
       newMuscleMap,
     );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppOffsets {
   static late BoxConstraints formWidthConstraint;
   static late EdgeInsets screenPadding;
+  static late double maxFormWidth;
 
   static void init(BuildContext context) {
     formWidthConstraint = const BoxConstraints(maxWidth: 500);
@@ -11,5 +12,8 @@ class AppOffsets {
       vertical: SizeConfig.safeBlockVertical * 2,
       horizontal: SizeConfig.safeBlockHorizontal * 5,
     );
+    maxFormWidth = SizeConfig.safeBlockHorizontal * 80 > 600
+        ? 600
+        : SizeConfig.safeBlockHorizontal * 80;
   }
 }

@@ -24,7 +24,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
     }
   }
 
-  Future<MuscleMap?> getMuscleMap(int id) async {
+  Future<MuscleMap> getMuscleMap(int id) async {
     try {
       final query = (select(muscleMaps)
         ..where(

@@ -6,7 +6,7 @@ part of 'get_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$muscleMapHash() => r'1ef51692e480d5f5d7b28c99b8f006c89b6e3902';
+String _$muscleMapHash() => r'e01708c425c7dea9fb3713cb50d15291a9f62a2a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const muscleMapProvider = MuscleMapFamily();
 
 /// See also [muscleMap].
-class MuscleMapFamily extends Family<AsyncValue<MuscleMapEntity?>> {
+class MuscleMapFamily extends Family<AsyncValue<MuscleMapDto>> {
   /// See also [muscleMap].
   const MuscleMapFamily();
 
@@ -72,7 +72,7 @@ class MuscleMapFamily extends Family<AsyncValue<MuscleMapEntity?>> {
 }
 
 /// See also [muscleMap].
-class MuscleMapProvider extends AutoDisposeFutureProvider<MuscleMapEntity?> {
+class MuscleMapProvider extends AutoDisposeFutureProvider<MuscleMapDto> {
   /// See also [muscleMap].
   MuscleMapProvider(
     int id,
@@ -106,7 +106,7 @@ class MuscleMapProvider extends AutoDisposeFutureProvider<MuscleMapEntity?> {
 
   @override
   Override overrideWith(
-    FutureOr<MuscleMapEntity?> Function(MuscleMapRef provider) create,
+    FutureOr<MuscleMapDto> Function(MuscleMapRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -123,7 +123,7 @@ class MuscleMapProvider extends AutoDisposeFutureProvider<MuscleMapEntity?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<MuscleMapEntity?> createElement() {
+  AutoDisposeFutureProviderElement<MuscleMapDto> createElement() {
     return _MuscleMapProviderElement(this);
   }
 
@@ -141,14 +141,13 @@ class MuscleMapProvider extends AutoDisposeFutureProvider<MuscleMapEntity?> {
   }
 }
 
-mixin MuscleMapRef on AutoDisposeFutureProviderRef<MuscleMapEntity?> {
+mixin MuscleMapRef on AutoDisposeFutureProviderRef<MuscleMapDto> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
 class _MuscleMapProviderElement
-    extends AutoDisposeFutureProviderElement<MuscleMapEntity?>
-    with MuscleMapRef {
+    extends AutoDisposeFutureProviderElement<MuscleMapDto> with MuscleMapRef {
   _MuscleMapProviderElement(super.provider);
 
   @override

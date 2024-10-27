@@ -1,7 +1,6 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
-import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
@@ -18,7 +17,7 @@ class MuscleMapFormWidget extends ConsumerStatefulWidget {
   });
 
   /// Provided only in case of edit
-  final MuscleMapEntity? muscleMap;
+  final MuscleMapDto? muscleMap;
 
   @override
   ConsumerState<MuscleMapFormWidget> createState() =>
@@ -59,9 +58,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     _formKey.currentState!.save();
 
     if (isEditMode) {
-      final newMuscleMap = MuscleMapDto(
-        name: _name,
-      );
+      final newMuscleMap = widget.muscleMap!.copyWith(name: _name);
       ref.read(updateMuscleMapProvider.notifier).go(newMuscleMap);
       return;
     }
