@@ -42,8 +42,16 @@ class MuscleMapService {
     );
   }
 
-  Future<void> updateMuscleMap(int id, String name) {
-    return _appDatabase.muscleMapDao.updateMuscleMap(id, name);
+  Future<void> updateMuscleMap(MuscleMapModel muscleMap) {
+    final newMuscleMap = MuscleMapsCompanion(
+      name: Value(
+        muscleMap.name,
+      ),
+    );
+    return _appDatabase.muscleMapDao.updateMuscleMap(
+      muscleMap.id,
+      newMuscleMap,
+    );
   }
 }
 
