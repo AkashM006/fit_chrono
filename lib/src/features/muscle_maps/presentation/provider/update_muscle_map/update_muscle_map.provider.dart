@@ -24,7 +24,7 @@ class UpdateMuscleMap extends _$UpdateMuscleMap {
 
     state = result.fold(
       onSuccess: (data) => DataSuccess<String>(
-        "Your muscle map is updated and ready for the action!",
+        "All set! Your muscle map is now up to date",
       ),
       onFailure: (error) => DataFailure(error),
     );

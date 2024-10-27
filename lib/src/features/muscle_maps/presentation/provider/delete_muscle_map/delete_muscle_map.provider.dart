@@ -15,15 +15,15 @@ class DeleteMuscleMap extends _$DeleteMuscleMap {
   void go(int id) async {
     state = DataLoading();
 
-    await Future.delayed(Duration(seconds: 3));
-
     final muscleMapRepository = ref.read(muscleMapImplProvider);
 
     final result =
         await DeleteMuscleMapUsecase(muscleMapRepository)(params: id);
 
     state = result.fold(
-      onSuccess: (data) => DataSuccess<String>("Deleted your muscle map"),
+      onSuccess: (data) => DataSuccess<String>(
+        "Deleted your muscle map. Time for a fresh start!",
+      ),
       onFailure: (error) => DataFailure(error),
     );
   }

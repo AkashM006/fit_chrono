@@ -23,7 +23,9 @@ class AddMuscleMap extends _$AddMuscleMap {
     );
 
     state = result.fold(
-      onSuccess: (data) => DataSuccess<String>("Added your muscle map"),
+      onSuccess: (data) => DataSuccess<String>(
+        "New muscle map locked in—let’s make every workout count!",
+      ),
       onFailure: (error) => DataFailure(error),
     );
   }
