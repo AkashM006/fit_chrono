@@ -22,7 +22,7 @@ Stream<List<MuscleMapDto>> muscleMaps(MuscleMapsRef ref) {
           .toList(),
     );
   } catch (e) {
-    final error = somethingWentWrongMsg("get your muscle maps");
+    final error = somethingWentWrongMsg("getting your muscle maps");
     throw AppError(message: error);
   }
 }
