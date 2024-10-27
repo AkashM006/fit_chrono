@@ -85,9 +85,16 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
           (tbl) => tbl.id.equals(id),
         ));
 
-      final result = await query.getSingleOrNull();
+      final result = await query.get();
 
-      if (result == null) {
+      if (result.length > 1) {
+        final errorMsg = multipleRecordsFound("delete your muscle map");
+        throw AppError(
+          message: errorMsg,
+        );
+      }
+
+      if (result.isEmpty) {
         final errorMsg = doesNotExistMsg("muscle map you're trying to delete");
         throw AppError(
           message: errorMsg,
