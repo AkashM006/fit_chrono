@@ -6,12 +6,12 @@ part of 'muscle_maps.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$muscleMapsHash() => r'6b4bd7f7788a7e8ac828baa0f10a5300ef4fbbbc';
+String _$muscleMapsHash() => r'6fa81b98dfc2377c6d4f122a05786a830aa99157';
 
 /// See also [muscleMaps].
 @ProviderFor(muscleMaps)
 final muscleMapsProvider =
-    AutoDisposeStreamProvider<List<MuscleMapEntity>>.internal(
+    AutoDisposeStreamProvider<List<MuscleMapDto>>.internal(
   muscleMaps,
   name: r'muscleMapsProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final muscleMapsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef MuscleMapsRef = AutoDisposeStreamProviderRef<List<MuscleMapEntity>>;
+typedef MuscleMapsRef = AutoDisposeStreamProviderRef<List<MuscleMapDto>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

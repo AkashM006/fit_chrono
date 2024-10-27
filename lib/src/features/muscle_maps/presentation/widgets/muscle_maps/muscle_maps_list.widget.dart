@@ -1,5 +1,5 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
-import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +10,7 @@ class MuscleMapsListWidget extends StatelessWidget {
     required this.muscleMaps,
   });
 
-  final List<MuscleMapEntity> muscleMaps;
+  final List<MuscleMapDto> muscleMaps;
 
   @override
   Widget build(BuildContext context) {
