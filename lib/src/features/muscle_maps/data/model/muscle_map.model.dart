@@ -14,10 +14,10 @@ class MuscleMapModel {
 
   String get name => _name;
 
-  factory MuscleMapModel.fromEntity(MuscleMapEntity muscleMapEntity) {
+  factory MuscleMapModel.fromEntity(MuscleMapEntity muscleMap) {
     return MuscleMapModel(
-      id: muscleMapEntity.id,
-      name: muscleMapEntity.name,
+      id: muscleMap.id,
+      name: muscleMap.name,
     );
   }
 
@@ -25,13 +25,6 @@ class MuscleMapModel {
     return MuscleMapEntity(
       id: id,
       name: name,
-    );
-  }
-
-  MuscleMapModel copyWith({int? id, String? name}) {
-    return MuscleMapModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
     );
   }
 }

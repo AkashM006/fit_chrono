@@ -1,17 +1,17 @@
-import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
+import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 
 class WorkoutEntity {
   final int id;
   final String name;
-  final List<MuscleMap> muscles;
-  final WorkoutMeasureEntity mesaure;
+  final List<MuscleMapEntity> muscles;
+  final WorkoutMeasureEntity measure;
   final int count;
 
   const WorkoutEntity({
     required this.id,
     required this.name,
     required this.muscles,
-    required this.mesaure,
+    required this.measure,
     required this.count,
   });
 }
