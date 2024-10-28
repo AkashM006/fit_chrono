@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/core/utils/custom_error.util.dart';
 import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 
 part 'muscle_map.dao.g.dart';
@@ -11,36 +12,44 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
     with _$MuscleMapDaoMixin {
   MuscleMapDao(super.key);
 
-  Stream<List<MuscleMap>> watchMuscleMaps() {
-    return select(muscleMaps).watch();
+  Stream<List<MuscleMapModel>> watchMuscleMaps() {
+    return select(muscleMaps).watch().map(
+          (muscleMapList) => muscleMapList
+              .map(
+                (muscleMap) => MuscleMapModel.fromDbModel(muscleMap),
+              )
+              .toList(),
+        );
   }
 
-  Future<void> addMuscleMap(MuscleMapsCompanion muscleMap) async {
+  Future<void> addMuscleMap(MuscleMapModel muscleMap) async {
     try {
-      await into(muscleMaps).insert(muscleMap);
+      await into(muscleMaps).insert(MuscleMapsCompanion(
+        name: Value(muscleMap.name),
+      ));
     } catch (e) {
       final errorMsg = somethingWentWrongMsg("add your muscle map");
       throw AppError(message: errorMsg);
     }
   }
 
-  Future<MuscleMap> getMuscleMap(int id) async {
+  Future<MuscleMapModel> getMuscleMap(int id) async {
     try {
       final query = (select(muscleMaps)
         ..where(
           (tbl) => tbl.id.equals(id),
         ));
 
-      final result = await query.getSingleOrNull();
+      final muscleMap = await query.getSingleOrNull();
 
-      if (result == null) {
+      if (muscleMap == null) {
         final errorMsg = doesNotExistMsg("muscle map you're trying to get");
         throw AppError(
           message: errorMsg,
         );
       }
 
-      return result;
+      return MuscleMapModel.fromDbModel(muscleMap);
     } catch (e) {
       if (e is AppError) rethrow;
       final errorMsg = somethingWentWrongMsg("get your muscle map");
@@ -48,7 +57,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
     }
   }
 
-  Future<void> updateMuscleMap(int id, MuscleMapsCompanion muscleMap) async {
+  Future<void> updateMuscleMap(int id, MuscleMapModel muscleMap) async {
     try {
       final query = (select(muscleMaps)
         ..where(
@@ -69,7 +78,9 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
               (tbl) => tbl.id.equals(id),
             ))
           .write(
-        muscleMap,
+        MuscleMapsCompanion(
+          name: Value(muscleMap.name),
+        ),
       );
     } catch (e) {
       if (e is AppError) rethrow;
