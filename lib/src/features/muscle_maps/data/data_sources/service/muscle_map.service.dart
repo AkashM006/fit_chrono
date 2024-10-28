@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
+import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,22 +10,31 @@ class MuscleMapService {
 
   MuscleMapService(this._appDatabase);
 
-  Stream<List<MuscleMapModel>> watchMuscleMaps() {
-    return _appDatabase.muscleMapDao.watchMuscleMaps();
+  Stream<List<MuscleMapEntity>> watchMuscleMaps() {
+    return _appDatabase.muscleMapDao.watchMuscleMaps().map(
+          (muscleMapList) => muscleMapList
+              .map(
+                (muscleMap) => muscleMap.toEntity(),
+              )
+              .toList(),
+        );
   }
 
-  Future<void> addMuscleMap(MuscleMapModel muscleMap) {
-    return _appDatabase.muscleMapDao.addMuscleMap(muscleMap);
+  Future<void> addMuscleMap(MuscleMapEntity muscleMap) {
+    return _appDatabase.muscleMapDao
+        .addMuscleMap(MuscleMapModel.fromEntity(muscleMap));
   }
 
-  Future<MuscleMapModel> getMuscleMap(int id) {
-    return _appDatabase.muscleMapDao.getMuscleMap(id);
+  Future<MuscleMapEntity> getMuscleMap(int id) async {
+    final result = await _appDatabase.muscleMapDao.getMuscleMap(id);
+
+    return result.toEntity();
   }
 
-  Future<void> updateMuscleMap(MuscleMapModel muscleMap) async {
+  Future<void> updateMuscleMap(MuscleMapEntity muscleMap) async {
     await _appDatabase.muscleMapDao.updateMuscleMap(
       muscleMap.id,
-      muscleMap,
+      MuscleMapModel.fromEntity(muscleMap),
     );
   }
 
