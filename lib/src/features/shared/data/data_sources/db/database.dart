@@ -4,6 +4,8 @@ import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/dao/muscle_map.dao.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
+import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/muscle_maps_for_workouts.schema.dart';
+import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/workout.schema.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,6 +18,8 @@ part 'database.g.dart';
 @DriftDatabase(
   tables: [
     MuscleMaps,
+    Workouts,
+    MuscleMapsForWorkouts,
   ],
   daos: [
     MuscleMapDao,
