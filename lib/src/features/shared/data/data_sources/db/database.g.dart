@@ -498,7 +498,7 @@ class $MuscleMapsForWorkoutsTable extends MuscleMapsForWorkouts
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {workoutId, muscleMapId};
   @override
   MuscleMapsForWorkout map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -657,6 +657,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MuscleMapsForWorkoutsTable muscleMapsForWorkouts =
       $MuscleMapsForWorkoutsTable(this);
   late final MuscleMapDao muscleMapDao = MuscleMapDao(this as AppDatabase);
+  late final WorkoutDao workoutDao = WorkoutDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

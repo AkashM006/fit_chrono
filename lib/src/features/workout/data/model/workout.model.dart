@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
+import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dart';
 
 class WorkoutModel {
@@ -37,12 +38,37 @@ class WorkoutModel {
       count: workout.count,
     );
   }
+
+  factory WorkoutModel.fromDbModel(Workout workout) {
+    return WorkoutModel(
+      id: workout.id,
+      name: workout.name,
+      muscles: [],
+      measure: WorkoutMeasureModelMapper.fromString(workout.repititionType),
+      count: workout.repitition,
+    );
+  }
+
+  WorkoutEntity toEntity() {
+    return WorkoutEntity(
+      id: id,
+      name: name,
+      muscles: muscles.map((muscle) => muscle.toEntity()).toList(),
+      measure: WorkoutMeasureModelMapper.toEntity(measure),
+      count: count,
+    );
+  }
 }
 
 enum WorkoutMeasureModel {
   time,
   reps,
 }
+
+Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
+  "time": WorkoutMeasureModel.time,
+  "reps": WorkoutMeasureModel.reps,
+};
 
 class WorkoutMeasureModelMapper {
   static WorkoutMeasureModel fromEntity(WorkoutMeasureEntity measure) {
@@ -61,5 +87,11 @@ class WorkoutMeasureModelMapper {
       case WorkoutMeasureModel.time:
         return WorkoutMeasureEntity.time;
     }
+  }
+
+  static WorkoutMeasureModel fromString(String text) {
+    final result = stringMappedtoMeasure[text];
+
+    return result ?? WorkoutMeasureModel.reps;
   }
 }

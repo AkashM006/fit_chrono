@@ -4,6 +4,7 @@ import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/dao/muscle_map.dao.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
+import 'package:fit_chrono/src/features/workout/data/data_sources/local/dao/workout.dao.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/muscle_maps_for_workouts.schema.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/workout.schema.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,6 +24,7 @@ part 'database.g.dart';
   ],
   daos: [
     MuscleMapDao,
+    WorkoutDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {

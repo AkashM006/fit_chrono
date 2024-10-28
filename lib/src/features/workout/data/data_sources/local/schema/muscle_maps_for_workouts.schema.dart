@@ -5,4 +5,7 @@ import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/w
 class MuscleMapsForWorkouts extends Table {
   IntColumn get workoutId => integer().references(Workouts, #id)();
   IntColumn get muscleMapId => integer().references(MuscleMaps, #id)();
+
+  @override
+  Set<Column> get primaryKey => {workoutId, muscleMapId};
 }
