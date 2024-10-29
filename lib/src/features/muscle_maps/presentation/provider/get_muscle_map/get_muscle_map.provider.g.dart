@@ -6,7 +6,7 @@ part of 'get_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$muscleMapHash() => r'e01708c425c7dea9fb3713cb50d15291a9f62a2a';
+String _$muscleMapHash() => r'c51924f0d00b8ac202d154dbebbe2724db7dd63d';
 
 /// Copied from Dart SDK
 class _SystemHash {

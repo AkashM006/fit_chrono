@@ -25,8 +25,8 @@ class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
   }
 
   @override
-  Future<MuscleMapEntity> getMuscleMap(int id) {
-    return _muscleMapService.getMuscleMap(id);
+  Future<DataState<MuscleMapEntity>> getMuscleMap(int id) {
+    return safeExecute(() => _muscleMapService.getMuscleMap(id));
   }
 
   @override

@@ -28,33 +28,33 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
         name: Value(muscleMap.name),
       ));
     } catch (e) {
-      final errorMsg = somethingWentWrongMsg("add your muscle map");
+      final errorMsg = somethingWentWrongMsg("addding your muscle map");
       throw AppError(message: errorMsg);
     }
   }
 
   Future<MuscleMapModel> getMuscleMap(int id) async {
-    try {
-      final query = (select(muscleMaps)
-        ..where(
-          (tbl) => tbl.id.equals(id),
-        ));
+    // try {
+    //   final query = (select(muscleMaps)
+    //     ..where(
+    //       (tbl) => tbl.id.equals(id),
+    //     ));
 
-      final muscleMap = await query.getSingleOrNull();
+    //   final muscleMap = await query.getSingleOrNull();
 
-      if (muscleMap == null) {
-        final errorMsg = doesNotExistMsg("muscle map you're trying to get");
-        throw AppError(
-          message: errorMsg,
-        );
-      }
+    //   if (muscleMap == null) {
+    //     final errorMsg = doesNotExistMsg("muscle map you're trying to get");
+    //     throw AppError(
+    //       message: errorMsg,
+    //     );
+    //   }
 
-      return MuscleMapModel.fromDbModel(muscleMap);
-    } catch (e) {
-      if (e is AppError) rethrow;
-      final errorMsg = somethingWentWrongMsg("get your muscle map");
-      throw AppError(message: errorMsg);
-    }
+    //   return MuscleMapModel.fromDbModel(muscleMap);
+    // } catch (e) {
+    //   if (e is AppError) rethrow;
+    final errorMsg = somethingWentWrongMsg("getting your muscle map");
+    throw AppError(message: errorMsg);
+    // }
   }
 
   Future<void> updateMuscleMap(int id, MuscleMapModel muscleMap) async {
