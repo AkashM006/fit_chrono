@@ -2,20 +2,44 @@ import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+final routeItems = [
+  {
+    'emoji': "\u{1F4AA}",
+    'title': "Muscle Maps",
+    'path': PAGES.muscleMaps.path,
+  },
+  {
+    'emoji': "\u{1F3CB}",
+    'title': "Workouts",
+    'path': PAGES.workouts.path,
+  }
+];
+
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void onMuscleMapNavigation() {
+    void handleRouting(String path) {
       context.pop();
-      context.push(PAGES.muscleMaps.path);
+      context.push(path);
     }
 
-    void onWorkoutNavigation() {
-      context.pop();
-      context.push(PAGES.workouts.path);
-    }
+    final drawerItemTextTheme = Theme.of(context).textTheme.titleLarge;
+
+    List<Widget> drawerItems = routeItems.map((routeItem) {
+      return ListTile(
+        leading: Text(
+          routeItem['emoji'] as String,
+          style: drawerItemTextTheme,
+        ),
+        title: Text(
+          routeItem['title'] as String,
+          style: drawerItemTextTheme,
+        ),
+        onTap: () => handleRouting(routeItem['path'] as String),
+      );
+    }).toList();
 
     return Drawer(
       child: ListView(
@@ -30,14 +54,7 @@ class DrawerWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          ListTile(
-            onTap: onMuscleMapNavigation,
-            title: const Text("Muscle Maps"),
-          ),
-          ListTile(
-            onTap: onWorkoutNavigation,
-            title: const Text("Workouts"),
-          )
+          ...drawerItems,
         ],
       ),
     );
