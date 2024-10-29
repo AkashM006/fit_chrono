@@ -12,6 +12,11 @@ class DrawerWidget extends StatelessWidget {
       context.push(PAGES.muscleMaps.path);
     }
 
+    void onWorkoutNavigation() {
+      context.pop();
+      context.push(PAGES.workouts.path);
+    }
+
     return Drawer(
       child: ListView(
         padding: const EdgeInsets.all(0),
@@ -28,6 +33,10 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             onTap: onMuscleMapNavigation,
             title: const Text("Muscle Maps"),
+          ),
+          ListTile(
+            onTap: onWorkoutNavigation,
+            title: const Text("Workouts"),
           )
         ],
       ),

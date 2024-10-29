@@ -6,6 +6,7 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/get_mu
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map/muscle_map_appbar.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
@@ -95,8 +96,9 @@ class MuscleMapDetailScreen extends ConsumerWidget {
     final muscleMap = ref.watch(muscleMapProvider(id!));
 
     return Scaffold(
-      appBar: MuscleMapAppbarWidget(
-        muscleMap: muscleMap,
+      appBar: CustomAppbarWidget(
+        asyncData: muscleMap,
+        builder: (context, data) => MuscleMapAppbarWidget(muscleMap: data),
       ),
       body: muscleMap.when(
         data: (data) {

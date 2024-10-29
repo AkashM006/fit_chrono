@@ -8,7 +8,7 @@ class WatchWorkoutsUsecase extends Usecase<Stream<List<WorkoutEntity>>, void> {
   WatchWorkoutsUsecase(this._workoutRepository);
 
   @override
-  Stream<List<WorkoutEntity>> call({required void params}) {
+  Stream<List<WorkoutEntity>> call({void params}) {
     return _workoutRepository.watchWorkouts();
   }
 }

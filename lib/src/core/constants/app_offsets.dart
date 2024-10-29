@@ -5,6 +5,7 @@ class AppOffsets {
   static late BoxConstraints formWidthConstraint;
   static late EdgeInsets screenPadding;
   static late double maxFormWidth;
+  static late double maxBodyWidth;
 
   static void init(BuildContext context) {
     formWidthConstraint = const BoxConstraints(maxWidth: 500);
@@ -15,5 +16,6 @@ class AppOffsets {
     maxFormWidth = SizeConfig.safeBlockHorizontal * 80 > 600
         ? 600
         : SizeConfig.safeBlockHorizontal * 80;
+    maxBodyWidth = SizeConfig.safeBlockHorizontal * 60;
   }
 }

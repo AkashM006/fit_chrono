@@ -1,5 +1,6 @@
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/muscle_maps.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_maps/muscle_maps_list.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
@@ -19,8 +20,11 @@ class MuscleMapScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Muscle Maps"),
+      appBar: CustomAppbarWidget(
+        asyncData: muscleMaps,
+        builder: (context, data) => AppBar(
+          title: const Text("Muscle Maps"),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: onNewMuscleMapAdded,

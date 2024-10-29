@@ -2,6 +2,7 @@ import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_detail.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_form.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.screen.dart';
+import 'package:fit_chrono/src/features/workout/presentation/workouts.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,6 +11,7 @@ enum PAGES {
   muscleMaps,
   muscleMapForm,
   muscleMapDetail,
+  workouts,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -23,6 +25,8 @@ extension AppRoutesExtension on PAGES {
         return '/muscle-map-form';
       case PAGES.muscleMapDetail:
         return '/muscle-map-detail';
+      case PAGES.workouts:
+        return '/workouts';
     }
   }
 
@@ -36,6 +40,8 @@ extension AppRoutesExtension on PAGES {
         return "Muscle Map Form";
       case PAGES.muscleMapDetail:
         return "Muscle Map Detail";
+      case PAGES.workouts:
+        return "Workouts";
     }
   }
 
@@ -58,6 +64,8 @@ extension AppRoutesExtension on PAGES {
             id: resultId,
           );
         };
+      case PAGES.workouts:
+        return (context, routerState) => const WorkoutsScreen();
     }
   }
 }

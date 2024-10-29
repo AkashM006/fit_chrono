@@ -5,17 +5,13 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MuscleMapAppbarWidget extends ConsumerWidget
-    implements PreferredSizeWidget {
+class MuscleMapAppbarWidget extends ConsumerWidget {
   const MuscleMapAppbarWidget({
     super.key,
     required this.muscleMap,
   });
 
-  final AsyncValue<MuscleMapDto> muscleMap;
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  final MuscleMapDto muscleMap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,25 +25,17 @@ class MuscleMapAppbarWidget extends ConsumerWidget
     final isLoading = updateMuscleMapStatus is DataLoading ||
         deleteMuscleMapStatus is DataLoading;
 
-    return muscleMap.when(
-      data: (data) => AppBar(
-        title: const Text("Muscle Map"),
-        actions: [
-          IconButton(
-            onPressed: isLoading ? null : () => handleDelete(data.id),
-            icon: const Icon(
-              Icons.delete,
-            ),
-            color: Theme.of(context).colorScheme.error,
-          )
-        ],
-      ),
-      error: (error, stackTrace) => AppBar(
-        title: const Text("Error"),
-      ),
-      loading: () => AppBar(
-        title: const Text("Loading..."),
-      ),
+    return AppBar(
+      title: const Text("Muscle Map"),
+      actions: [
+        IconButton(
+          onPressed: isLoading ? null : () => handleDelete(muscleMap.id),
+          icon: const Icon(
+            Icons.delete,
+          ),
+          color: Theme.of(context).colorScheme.error,
+        )
+      ],
     );
   }
 }
