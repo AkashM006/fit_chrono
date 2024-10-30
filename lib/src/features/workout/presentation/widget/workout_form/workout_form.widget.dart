@@ -1,6 +1,7 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
+import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/workout_muscle_bottom_sheet.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -151,7 +152,17 @@ class MuscleMapSelectionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onAddMuscleMap() {}
+    void onAddMuscleMap() {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => Container(
+          padding: const EdgeInsets.all(20),
+          width: SizeConfig.safeBlockHorizontal * 100,
+          child: const WorkoutMuscleBottomSheetWidget(),
+        ),
+      );
+    }
+
     void onDeleteMuscleMap() {}
 
     final widgetsList = [

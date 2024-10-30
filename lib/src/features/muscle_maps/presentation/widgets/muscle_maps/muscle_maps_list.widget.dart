@@ -1,5 +1,5 @@
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/empty_list/empty_list.widget.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_maps/muscle_maps_empty.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -15,11 +15,7 @@ class MuscleMapsListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (muscleMaps.isEmpty) {
-      return const Center(
-        child: EmptyListWidget(
-          text: "You have no muscle maps added. Add one to view it here",
-        ),
-      );
+      return const MuscleMapsEmptyWidget();
     }
 
     void onMuscleMapTapped(int id) {
