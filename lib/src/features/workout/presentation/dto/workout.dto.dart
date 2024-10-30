@@ -9,12 +9,12 @@ class WorkoutDto {
   int _count;
 
   WorkoutDto({
-    required int id,
+    int? id,
     required String name,
     required List<MuscleMapDto> muscles,
     required WorkoutMeasureDto measure,
     required int count,
-  })  : _id = id,
+  })  : _id = id ?? -1,
         _name = name,
         _muscles = muscles,
         _measure = measure,
@@ -25,6 +25,15 @@ class WorkoutDto {
   List<MuscleMapDto> get muscles => _muscles;
   WorkoutMeasureDto get measure => _measure;
   int get count => _count;
+
+  factory WorkoutDto.init() {
+    return WorkoutDto(
+      name: "",
+      muscles: [],
+      measure: WorkoutMeasureDto.reps,
+      count: 0,
+    );
+  }
 
   factory WorkoutDto.fromEntity(WorkoutEntity workout) {
     return WorkoutDto(
@@ -45,6 +54,25 @@ class WorkoutDto {
       muscles: muscles.map((muscle) => muscle.toEntity()).toList(),
       measure: WorkoutMeasureModelMapper.toEntity(measure),
       count: count,
+    );
+  }
+
+  void addMuscle(MuscleMapDto muscle) {
+    muscles.add(muscle);
+  }
+
+  WorkoutDto copyWith({
+    String? name,
+    List<MuscleMapDto>? muscles,
+    WorkoutMeasureDto? measure,
+    int? count,
+  }) {
+    return WorkoutDto(
+      id: id,
+      name: name ?? this.name,
+      muscles: muscles ?? this.muscles,
+      measure: measure ?? this.measure,
+      count: count ?? this.count,
     );
   }
 }

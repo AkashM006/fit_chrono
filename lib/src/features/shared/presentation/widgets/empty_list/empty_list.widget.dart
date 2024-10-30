@@ -11,11 +11,8 @@ class EmptyListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxWidth = AppOffsets.maxBodyWidth;
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: maxWidth,
-      ),
+      constraints: AppOffsets.messageWidthConstaint,
       child: Text(
         text,
         textAlign: TextAlign.center,

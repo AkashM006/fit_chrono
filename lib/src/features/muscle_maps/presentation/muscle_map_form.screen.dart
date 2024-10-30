@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
@@ -31,12 +32,9 @@ class MuscleMapFormScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          vertical: SizeConfig.safeBlockVertical * 2,
-          horizontal: SizeConfig.safeBlockHorizontal * 5,
-        ),
+        padding: AppOffsets.screenPadding,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 500),
+          constraints: AppOffsets.formWidthConstraint,
           child: Column(
             children: [
               const MuscleMapDescriptionWidget(),
