@@ -19,8 +19,9 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
 
   @override
   Future<DataState<void>> addWorkout(WorkoutEntity workout) {
-    // TODO: implement addWorkout
-    throw UnimplementedError();
+    return safeExecute(
+      () => _workoutService.addWorkout(workout),
+    );
   }
 }
 

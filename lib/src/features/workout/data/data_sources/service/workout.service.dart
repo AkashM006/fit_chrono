@@ -18,6 +18,8 @@ class WorkoutService {
               .toList(),
         );
   }
+
+  Future<void> addWorkout(WorkoutEntity workout) async {}
 }
 
 @riverpod

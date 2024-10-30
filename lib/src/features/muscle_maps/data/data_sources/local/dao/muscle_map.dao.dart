@@ -13,13 +13,18 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
   MuscleMapDao(super.key);
 
   Stream<List<MuscleMapModel>> watchMuscleMaps() {
-    return select(muscleMaps).watch().map(
-          (muscleMapList) => muscleMapList
-              .map(
-                (muscleMap) => MuscleMapModel.fromDbModel(muscleMap),
-              )
-              .toList(),
-        );
+    try {
+      return select(muscleMaps).watch().map(
+            (muscleMapList) => muscleMapList
+                .map(
+                  (muscleMap) => MuscleMapModel.fromDbModel(muscleMap),
+                )
+                .toList(),
+          );
+    } catch (e) {
+      final errorMsg = somethingWentWrongMsg("getting you workouts");
+      throw AppError(message: errorMsg);
+    }
   }
 
   Future<void> addMuscleMap(MuscleMapModel muscleMap) async {
@@ -34,27 +39,27 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<MuscleMapModel> getMuscleMap(int id) async {
-    // try {
-    //   final query = (select(muscleMaps)
-    //     ..where(
-    //       (tbl) => tbl.id.equals(id),
-    //     ));
+    try {
+      final query = (select(muscleMaps)
+        ..where(
+          (tbl) => tbl.id.equals(id),
+        ));
 
-    //   final muscleMap = await query.getSingleOrNull();
+      final muscleMap = await query.getSingleOrNull();
 
-    //   if (muscleMap == null) {
-    //     final errorMsg = doesNotExistMsg("muscle map you're trying to get");
-    //     throw AppError(
-    //       message: errorMsg,
-    //     );
-    //   }
+      if (muscleMap == null) {
+        final errorMsg = doesNotExistMsg("muscle map you're trying to get");
+        throw AppError(
+          message: errorMsg,
+        );
+      }
 
-    //   return MuscleMapModel.fromDbModel(muscleMap);
-    // } catch (e) {
-    //   if (e is AppError) rethrow;
-    final errorMsg = somethingWentWrongMsg("getting your muscle map");
-    throw AppError(message: errorMsg);
-    // }
+      return MuscleMapModel.fromDbModel(muscleMap);
+    } catch (e) {
+      if (e is AppError) rethrow;
+      final errorMsg = somethingWentWrongMsg("getting your muscle map");
+      throw AppError(message: errorMsg);
+    }
   }
 
   Future<void> updateMuscleMap(int id, MuscleMapModel muscleMap) async {

@@ -45,4 +45,6 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
       },
     );
   }
+
+  Future<void> addWorkout(WorkoutModel workout) async {}
 }
