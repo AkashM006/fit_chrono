@@ -1,4 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:fit_chrono/src/core/utils/custom_error.util.dart';
+import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
@@ -46,5 +48,35 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
     );
   }
 
-  Future<void> addWorkout(WorkoutModel workout) async {}
+  Future<void> addWorkout(WorkoutModel workout) async {
+    try {
+      await transaction(() async {
+        final workoutId = await into(workouts).insert(
+          WorkoutsCompanion.insert(
+            name: workout.name,
+            repitition: workout.count,
+            repititionType: workout.measure.toString(),
+          ),
+        );
+
+        if (workout.muscles.isEmpty) return;
+
+        await batch((batch) {
+          batch.insertAll(
+              muscleMapsForWorkouts,
+              workout.muscles
+                  .map(
+                    (muscle) => MuscleMapsForWorkoutsCompanion.insert(
+                      workoutId: workoutId,
+                      muscleMapId: muscle.id,
+                    ),
+                  )
+                  .toList());
+        });
+      });
+    } catch (e) {
+      final errorMsg = somethingWentWrongMsg("adding your workout");
+      throw AppError(message: errorMsg);
+    }
+  }
 }

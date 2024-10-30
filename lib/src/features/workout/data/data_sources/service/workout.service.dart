@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
+import 'package:fit_chrono/src/features/workout/data/model/workout.model.dart';
 import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -19,7 +20,9 @@ class WorkoutService {
         );
   }
 
-  Future<void> addWorkout(WorkoutEntity workout) async {}
+  Future<void> addWorkout(WorkoutEntity workout) async {
+    await _appDatabase.workoutDao.addWorkout(WorkoutModel.fromEntity(workout));
+  }
 }
 
 @riverpod
