@@ -21,6 +21,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
   WorkoutDto _workout = WorkoutDto.init();
+  List<int> _selectedMuscles = [];
 
   bool get isEditMode => widget.workout != null;
 
@@ -45,6 +46,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
       _workout = _workout.copyWith(
         muscles: [..._workout.muscles, muscle],
       );
+      _selectedMuscles.add(muscle.id);
     });
   }
 
@@ -54,6 +56,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
         muscles:
             _workout.muscles.where((muscle) => muscle.id != muscleId).toList(),
       );
+      _selectedMuscles.remove(muscleId);
     });
   }
 
@@ -122,6 +125,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                 muscles: _workout.muscles,
                 onAddMuscle: onAddMuscle,
                 onRemoveMuscle: onMuscleRemove,
+                selectedMuscleIds: _selectedMuscles,
               ),
             ),
             const SizedBox(
@@ -142,23 +146,38 @@ class MuscleMapSelectionField extends StatelessWidget {
   const MuscleMapSelectionField({
     super.key,
     required this.muscles,
+    required this.selectedMuscleIds,
     required this.onAddMuscle,
     required this.onRemoveMuscle,
   });
 
   final List<MuscleMapDto> muscles;
+  final List<int> selectedMuscleIds;
   final void Function(MuscleMapDto muscle) onAddMuscle;
   final void Function(int id) onRemoveMuscle;
 
   @override
   Widget build(BuildContext context) {
+    void onMuscleSelected(MuscleMapDto? muscle) {
+      if (muscle == null) return;
+
+      if (selectedMuscleIds.contains(muscle.id)) {
+        onRemoveMuscle(muscle.id);
+      } else {
+        onAddMuscle(muscle);
+      }
+    }
+
     void onAddMuscleMap() {
       showModalBottomSheet(
         context: context,
         builder: (context) => Container(
           padding: const EdgeInsets.all(20),
           width: SizeConfig.safeBlockHorizontal * 100,
-          child: const WorkoutMuscleBottomSheetWidget(),
+          child: WorkoutMuscleBottomSheetWidget(
+            selectedMusclesIdList: selectedMuscleIds,
+            onMuscleMapSelect: onMuscleSelected,
+          ),
         ),
       );
     }
