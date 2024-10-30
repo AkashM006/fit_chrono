@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/shared/data/repository/base.repository.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/service/workout.service.dart';
 import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dart';
@@ -14,6 +15,12 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
   @override
   Stream<List<WorkoutEntity>> watchWorkouts() {
     return _workoutService.watchWorkouts();
+  }
+
+  @override
+  Future<DataState<void>> addWorkout() {
+    // TODO: implement addWorkout
+    throw UnimplementedError();
   }
 }
 
