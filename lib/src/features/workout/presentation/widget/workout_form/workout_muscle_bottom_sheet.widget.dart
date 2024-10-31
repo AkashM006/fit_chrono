@@ -5,19 +5,39 @@ import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error
 import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class WorkoutMuscleBottomSheetWidget extends ConsumerWidget {
+class WorkoutMuscleBottomSheetWidget extends ConsumerStatefulWidget {
   const WorkoutMuscleBottomSheetWidget({
     super.key,
-    required this.selectedMusclesIdList,
-    required this.onMuscleMapSelect,
+    required this.selectedMuscles,
+    required this.onMuscleMapSave,
   });
 
-  final List<int> selectedMusclesIdList;
-  final void Function(MuscleMapDto? muscle) onMuscleMapSelect;
+  final List<MuscleMapDto> selectedMuscles;
+  final void Function(List<MuscleMapDto> muscle) onMuscleMapSave;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WorkoutMuscleBottomSheetWidget> createState() =>
+      _WorkoutMuscleBottomSheetWidgetState();
+}
+
+class _WorkoutMuscleBottomSheetWidgetState
+    extends ConsumerState<WorkoutMuscleBottomSheetWidget> {
+  List<int> _selectedMuscleIds = [];
+  List<MuscleMapDto> _selectedMuscles = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (var selectedMuscle in widget.selectedMuscles) {
+      _selectedMuscleIds.add(selectedMuscle.id);
+      _selectedMuscles.add(selectedMuscle);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final muscles = ref.watch(muscleMapsProvider);
 
     void onMuscleStatusChanged(
@@ -25,6 +45,24 @@ class WorkoutMuscleBottomSheetWidget extends ConsumerWidget {
       bool? selected,
     ) {
       if (selected == null) return;
+
+      setState(() {
+        if (_selectedMuscleIds.contains(muscle.id)) {
+          _selectedMuscleIds =
+              _selectedMuscleIds.where((id) => id != muscle.id).toList();
+          _selectedMuscles = _selectedMuscles
+              .where((selectedMuscle) => selectedMuscle.id != muscle.id)
+              .toList();
+        } else {
+          _selectedMuscleIds = [..._selectedMuscleIds, muscle.id];
+          _selectedMuscles = [..._selectedMuscles, muscle];
+        }
+      });
+    }
+
+    void onMuscleMapSave() {
+      widget.onMuscleMapSave(_selectedMuscles);
+      context.pop();
     }
 
     return muscles.when(
@@ -33,28 +71,37 @@ class WorkoutMuscleBottomSheetWidget extends ConsumerWidget {
           return const MuscleMapsEmptyWidget();
         }
 
-        return Column(
-          children: [
-            Text(
-              "Select Muscle Maps",
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) => CheckboxListTile(
-                  value: selectedMusclesIdList.contains(data[index].id),
-                  onChanged: (selected) {
-                    onMuscleStatusChanged(data[index], selected);
-                  },
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Select Muscle Maps",
+                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) => CheckboxListTile(
+                    value: _selectedMuscleIds.contains(data[index].id),
+                    onChanged: (selected) {
+                      onMuscleStatusChanged(data[index], selected);
+                    },
+                    title: Text(data[index].name),
+                  ),
                 ),
               ),
-            ),
-          ],
+              OutlinedButton(
+                onPressed: onMuscleMapSave,
+                child: const Text("Save"),
+              ),
+            ],
+          ),
         );
       },
       error: (error, stackTrace) => CustomErrorWidget(text: error.toString()),

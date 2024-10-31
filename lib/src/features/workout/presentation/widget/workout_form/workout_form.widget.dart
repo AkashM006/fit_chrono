@@ -1,7 +1,8 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
-import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/workout_muscle_bottom_sheet.widget.dart';
+import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
+import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_type_field.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,7 +22,6 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
   WorkoutDto _workout = WorkoutDto.init();
-  List<int> _selectedMuscles = [];
 
   bool get isEditMode => widget.workout != null;
 
@@ -41,22 +41,19 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
     });
   }
 
-  void onAddMuscle(MuscleMapDto muscle) {
+  void setMuscles(List<MuscleMapDto> muscles) {
     setState(() {
       _workout = _workout.copyWith(
-        muscles: [..._workout.muscles, muscle],
+        muscles: muscles,
       );
-      _selectedMuscles.add(muscle.id);
     });
   }
 
-  void onMuscleRemove(int muscleId) {
+  void onMuscleDelete(int id) {
     setState(() {
       _workout = _workout.copyWith(
-        muscles:
-            _workout.muscles.where((muscle) => muscle.id != muscleId).toList(),
+        muscles: _workout.muscles.where((muscle) => muscle.id != id).toList(),
       );
-      _selectedMuscles.remove(muscleId);
     });
   }
 
@@ -123,9 +120,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               alignment: Alignment.topLeft,
               child: MuscleMapSelectionField(
                 muscles: _workout.muscles,
-                onAddMuscle: onAddMuscle,
-                onRemoveMuscle: onMuscleRemove,
-                selectedMuscleIds: _selectedMuscles,
+                setMuscles: setMuscles,
               ),
             ),
             const SizedBox(
@@ -137,103 +132,6 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class MuscleMapSelectionField extends StatelessWidget {
-  const MuscleMapSelectionField({
-    super.key,
-    required this.muscles,
-    required this.selectedMuscleIds,
-    required this.onAddMuscle,
-    required this.onRemoveMuscle,
-  });
-
-  final List<MuscleMapDto> muscles;
-  final List<int> selectedMuscleIds;
-  final void Function(MuscleMapDto muscle) onAddMuscle;
-  final void Function(int id) onRemoveMuscle;
-
-  @override
-  Widget build(BuildContext context) {
-    void onMuscleSelected(MuscleMapDto? muscle) {
-      if (muscle == null) return;
-
-      if (selectedMuscleIds.contains(muscle.id)) {
-        onRemoveMuscle(muscle.id);
-      } else {
-        onAddMuscle(muscle);
-      }
-    }
-
-    void onAddMuscleMap() {
-      showModalBottomSheet(
-        context: context,
-        builder: (context) => Container(
-          padding: const EdgeInsets.all(20),
-          width: SizeConfig.safeBlockHorizontal * 100,
-          child: WorkoutMuscleBottomSheetWidget(
-            selectedMusclesIdList: selectedMuscleIds,
-            onMuscleMapSelect: onMuscleSelected,
-          ),
-        ),
-      );
-    }
-
-    void onDeleteMuscleMap() {}
-
-    final widgetsList = [
-      OutlinedButton.icon(
-        onPressed: onAddMuscleMap,
-        icon: const Icon(Icons.add),
-        label: const Text("Add a muscle"),
-      ),
-      ...muscles.map(
-        (muscle) => InputChip(
-          label: Text(muscle.name),
-          onDeleted: onDeleteMuscleMap,
-        ),
-      ),
-    ];
-
-    return Wrap(
-      spacing: 10,
-      runSpacing: 10,
-      children: widgetsList,
-    );
-  }
-}
-
-class MuscleTypeField extends StatelessWidget {
-  const MuscleTypeField({
-    super.key,
-    required this.value,
-    required this.onChanged,
-  });
-
-  final WorkoutMeasureDto value;
-  final void Function(WorkoutMeasureDto? selected) onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: DropdownButtonFormField<WorkoutMeasureDto>(
-        menuMaxHeight: double.infinity,
-        value: value,
-        items: const [
-          DropdownMenuItem(
-            value: WorkoutMeasureDto.reps,
-            child: Text("Reps"),
-          ),
-          DropdownMenuItem(
-            value: WorkoutMeasureDto.time,
-            child: Text("Time"),
-          ),
-        ],
-        onChanged: onChanged,
       ),
     );
   }
