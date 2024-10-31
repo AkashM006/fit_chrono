@@ -4,8 +4,8 @@ import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
-import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form_dialog.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_spinner/custom_spinner.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -101,8 +101,8 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
         showDialog(
           context: context,
-          builder: (context) => MuscleMapFormDialogWidget(
-            isEditMode: isEditMode,
+          builder: (context) => const UnsavedFormDialogWidget(
+            item: "muscle map",
           ),
         );
       },

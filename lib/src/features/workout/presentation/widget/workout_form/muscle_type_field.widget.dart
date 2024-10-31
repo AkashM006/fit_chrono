@@ -16,7 +16,9 @@ class MuscleTypeField extends StatelessWidget {
     return Expanded(
       flex: 1,
       child: DropdownButtonFormField<WorkoutMeasureDto>(
-        menuMaxHeight: double.infinity,
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+        ),
         value: value,
         items: const [
           DropdownMenuItem(

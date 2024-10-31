@@ -1,10 +1,14 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
+import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_type_field.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkoutFormWidget extends ConsumerStatefulWidget {
   const WorkoutFormWidget({
@@ -26,6 +30,8 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
   bool get isEditMode => widget.workout != null;
 
   bool get isSubmitEnabled {
+    if (!isEditMode) return true;
+
     return false;
   }
 
@@ -33,18 +39,18 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
     return _workout.measure == WorkoutMeasureDto.reps;
   }
 
+  bool get canPop {
+    if (isEditMode) return true;
+
+    return _workout.name.isEmpty &&
+        _workout.muscles.isEmpty &&
+        _workout.count == 0;
+  }
+
   void onMeasureChanged(WorkoutMeasureDto? measure) {
     setState(() {
       _workout = _workout.copyWith(
         measure: measure,
-      );
-    });
-  }
-
-  void setMuscles(List<MuscleMapDto> muscles) {
-    setState(() {
-      _workout = _workout.copyWith(
-        muscles: muscles,
       );
     });
   }
@@ -59,11 +65,49 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
 
   void handleSubmit() {
     // todo: Handle submit and validation
+    if (!_formKey.currentState!.validate()) return;
+
+    _formKey.currentState!.save();
+  }
+
+  void setName(String? value) {
+    _workout = _workout.copyWith(
+      name: value,
+    );
+  }
+
+  void setCount(String? value) {
+    final count = int.tryParse(value ?? "");
+
+    _workout = _workout.copyWith(
+      count: count,
+    );
+  }
+
+  void setMuscles(List<MuscleMapDto> muscles) {
+    setState(() {
+      _workout = _workout.copyWith(
+        muscles: muscles,
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        if (canPop) {
+          context.pop();
+          return;
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => const UnsavedFormDialogWidget(item: "workout"),
+        );
+      },
       child: Form(
         key: _formKey,
         child: Column(
@@ -73,6 +117,11 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               decoration: const InputDecoration(
                 label: Text("Enter Name"),
               ),
+              textCapitalization: TextCapitalization.sentences,
+              validator: (value) =>
+                  cannotBeginWithDigitValidator("Name", value),
+              onChanged: setName,
+              onSaved: setName,
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
@@ -90,6 +139,19 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                         decoration: InputDecoration(
                           label: Text(isReps ? "Count" : "Seconds"),
                         ),
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: false,
+                          signed: false,
+                        ),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        validator: (value) => requiredValidator(
+                          isReps ? "Count" : "Seconds",
+                          value,
+                        ),
+                        onChanged: setCount,
+                        onSaved: setCount,
                       ),
                     ),
                     const SizedBox(
@@ -127,7 +189,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               height: 25,
             ),
             FilledButton(
-              onPressed: handleSubmit,
+              onPressed: isSubmitEnabled ? handleSubmit : null,
               child: const Text("Save"),
             ),
           ],

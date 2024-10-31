@@ -1,11 +1,11 @@
-String? requiredValidtor(String name, String? value) {
+String? requiredValidator(String name, String? value) {
   if (value == null || value.isEmpty) return '$name is required';
 
   return null;
 }
 
 String? cannotBeginWithDigitValidator(String name, String? value) {
-  final isEmpty = requiredValidtor(name, value);
+  final isEmpty = requiredValidator(name, value);
 
   if (isEmpty != null) return isEmpty;
 
