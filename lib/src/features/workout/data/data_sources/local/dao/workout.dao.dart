@@ -19,33 +19,38 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
   WorkoutDao(super.key);
 
   Stream<List<WorkoutModel>> watchWorkouts() {
-    final query = select(workouts).join([
-      leftOuterJoin(muscleMapsForWorkouts,
-          muscleMapsForWorkouts.workoutId.equalsExp(workouts.id)),
-      leftOuterJoin(muscleMaps,
-          muscleMapsForWorkouts.muscleMapId.equalsExp(muscleMaps.id)),
-    ]);
+    try {
+      final query = select(workouts).join([
+        leftOuterJoin(muscleMapsForWorkouts,
+            muscleMapsForWorkouts.workoutId.equalsExp(workouts.id)),
+        leftOuterJoin(muscleMaps,
+            muscleMapsForWorkouts.muscleMapId.equalsExp(muscleMaps.id)),
+      ]);
 
-    return query.watch().map(
-      (rows) {
-        final groupedWorkouts = <int, WorkoutModel>{};
+      return query.watch().map(
+        (rows) {
+          final groupedWorkouts = <int, WorkoutModel>{};
 
-        for (final row in rows) {
-          final workout = row.readTable(workouts);
-          final muscleMap = row.readTable(muscleMaps);
+          for (final row in rows) {
+            final workout = row.readTable(workouts);
+            final muscleMap = row.readTable(muscleMaps);
 
-          if (!groupedWorkouts.containsKey(workout.id)) {
-            groupedWorkouts[workout.id] = WorkoutModel.fromDbModel(workout);
+            if (!groupedWorkouts.containsKey(workout.id)) {
+              groupedWorkouts[workout.id] = WorkoutModel.fromDbModel(workout);
+            }
+
+            groupedWorkouts[workout.id]!
+                .muscles
+                .add(MuscleMapModel.fromDbModel(muscleMap));
           }
 
-          groupedWorkouts[workout.id]!
-              .muscles
-              .add(MuscleMapModel.fromDbModel(muscleMap));
-        }
-
-        return groupedWorkouts.values.toList();
-      },
-    );
+          return groupedWorkouts.values.toList();
+        },
+      );
+    } catch (e) {
+      final errorMsg = somethingWentWrongMsg("getting your workouts");
+      throw AppError(message: errorMsg);
+    }
   }
 
   Future<void> addWorkout(WorkoutModel workout) async {
