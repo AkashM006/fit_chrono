@@ -6,10 +6,12 @@ class MuscleTypeField extends StatelessWidget {
     super.key,
     required this.value,
     required this.onChanged,
+    this.isEnabled = true,
   });
 
   final WorkoutMeasureDto value;
   final void Function(WorkoutMeasureDto? selected) onChanged;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class MuscleTypeField extends StatelessWidget {
             child: Text("Time"),
           ),
         ],
-        onChanged: onChanged,
+        onChanged: !isEnabled ? null : onChanged,
       ),
     );
   }

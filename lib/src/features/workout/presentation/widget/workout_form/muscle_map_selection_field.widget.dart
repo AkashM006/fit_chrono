@@ -8,10 +8,12 @@ class MuscleMapSelectionField extends StatelessWidget {
     super.key,
     required this.muscles,
     required this.setMuscles,
+    this.isEnabled = true,
   });
 
   final List<MuscleMapDto> muscles;
   final void Function(List<MuscleMapDto> muscles) setMuscles;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class MuscleMapSelectionField extends StatelessWidget {
 
     final widgetsList = [
       OutlinedButton.icon(
-        onPressed: onAddMuscleMap,
+        onPressed: isEnabled ? onAddMuscleMap : null,
         icon: const Icon(Icons.add),
         label: const Text("Add muscle maps"),
       ),

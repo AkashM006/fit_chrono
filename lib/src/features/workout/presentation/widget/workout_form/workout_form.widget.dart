@@ -1,8 +1,11 @@
 import 'package:fit_chrono/src/core/constants/size.dart';
+import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/button_loader/button_loader.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/add_workout/add_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_type_field.widget.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +67,15 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
   }
 
   void handleSubmit() {
-    // todo: Handle submit and validation
     if (!_formKey.currentState!.validate()) return;
 
     _formKey.currentState!.save();
+
+    if (isEditMode) {
+      return;
+    }
+
+    ref.read(addWorkoutProvider.notifier).go(_workout);
   }
 
   void setName(String? value) {
@@ -94,10 +102,17 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final addWorkoutStatus = ref.watch(addWorkoutProvider);
+
+    final isAddLoading = addWorkoutStatus is DataLoading;
+
+    final areTextFieldsEnabled = !isAddLoading;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
+        _formKey.currentState!.save();
         if (canPop) {
           context.pop();
           return;
@@ -120,8 +135,8 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               textCapitalization: TextCapitalization.sentences,
               validator: (value) =>
                   cannotBeginWithDigitValidator("Name", value),
-              onChanged: setName,
               onSaved: setName,
+              enabled: areTextFieldsEnabled,
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
@@ -150,8 +165,8 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                           isReps ? "Count" : "Seconds",
                           value,
                         ),
-                        onChanged: setCount,
                         onSaved: setCount,
+                        enabled: areTextFieldsEnabled,
                       ),
                     ),
                     const SizedBox(
@@ -160,6 +175,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                     MuscleTypeField(
                       value: _workout.measure,
                       onChanged: onMeasureChanged,
+                      isEnabled: areTextFieldsEnabled,
                     ),
                   ],
                 ),
@@ -183,14 +199,17 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               child: MuscleMapSelectionField(
                 muscles: _workout.muscles,
                 setMuscles: setMuscles,
+                isEnabled: areTextFieldsEnabled,
               ),
             ),
             const SizedBox(
               height: 25,
             ),
             FilledButton(
-              onPressed: isSubmitEnabled ? handleSubmit : null,
-              child: const Text("Save"),
+              onPressed: isSubmitEnabled && !isAddLoading ? handleSubmit : null,
+              child: isAddLoading
+                  ? const ButtonLoaderWidget()
+                  : const Text("Save"),
             ),
           ],
         ),

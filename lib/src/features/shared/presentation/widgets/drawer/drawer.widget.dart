@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 
 final routeItems = [
   {
-    'emoji': "\u{1F4AA}",
+    // 'emoji': "\u{1F4AA}",
+    'emoji': "💪",
     'title': "Muscle Maps",
     'path': PAGES.muscleMaps.path,
   },
   {
-    'emoji': "\u{1F3CB}",
+    // 'emoji': "\u{1F3CB}",
+    'emoji': "🏋️",
     'title': "Workouts",
     'path': PAGES.workouts.path,
   }

@@ -93,6 +93,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
+        _formKey.currentState!.save();
         if ((!isEditMode && _name.isEmpty) ||
             (isEditMode && _name == widget.muscleMap!.name)) {
           context.pop();
@@ -117,11 +118,6 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
               ),
               onSaved: (newValue) {
                 _name = newValue!;
-              },
-              onChanged: (value) {
-                setState(() {
-                  _name = value;
-                });
               },
               validator: (value) =>
                   cannotBeginWithDigitValidator("Name", value),
