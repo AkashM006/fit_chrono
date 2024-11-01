@@ -1,38 +1,17 @@
-import 'package:fit_chrono/src/core/constants/app_offsets.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/empty_list/empty_list.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class WorkoutsEmptyWidget extends StatelessWidget {
   const WorkoutsEmptyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void onAddWorkout() {
-      context.push(PAGES.workoutForm.path);
-    }
-
-    return Center(
-      child: ConstrainedBox(
-        constraints: AppOffsets.messageWidthConstaint,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Your fitness journey is waiting to be written! 💥 Add some workouts and make them count!",
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(fontStyle: FontStyle.italic),
-            ),
-            TextButton(
-              onPressed: onAddWorkout,
-              child: const Text("Add Workout"),
-            ),
-          ],
-        ),
-      ),
+    return const EmptyListWidget(
+      text:
+          "Your fitness journey is waiting to be written! 💥 Add some workouts and make them count!",
+      buttonText: "Add Workout",
+      targetPage: PAGES.workoutForm,
     );
   }
 }
