@@ -19,7 +19,7 @@ class WorkoutsEmptyWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Your workout space is all set - let's build it up",
+              "Your fitness journey is waiting to be written! 💥 Add some workouts and make them count!",
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme

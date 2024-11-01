@@ -22,7 +22,7 @@ class DeleteMuscleMap extends _$DeleteMuscleMap {
 
     state = result.fold(
       onSuccess: (data) => DataSuccess<String>(
-        "Deleted your muscle map. Time for a fresh start!",
+        "Deleted your muscle map. Time for a fresh start! 🌱",
       ),
       onFailure: (error) => DataFailure(error),
     );

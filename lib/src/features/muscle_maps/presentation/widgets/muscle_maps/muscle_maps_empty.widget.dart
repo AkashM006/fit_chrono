@@ -20,7 +20,7 @@ class MuscleMapsEmptyWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "You have no muscle maps",
+              "Your journey starts here! 🏋️‍♂️💥 Add your first muscle map to crush those goals!",
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme

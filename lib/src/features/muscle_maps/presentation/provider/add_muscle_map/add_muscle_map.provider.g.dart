@@ -6,7 +6,7 @@ part of 'add_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addMuscleMapHash() => r'29c5c69393cd8b9e6be343d4c78b240b7cf560c5';
+String _$addMuscleMapHash() => r'1ae7a8323ea06abed66ef8793346afcc25b05949';
 
 /// See also [AddMuscleMap].
 @ProviderFor(AddMuscleMap)
