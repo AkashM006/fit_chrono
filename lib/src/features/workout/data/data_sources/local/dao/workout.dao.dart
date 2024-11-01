@@ -57,11 +57,7 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
     try {
       await transaction(() async {
         final workoutId = await into(workouts).insert(
-          WorkoutsCompanion.insert(
-            name: workout.name,
-            repitition: workout.count,
-            repititionType: workout.measure.toString(),
-          ),
+          workout.toCompanion(),
         );
 
         if (workout.muscles.isEmpty) return;

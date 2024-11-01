@@ -29,9 +29,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> addMuscleMap(MuscleMapModel muscleMap) async {
     try {
-      await into(muscleMaps).insert(MuscleMapsCompanion(
-        name: Value(muscleMap.name),
-      ));
+      await into(muscleMaps).insert(muscleMap.toCompanion());
     } catch (e) {
       final errorMsg = somethingWentWrongMsg("addding your muscle map");
       throw AppError(message: errorMsg);
@@ -82,11 +80,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
             ..where(
               (tbl) => tbl.id.equals(id),
             ))
-          .write(
-        MuscleMapsCompanion(
-          name: Value(muscleMap.name),
-        ),
-      );
+          .write(muscleMap.toCompanion());
     } catch (e) {
       if (e is AppError) rethrow;
       final errorMsg = somethingWentWrongMsg("updating your muscle map");

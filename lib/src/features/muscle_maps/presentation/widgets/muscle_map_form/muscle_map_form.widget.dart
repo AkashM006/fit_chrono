@@ -49,7 +49,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
       return hasEdited && _name.isNotEmpty;
     }
 
-    return _name.isNotEmpty;
+    return true;
   }
 
   void handleSubmit() {
@@ -89,6 +89,12 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
     final isLoading = isEditMode ? isUpdateLoading : isAddLoading;
 
+    void setName(String value) {
+      setState(() {
+        _name = value;
+      });
+    }
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -119,6 +125,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
               onSaved: (newValue) {
                 _name = newValue!;
               },
+              onChanged: isEditMode ? setName : null,
               validator: (value) =>
                   cannotBeginWithDigitValidator("Name", value),
               maxLength: 24,

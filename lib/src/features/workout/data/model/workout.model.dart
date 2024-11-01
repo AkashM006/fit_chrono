@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dart';
@@ -56,6 +57,15 @@ class WorkoutModel {
       muscles: muscles.map((muscle) => muscle.toEntity()).toList(),
       measure: WorkoutMeasureModelMapper.toEntity(measure),
       count: count,
+    );
+  }
+
+  WorkoutsCompanion toCompanion() {
+    return WorkoutsCompanion(
+      id: Value(id),
+      name: Value(name),
+      repitition: Value(count),
+      repititionType: Value(measure.toString()),
     );
   }
 }
