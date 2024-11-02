@@ -16,7 +16,6 @@ class MuscleMapFormWidget extends ConsumerStatefulWidget {
     this.muscleMap,
   });
 
-  /// Provided only in case of edit
   final MuscleMapDto? muscleMap;
 
   @override
@@ -27,7 +26,7 @@ class MuscleMapFormWidget extends ConsumerStatefulWidget {
 class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
-  String _name = "";
+  MuscleMapDto _muscleMap = MuscleMapDto.init();
 
   Widget loaderWidget = SizedBox(
     height: SizeConfig.safeBlockVertical * 5,
@@ -41,15 +40,20 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   bool get hasEdited {
     if (!isEditMode) return false;
 
-    return widget.muscleMap!.name != _name;
+    return widget.muscleMap!.name != _muscleMap.name;
   }
 
   bool get isSubmitEnabled {
     if (isEditMode) {
-      return hasEdited && _name.isNotEmpty;
+      return hasEdited && _muscleMap.name.isNotEmpty;
     }
 
     return true;
+  }
+
+  bool get canPop {
+    return (!isEditMode && _muscleMap.name.isEmpty) ||
+        (isEditMode && _muscleMap.name == widget.muscleMap!.name);
   }
 
   void handleSubmit() {
@@ -58,12 +62,12 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     _formKey.currentState!.save();
 
     if (isEditMode) {
-      final newMuscleMap = widget.muscleMap!.copyWith(name: _name);
+      final newMuscleMap = widget.muscleMap!.copyWith(name: _muscleMap.name);
       ref.read(updateMuscleMapProvider.notifier).go(newMuscleMap);
       return;
     }
 
-    final newMuscleMap = MuscleMapDto(name: _name);
+    final newMuscleMap = MuscleMapDto(name: _muscleMap.name);
 
     ref.read(addMuscleMapProvider.notifier).go(newMuscleMap);
   }
@@ -71,7 +75,9 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   @override
   void initState() {
     super.initState();
-    _name = isEditMode ? widget.muscleMap!.name : "";
+    _muscleMap = _muscleMap.copyWith(
+      name: isEditMode ? widget.muscleMap!.name : "",
+    );
   }
 
   @override
@@ -91,7 +97,9 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
     void setName(String value) {
       setState(() {
-        _name = value;
+        _muscleMap = _muscleMap.copyWith(
+          name: isEditMode ? widget.muscleMap!.name : "",
+        );
       });
     }
 
@@ -100,8 +108,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         _formKey.currentState!.save();
-        if ((!isEditMode && _name.isEmpty) ||
-            (isEditMode && _name == widget.muscleMap!.name)) {
+        if (canPop) {
           context.pop();
           return;
         }
@@ -118,12 +125,12 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
         child: Column(
           children: [
             TextFormField(
-              initialValue: _name,
+              initialValue: _muscleMap.name,
               decoration: const InputDecoration(
                 label: Text("Enter Name"),
               ),
               onSaved: (newValue) {
-                _name = newValue!;
+                _muscleMap = _muscleMap.copyWith(name: newValue);
               },
               onChanged: isEditMode ? setName : null,
               validator: (value) =>

@@ -9,12 +9,12 @@ class WorkoutDto {
   int _count;
 
   WorkoutDto({
-    int? id,
+    int id = -1,
     required String name,
     required List<MuscleMapDto> muscles,
     required WorkoutMeasureDto measure,
     required int count,
-  })  : _id = id ?? -1,
+  })  : _id = id,
         _name = name,
         _muscles = muscles,
         _measure = measure,

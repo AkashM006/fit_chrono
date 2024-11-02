@@ -23,6 +23,12 @@ class MuscleMapDto {
     );
   }
 
+  factory MuscleMapDto.init() {
+    return MuscleMapDto(
+      name: "",
+    );
+  }
+
   factory MuscleMapDto.fromEntity(MuscleMapEntity entity) {
     return MuscleMapDto(
       id: entity.id,
