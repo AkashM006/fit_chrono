@@ -30,6 +30,12 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
       () => _workoutService.getWorkout(id),
     );
   }
+
+  @override
+  Future<DataState<void>> updateWorkout(WorkoutEntity workout) {
+    // TODO: implement updateWorkout
+    throw UnimplementedError();
+  }
 }
 
 @riverpod
