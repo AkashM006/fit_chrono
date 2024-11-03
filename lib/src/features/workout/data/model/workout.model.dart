@@ -68,6 +68,10 @@ class WorkoutModel {
       repititionType: Value(measure.toString()),
     );
   }
+
+  void setMuscles(List<MuscleMapModel> muscles) {
+    _muscles = muscles;
+  }
 }
 
 enum WorkoutMeasureModel {

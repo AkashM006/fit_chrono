@@ -80,4 +80,40 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
       throw AppError(message: errorMsg);
     }
   }
+
+  Future<WorkoutModel> getWorkout(int id) async {
+    try {
+      final query = select(workouts).join([
+        leftOuterJoin(muscleMapsForWorkouts,
+            muscleMapsForWorkouts.workoutId.equalsExp(workouts.id)),
+        leftOuterJoin(muscleMaps,
+            muscleMapsForWorkouts.muscleMapId.equalsExp(muscleMaps.id)),
+      ])
+        ..where(workouts.id.equals(id));
+
+      final result = await query.get();
+
+      if (result.isEmpty) {
+        final errorMsg = doesNotExistMsg("workout");
+        throw AppError(message: errorMsg);
+      }
+
+      final workout = result.first.readTable(workouts);
+      final muscles = result.map((row) => row.readTable(muscleMaps)).toList();
+
+      final resultWorkout = WorkoutModel.fromDbModel(workout);
+      final muscleModels =
+          muscles.map((muscle) => MuscleMapModel.fromDbModel(muscle)).toList();
+
+      resultWorkout.setMuscles(muscleModels);
+
+      return resultWorkout;
+    } catch (e) {
+      if (e is AppError) {
+        rethrow;
+      }
+      final errorMsg = somethingWentWrongMsg("getting your workout");
+      throw AppError(message: errorMsg);
+    }
+  }
 }
