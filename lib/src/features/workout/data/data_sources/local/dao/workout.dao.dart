@@ -33,11 +33,13 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
 
           for (final row in rows) {
             final workout = row.readTable(workouts);
-            final muscleMap = row.readTable(muscleMaps);
+            final muscleMap = row.readTableOrNull(muscleMaps);
 
             if (!groupedWorkouts.containsKey(workout.id)) {
               groupedWorkouts[workout.id] = WorkoutModel.fromDbModel(workout);
             }
+
+            if (muscleMap == null) continue;
 
             groupedWorkouts[workout.id]!
                 .muscles
@@ -99,7 +101,15 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
       }
 
       final workout = result.first.readTable(workouts);
-      final muscles = result.map((row) => row.readTable(muscleMaps)).toList();
+      final List<MuscleMap> muscles = [];
+
+      for (var row in result) {
+        final muscleMap = row.readTableOrNull(muscleMaps);
+
+        if (muscleMap != null) {
+          muscles.add(muscleMap);
+        }
+      }
 
       final resultWorkout = WorkoutModel.fromDbModel(workout);
       final muscleModels =

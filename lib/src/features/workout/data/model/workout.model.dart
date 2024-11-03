@@ -62,7 +62,6 @@ class WorkoutModel {
 
   WorkoutsCompanion toCompanion() {
     return WorkoutsCompanion(
-      id: Value(id),
       name: Value(name),
       repitition: Value(count),
       repititionType: Value(measure.toString()),

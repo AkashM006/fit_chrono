@@ -29,6 +29,8 @@ class MuscleMapDetailScreen extends ConsumerWidget {
       context.pushReplacement(PAGES.muscleMapForm.path);
     }
 
+    final messageConstraints = AppOffsets.messageWidthConstaint;
+
     if (id == null) {
       return Scaffold(
         appBar: AppBar(
@@ -36,9 +38,7 @@ class MuscleMapDetailScreen extends ConsumerWidget {
         ),
         body: Center(
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: SizeConfig.safeBlockHorizontal * 70,
-            ),
+            constraints: messageConstraints,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

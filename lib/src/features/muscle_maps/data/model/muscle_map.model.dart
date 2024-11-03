@@ -39,7 +39,6 @@ class MuscleMapModel {
 
   MuscleMapsCompanion toCompanion() {
     return MuscleMapsCompanion(
-      id: Value(id),
       name: Value(name),
     );
   }

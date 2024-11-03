@@ -1,6 +1,8 @@
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workouts/workouts_empty.widget.dart';
+import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkoutsListWidget extends StatelessWidget {
   const WorkoutsListWidget({
@@ -16,10 +18,21 @@ class WorkoutsListWidget extends StatelessWidget {
       return const WorkoutsEmptyWidget();
     }
 
-    return ListView.builder(
+    void onWorkoutDetail(int id) {
+      context.pushNamed(PAGES.workoutDetail.name, queryParameters: {
+        'id': id.toString(),
+      });
+    }
+
+    return ListView.separated(
+      separatorBuilder: (context, index) => Divider(
+        color: Theme.of(context).colorScheme.surface,
+      ),
       itemCount: workouts.length,
       itemBuilder: (context, index) => ListTile(
+        onTap: () => onWorkoutDetail(workouts[index].id),
         title: Text(workouts[index].name),
+        trailing: const Icon(Icons.arrow_right),
       ),
     );
   }
