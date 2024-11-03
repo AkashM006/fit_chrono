@@ -31,12 +31,9 @@ class WorkoutService {
 
   Future<void> updateWorkout(
     WorkoutEntity workout,
-    bool hasUpdatedMuscles,
   ) async {
-    await _appDatabase.workoutDao.updateWorkout(
-      WorkoutModel.fromEntity(workout),
-      hasUpdatedMuscles,
-    );
+    await _appDatabase.workoutDao
+        .updateWorkout(WorkoutModel.fromEntity(workout));
   }
 }
 

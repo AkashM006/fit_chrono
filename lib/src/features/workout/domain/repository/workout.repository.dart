@@ -5,8 +5,5 @@ abstract class WorkoutRepository {
   Stream<List<WorkoutEntity>> watchWorkouts();
   Future<DataState<void>> addWorkout(WorkoutEntity workout);
   Future<DataState<WorkoutEntity>> getWorkout(int id);
-  Future<DataState<void>> updateWorkout(
-    WorkoutEntity workout,
-    bool hasUpdatedMuscles,
-  );
+  Future<DataState<void>> updateWorkout(WorkoutEntity workout);
 }

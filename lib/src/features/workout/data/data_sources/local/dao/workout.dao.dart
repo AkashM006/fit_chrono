@@ -129,7 +129,6 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
 
   Future<void> updateWorkout(
     WorkoutModel workout,
-    bool hasUpdatedMuscles,
   ) async {
     try {
       final query = (select(workouts)
@@ -153,7 +152,7 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
               ))
             .write(workout.toCompanion());
 
-        if (!hasUpdatedMuscles) return;
+        if (workout.muscles.isEmpty) return;
 
         await (delete(muscleMapsForWorkouts)
               ..where(

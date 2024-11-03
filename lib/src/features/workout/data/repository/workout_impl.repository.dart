@@ -34,10 +34,9 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
   @override
   Future<DataState<void>> updateWorkout(
     WorkoutEntity workout,
-    bool hasUpdatedMuscles,
   ) {
     return safeExecute(
-      () => _workoutService.updateWorkout(workout, hasUpdatedMuscles),
+      () => _workoutService.updateWorkout(workout),
     );
   }
 }
