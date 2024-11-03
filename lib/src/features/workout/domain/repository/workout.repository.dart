@@ -4,4 +4,5 @@ import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dar
 abstract class WorkoutRepository {
   Stream<List<WorkoutEntity>> watchWorkouts();
   Future<DataState<void>> addWorkout(WorkoutEntity workout);
+  Future<DataState<WorkoutEntity>> getWorkout(int id);
 }
