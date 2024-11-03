@@ -28,6 +28,16 @@ class WorkoutService {
     final result = await _appDatabase.workoutDao.getWorkout(id);
     return result.toEntity();
   }
+
+  Future<void> updateWorkout(
+    WorkoutEntity workout,
+    bool hasUpdatedMuscles,
+  ) async {
+    await _appDatabase.workoutDao.updateWorkout(
+      WorkoutModel.fromEntity(workout),
+      hasUpdatedMuscles,
+    );
+  }
 }
 
 @riverpod

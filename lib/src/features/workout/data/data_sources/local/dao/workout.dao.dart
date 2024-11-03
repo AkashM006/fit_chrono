@@ -126,4 +126,58 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
       throw AppError(message: errorMsg);
     }
   }
+
+  Future<void> updateWorkout(
+    WorkoutModel workout,
+    bool hasUpdatedMuscles,
+  ) async {
+    try {
+      final query = (select(workouts)
+        ..where(
+          (tbl) => tbl.id.equals(workout.id),
+        ));
+
+      final result = await query.getSingleOrNull();
+
+      if (result == null) {
+        final errorMsg = doesNotExistMsg("workout you're trying update");
+        throw AppError(
+          message: errorMsg,
+        );
+      }
+
+      await transaction(() async {
+        await (update(workouts)
+              ..where(
+                (tbl) => tbl.id.equals(workout.id),
+              ))
+            .write(workout.toCompanion());
+
+        if (!hasUpdatedMuscles) return;
+
+        await (delete(muscleMapsForWorkouts)
+              ..where(
+                (tbl) => tbl.workoutId.equals(workout.id),
+              ))
+            .go();
+
+        await batch((batch) {
+          batch.insertAll(
+              muscleMapsForWorkouts,
+              workout.muscles
+                  .map(
+                    (muscle) => MuscleMapsForWorkoutsCompanion.insert(
+                      workoutId: workout.id,
+                      muscleMapId: muscle.id,
+                    ),
+                  )
+                  .toList());
+        });
+      });
+    } catch (e) {
+      if (e is AppError) rethrow;
+      final errorMsg = somethingWentWrongMsg("updating your workout");
+      throw AppError(message: errorMsg);
+    }
+  }
 }
