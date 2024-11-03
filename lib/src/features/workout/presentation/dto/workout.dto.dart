@@ -75,6 +75,27 @@ class WorkoutDto {
       count: count ?? this.count,
     );
   }
+
+  @override
+  bool operator ==(covariant WorkoutDto other) {
+    if (name != other.name) return false;
+    if (muscles.length != other.muscles.length) return false;
+    final length = muscles.length;
+
+    for (var i = 0; i < length; i++) {
+      if (muscles[i] != other.muscles[i]) return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    var hashCode = id.hashCode ^ name.hashCode;
+    for (var muscle in muscles) {
+      hashCode = hashCode ^ muscle.hashCode;
+    }
+    return hashCode;
+  }
 }
 
 enum WorkoutMeasureDto {

@@ -1,4 +1,9 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/get_workout/get_workout.provider.dart';
+import 'package:fit_chrono/src/features/workout/presentation/widget/workout_detail/workout_detail_appbar.widget.dart';
+import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/workout_form.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,9 +37,23 @@ class WorkoutDetailScreen extends ConsumerWidget {
       );
     }
 
-    return const Scaffold(
-      body: Center(
-        child: Text("Detail"),
+    final workout = ref.watch(getWorkoutProvider(id!));
+
+    return Scaffold(
+      appBar: CustomAppbarWidget(
+        asyncData: workout,
+        builder: (context, data) => WorkoutDetailAppbarWidget(
+          workout: data,
+        ),
+      ),
+      body: AsyncValueBuilderWidget(
+        asyncValue: workout,
+        builder: (context, data) => SingleChildScrollView(
+          padding: AppOffsets.screenPadding,
+          child: WorkoutFormWidget(
+            workout: data,
+          ),
+        ),
       ),
     );
   }

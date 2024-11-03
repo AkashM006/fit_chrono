@@ -32,22 +32,28 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
 
   bool get isEditMode => widget.workout != null;
 
-  bool get isSubmitEnabled {
-    if (!isEditMode) return true;
-
-    return false;
-  }
+  bool get isSubmitEnabled => isEditMode ? (widget.workout != _workout) : true;
 
   bool get isReps {
     return _workout.measure == WorkoutMeasureDto.reps;
   }
 
   bool get canPop {
-    if (isEditMode) return true;
+    if (isEditMode) {
+      return widget.workout == _workout;
+    }
 
     return _workout.name.isEmpty &&
         _workout.muscles.isEmpty &&
         _workout.count == 0;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (isEditMode) {
+      _workout = widget.workout!;
+    }
   }
 
   void onMeasureChanged(WorkoutMeasureDto? measure) {
@@ -137,6 +143,13 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                   cannotBeginWithDigitValidator("Name", value),
               onSaved: setName,
               enabled: areTextFieldsEnabled,
+              onChanged: isEditMode
+                  ? (value) {
+                      setState(() {
+                        setName(value);
+                      });
+                    }
+                  : null,
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
@@ -151,6 +164,9 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                     Expanded(
                       flex: 2,
                       child: TextFormField(
+                        initialValue: _workout.count == 0
+                            ? null
+                            : _workout.count.toString(),
                         decoration: InputDecoration(
                           label: Text(isReps ? "Count" : "Seconds"),
                         ),
@@ -166,6 +182,13 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                           value,
                         ),
                         onSaved: setCount,
+                        onChanged: isEditMode
+                            ? (value) {
+                                setState(() {
+                                  setCount(value);
+                                });
+                              }
+                            : null,
                         enabled: areTextFieldsEnabled,
                       ),
                     ),

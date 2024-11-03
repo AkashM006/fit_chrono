@@ -42,4 +42,12 @@ class MuscleMapDto {
       name: name,
     );
   }
+
+  @override
+  bool operator ==(covariant MuscleMapDto other) {
+    return id == other.id && name == other.name;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode;
 }
