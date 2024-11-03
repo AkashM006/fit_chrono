@@ -1,11 +1,15 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
+import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/get_workout/get_workout.provider.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_detail/workout_detail_appbar.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/workout_form.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkoutDetailScreen extends ConsumerWidget {
   const WorkoutDetailScreen({
@@ -38,6 +42,22 @@ class WorkoutDetailScreen extends ConsumerWidget {
     }
 
     final workout = ref.watch(getWorkoutProvider(id!));
+
+    ref.listen(
+      updateWorkoutProvider,
+      (previous, next) {
+        next?.fold(
+          onSuccess: (data) {
+            showSnackBar(context, data);
+            context.pop();
+          },
+          onFailure: (error) => showSnackBar(
+            context,
+            error.toString(),
+          ),
+        );
+      },
+    );
 
     return Scaffold(
       appBar: CustomAppbarWidget(

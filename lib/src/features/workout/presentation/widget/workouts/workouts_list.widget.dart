@@ -24,10 +24,7 @@ class WorkoutsListWidget extends StatelessWidget {
       });
     }
 
-    return ListView.separated(
-      separatorBuilder: (context, index) => Divider(
-        color: Theme.of(context).colorScheme.surface,
-      ),
+    return ListView.builder(
       itemCount: workouts.length,
       itemBuilder: (context, index) => ListTile(
         onTap: () => onWorkoutDetail(workouts[index].id),
