@@ -5,6 +5,7 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_mu
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_description.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
+import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +21,7 @@ class MuscleMapFormScreen extends ConsumerWidget {
         next?.on(
           success: (data) {
             showSnackBar(context, data);
-            context.pop();
+            context.pushReplacement(PAGES.muscleMapForm.path);
           },
           failed: (error) {
             showSnackBar(context, error.toString());

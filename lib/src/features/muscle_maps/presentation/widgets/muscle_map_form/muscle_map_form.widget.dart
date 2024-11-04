@@ -83,6 +83,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   @override
   void dispose() {
     super.dispose();
+    print("Disposed form widget");
   }
 
   @override
