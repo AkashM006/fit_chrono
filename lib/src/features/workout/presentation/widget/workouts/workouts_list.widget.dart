@@ -25,12 +25,26 @@ class WorkoutsListWidget extends StatelessWidget {
     }
 
     return ListView.builder(
-      itemCount: workouts.length,
-      itemBuilder: (context, index) => ListTile(
-        onTap: () => onWorkoutDetail(workouts[index].id),
-        title: Text(workouts[index].name),
-        trailing: const Icon(Icons.arrow_right),
-      ),
-    );
+        itemCount: workouts.length,
+        itemBuilder: (context, index) {
+          final workout = workouts[index];
+
+          final muscles = workout.muscles
+              .take(3)
+              .map((muscle) => muscle.name)
+              .toList()
+              .join(', ');
+
+          return ListTile(
+            onTap: () => onWorkoutDetail(workout.id),
+            title: Text(workout.name),
+            subtitle: Text(
+              muscles,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: const Icon(Icons.arrow_right),
+          );
+        });
   }
 }
