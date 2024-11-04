@@ -41,7 +41,7 @@ class MuscleMapSelectionField extends StatelessWidget {
       OutlinedButton.icon(
         onPressed: isEnabled ? onAddMuscleMap : null,
         icon: const Icon(Icons.add),
-        label: const Text("Add muscle maps"),
+        label: const Text("Link muscle maps"),
       ),
       ...muscles.map(
         (muscle) => InputChip(

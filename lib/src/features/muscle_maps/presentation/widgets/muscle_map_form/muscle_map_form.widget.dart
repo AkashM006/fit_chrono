@@ -135,7 +135,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
               onChanged: isEditMode ? setName : null,
               validator: (value) =>
                   cannotBeginWithDigitValidator("Name", value),
-              maxLength: 24,
+              maxLength: 32,
               enabled: !isLoading,
             ),
             FilledButton(

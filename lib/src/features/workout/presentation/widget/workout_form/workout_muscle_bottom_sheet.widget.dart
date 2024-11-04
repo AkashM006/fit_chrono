@@ -2,6 +2,7 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/muscle_maps.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_maps/muscle_maps_empty.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
+import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -64,6 +65,10 @@ class _WorkoutMuscleBottomSheetWidgetState
       context.pop();
     }
 
+    void onAddMuscleMap() {
+      context.push(PAGES.muscleMapForm.path);
+    }
+
     return AsyncValueBuilderWidget(
       asyncValue: muscles,
       builder: (context, data) {
@@ -80,6 +85,14 @@ class _WorkoutMuscleBottomSheetWidgetState
                 "Select Muscle Maps",
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              OutlinedButton.icon(
+                onPressed: onAddMuscleMap,
+                icon: const Icon(Icons.add),
+                label: const Text("Add Muscle Map"),
               ),
               const SizedBox(
                 height: 20,

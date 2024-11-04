@@ -152,6 +152,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                       });
                     }
                   : null,
+              maxLength: 32,
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
