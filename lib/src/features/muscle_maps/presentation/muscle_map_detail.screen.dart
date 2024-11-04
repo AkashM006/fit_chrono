@@ -65,13 +65,12 @@ class MuscleMapDetailScreen extends ConsumerWidget {
     ref.listen(
       updateMuscleMapProvider,
       (previous, next) {
-        if (next == null || next.isLoading) return;
-        next.fold(
-          onSuccess: (data) {
+        next?.on(
+          success: (data) {
             showSnackBar(context, data);
             context.pop();
           },
-          onFailure: (error) {
+          failed: (error) {
             showSnackBar(context, error.toString());
           },
         );
@@ -81,12 +80,12 @@ class MuscleMapDetailScreen extends ConsumerWidget {
     ref.listen(
       deleteMuscleMapProvider,
       (previous, next) {
-        next?.fold(
-          onSuccess: (data) {
+        next?.on(
+          success: (data) {
             showSnackBar(context, data);
             context.pop();
           },
-          onFailure: (error) {
+          failed: (error) {
             showSnackBar(context, error.toString());
           },
         );

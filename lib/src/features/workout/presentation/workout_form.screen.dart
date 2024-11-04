@@ -17,12 +17,12 @@ class WorkoutFormScreen extends ConsumerWidget {
     ref.listen(
       addWorkoutProvider,
       (previous, next) {
-        next?.fold(
-          onSuccess: (data) {
+        next?.on(
+          success: (data) {
             showSnackBar(context, data);
             context.pop();
           },
-          onFailure: (error) {
+          failed: (error) {
             showSnackBar(context, error.toString());
           },
         );
