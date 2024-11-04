@@ -37,7 +37,11 @@ class WorkoutsListWidget extends StatelessWidget {
 
           return ListTile(
             onTap: () => onWorkoutDetail(workout.id),
-            title: Text(workout.name),
+            title: Text(
+              workout.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             subtitle: Text(
               muscles,
               maxLines: 1,

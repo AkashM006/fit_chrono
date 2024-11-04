@@ -92,7 +92,11 @@ class _WorkoutMuscleBottomSheetWidgetState
                     onChanged: (selected) {
                       onMuscleStatusChanged(data[index], selected);
                     },
-                    title: Text(data[index].name),
+                    title: Text(
+                      data[index].name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
