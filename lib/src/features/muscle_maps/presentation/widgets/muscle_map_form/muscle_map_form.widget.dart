@@ -98,7 +98,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     void setName(String value) {
       setState(() {
         _muscleMap = _muscleMap.copyWith(
-          name: isEditMode ? widget.muscleMap!.name : "",
+          name: value,
         );
       });
     }
