@@ -1,8 +1,7 @@
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/muscle_maps.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_maps/muscle_maps_list.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,14 +29,9 @@ class MuscleMapScreen extends ConsumerWidget {
         onPressed: onNewMuscleMapAdded,
         child: const Icon(Icons.add),
       ),
-      body: muscleMaps.when(
-        data: (data) => MuscleMapsListWidget(muscleMaps: data),
-        error: (error, stackTrace) => Center(
-          child: CustomErrorWidget(text: error.toString()),
-        ),
-        loading: () => const Center(
-          child: LoaderWidget(),
-        ),
+      body: AsyncValueBuilderWidget(
+        asyncValue: muscleMaps,
+        builder: (context, data) => MuscleMapsListWidget(muscleMaps: data),
       ),
     );
   }

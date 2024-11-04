@@ -6,9 +6,8 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/get_mu
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map/muscle_map_appbar.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
@@ -100,26 +99,17 @@ class MuscleMapDetailScreen extends ConsumerWidget {
         asyncData: muscleMap,
         builder: (context, data) => MuscleMapAppbarWidget(muscleMap: data),
       ),
-      body: muscleMap.when(
-        data: (data) {
-          return SingleChildScrollView(
-            padding: AppOffsets.screenPadding,
-            child: ConstrainedBox(
-              constraints: AppOffsets.formWidthConstraint,
-              child: Column(
-                children: [
-                  MuscleMapFormWidget(
-                    muscleMap: data,
-                  ),
-                ],
-              ),
+      body: AsyncValueBuilderWidget(
+        asyncValue: muscleMap,
+        builder: (context, data) => SingleChildScrollView(
+          padding: AppOffsets.screenPadding,
+          child: ConstrainedBox(
+            constraints: AppOffsets.formWidthConstraint,
+            child: MuscleMapFormWidget(
+              muscleMap: data,
             ),
-          );
-        },
-        error: (error, stackTrace) => Center(
-          child: CustomErrorWidget(text: error.toString()),
+          ),
         ),
-        loading: () => const Center(child: LoaderWidget()),
       ),
     );
   }

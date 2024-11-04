@@ -1,8 +1,7 @@
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/muscle_maps.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_maps/muscle_maps_empty.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -65,8 +64,9 @@ class _WorkoutMuscleBottomSheetWidgetState
       context.pop();
     }
 
-    return muscles.when(
-      data: (data) {
+    return AsyncValueBuilderWidget(
+      asyncValue: muscles,
+      builder: (context, data) {
         if (data.isEmpty) {
           return const MuscleMapsEmptyWidget();
         }
@@ -104,10 +104,6 @@ class _WorkoutMuscleBottomSheetWidgetState
           ),
         );
       },
-      error: (error, stackTrace) => CustomErrorWidget(text: error.toString()),
-      loading: () => const LoaderWidget(
-        text: "Loading muscle maps",
-      ),
     );
   }
 }

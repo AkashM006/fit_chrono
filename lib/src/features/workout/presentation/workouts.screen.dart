@@ -1,6 +1,5 @@
+import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_error/custom_error.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/loader/loader.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/workouts.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workouts/workouts_list.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
@@ -30,15 +29,10 @@ class WorkoutsScreen extends ConsumerWidget {
         onPressed: onNewWorkoutAdd,
         child: const Icon(Icons.add),
       ),
-      body: workouts.when(
-        data: (data) => WorkoutsListWidget(
+      body: AsyncValueBuilderWidget(
+        asyncValue: workouts,
+        builder: (context, data) => WorkoutsListWidget(
           workouts: data,
-        ),
-        error: (error, stackTrace) => Center(
-          child: CustomErrorWidget(text: error.toString()),
-        ),
-        loading: () => const Center(
-          child: LoaderWidget(),
         ),
       ),
     );
