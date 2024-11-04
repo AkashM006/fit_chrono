@@ -152,8 +152,6 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
               ))
             .write(workout.toCompanion());
 
-        if (workout.muscles.isEmpty) return;
-
         await (delete(muscleMapsForWorkouts)
               ..where(
                 (tbl) => tbl.workoutId.equals(workout.id),

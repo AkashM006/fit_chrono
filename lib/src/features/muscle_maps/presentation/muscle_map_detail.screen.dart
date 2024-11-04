@@ -65,7 +65,8 @@ class MuscleMapDetailScreen extends ConsumerWidget {
     ref.listen(
       updateMuscleMapProvider,
       (previous, next) {
-        next?.fold(
+        if (next == null || next.isLoading) return;
+        next.fold(
           onSuccess: (data) {
             showSnackBar(context, data);
             context.pop();
