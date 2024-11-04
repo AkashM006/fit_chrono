@@ -199,20 +199,8 @@ class $WorkoutsTable extends Workouts with TableInfo<$WorkoutsTable, Workout> {
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _repititionMeta =
-      const VerificationMeta('repitition');
   @override
-  late final GeneratedColumn<int> repitition = GeneratedColumn<int>(
-      'repitition', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _repititionTypeMeta =
-      const VerificationMeta('repititionType');
-  @override
-  late final GeneratedColumn<String> repititionType = GeneratedColumn<String>(
-      'repitition_type', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, name, repitition, repititionType];
+  List<GeneratedColumn> get $columns => [id, name];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -232,22 +220,6 @@ class $WorkoutsTable extends Workouts with TableInfo<$WorkoutsTable, Workout> {
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('repitition')) {
-      context.handle(
-          _repititionMeta,
-          repitition.isAcceptableOrUnknown(
-              data['repitition']!, _repititionMeta));
-    } else if (isInserting) {
-      context.missing(_repititionMeta);
-    }
-    if (data.containsKey('repitition_type')) {
-      context.handle(
-          _repititionTypeMeta,
-          repititionType.isAcceptableOrUnknown(
-              data['repitition_type']!, _repititionTypeMeta));
-    } else if (isInserting) {
-      context.missing(_repititionTypeMeta);
-    }
     return context;
   }
 
@@ -261,10 +233,6 @@ class $WorkoutsTable extends Workouts with TableInfo<$WorkoutsTable, Workout> {
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      repitition: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}repitition'])!,
-      repititionType: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}repitition_type'])!,
     );
   }
 
@@ -277,20 +245,12 @@ class $WorkoutsTable extends Workouts with TableInfo<$WorkoutsTable, Workout> {
 class Workout extends DataClass implements Insertable<Workout> {
   final int id;
   final String name;
-  final int repitition;
-  final String repititionType;
-  const Workout(
-      {required this.id,
-      required this.name,
-      required this.repitition,
-      required this.repititionType});
+  const Workout({required this.id, required this.name});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    map['repitition'] = Variable<int>(repitition);
-    map['repitition_type'] = Variable<String>(repititionType);
     return map;
   }
 
@@ -298,8 +258,6 @@ class Workout extends DataClass implements Insertable<Workout> {
     return WorkoutsCompanion(
       id: Value(id),
       name: Value(name),
-      repitition: Value(repitition),
-      repititionType: Value(repititionType),
     );
   }
 
@@ -309,8 +267,6 @@ class Workout extends DataClass implements Insertable<Workout> {
     return Workout(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      repitition: serializer.fromJson<int>(json['repitition']),
-      repititionType: serializer.fromJson<String>(json['repititionType']),
     );
   }
   @override
@@ -319,28 +275,17 @@ class Workout extends DataClass implements Insertable<Workout> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'repitition': serializer.toJson<int>(repitition),
-      'repititionType': serializer.toJson<String>(repititionType),
     };
   }
 
-  Workout copyWith(
-          {int? id, String? name, int? repitition, String? repititionType}) =>
-      Workout(
+  Workout copyWith({int? id, String? name}) => Workout(
         id: id ?? this.id,
         name: name ?? this.name,
-        repitition: repitition ?? this.repitition,
-        repititionType: repititionType ?? this.repititionType,
       );
   Workout copyWithCompanion(WorkoutsCompanion data) {
     return Workout(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
-      repitition:
-          data.repitition.present ? data.repitition.value : this.repitition,
-      repititionType: data.repititionType.present
-          ? data.repititionType.value
-          : this.repititionType,
     );
   }
 
@@ -348,68 +293,44 @@ class Workout extends DataClass implements Insertable<Workout> {
   String toString() {
     return (StringBuffer('Workout(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('repitition: $repitition, ')
-          ..write('repititionType: $repititionType')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, repitition, repititionType);
+  int get hashCode => Object.hash(id, name);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Workout &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.repitition == this.repitition &&
-          other.repititionType == this.repititionType);
+      (other is Workout && other.id == this.id && other.name == this.name);
 }
 
 class WorkoutsCompanion extends UpdateCompanion<Workout> {
   final Value<int> id;
   final Value<String> name;
-  final Value<int> repitition;
-  final Value<String> repititionType;
   const WorkoutsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
-    this.repitition = const Value.absent(),
-    this.repititionType = const Value.absent(),
   });
   WorkoutsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    required int repitition,
-    required String repititionType,
-  })  : name = Value(name),
-        repitition = Value(repitition),
-        repititionType = Value(repititionType);
+  }) : name = Value(name);
   static Insertable<Workout> custom({
     Expression<int>? id,
     Expression<String>? name,
-    Expression<int>? repitition,
-    Expression<String>? repititionType,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
-      if (repitition != null) 'repitition': repitition,
-      if (repititionType != null) 'repitition_type': repititionType,
     });
   }
 
-  WorkoutsCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? name,
-      Value<int>? repitition,
-      Value<String>? repititionType}) {
+  WorkoutsCompanion copyWith({Value<int>? id, Value<String>? name}) {
     return WorkoutsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
-      repitition: repitition ?? this.repitition,
-      repititionType: repititionType ?? this.repititionType,
     );
   }
 
@@ -422,12 +343,6 @@ class WorkoutsCompanion extends UpdateCompanion<Workout> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (repitition.present) {
-      map['repitition'] = Variable<int>(repitition.value);
-    }
-    if (repititionType.present) {
-      map['repitition_type'] = Variable<String>(repititionType.value);
-    }
     return map;
   }
 
@@ -435,9 +350,7 @@ class WorkoutsCompanion extends UpdateCompanion<Workout> {
   String toString() {
     return (StringBuffer('WorkoutsCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('repitition: $repitition, ')
-          ..write('repititionType: $repititionType')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
@@ -880,14 +793,10 @@ typedef $$MuscleMapsTableProcessedTableManager = ProcessedTableManager<
 typedef $$WorkoutsTableCreateCompanionBuilder = WorkoutsCompanion Function({
   Value<int> id,
   required String name,
-  required int repitition,
-  required String repititionType,
 });
 typedef $$WorkoutsTableUpdateCompanionBuilder = WorkoutsCompanion Function({
   Value<int> id,
   Value<String> name,
-  Value<int> repitition,
-  Value<String> repititionType,
 });
 
 final class $$WorkoutsTableReferences
@@ -929,13 +838,6 @@ class $$WorkoutsTableFilterComposer
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get repitition => $composableBuilder(
-      column: $table.repitition, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get repititionType => $composableBuilder(
-      column: $table.repititionType,
-      builder: (column) => ColumnFilters(column));
-
   Expression<bool> muscleMapsForWorkoutsRefs(
       Expression<bool> Function($$MuscleMapsForWorkoutsTableFilterComposer f)
           f) {
@@ -974,13 +876,6 @@ class $$WorkoutsTableOrderingComposer
 
   ColumnOrderings<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get repitition => $composableBuilder(
-      column: $table.repitition, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get repititionType => $composableBuilder(
-      column: $table.repititionType,
-      builder: (column) => ColumnOrderings(column));
 }
 
 class $$WorkoutsTableAnnotationComposer
@@ -997,12 +892,6 @@ class $$WorkoutsTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<int> get repitition => $composableBuilder(
-      column: $table.repitition, builder: (column) => column);
-
-  GeneratedColumn<String> get repititionType => $composableBuilder(
-      column: $table.repititionType, builder: (column) => column);
 
   Expression<T> muscleMapsForWorkoutsRefs<T extends Object>(
       Expression<T> Function($$MuscleMapsForWorkoutsTableAnnotationComposer a)
@@ -1053,26 +942,18 @@ class $$WorkoutsTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
-            Value<int> repitition = const Value.absent(),
-            Value<String> repititionType = const Value.absent(),
           }) =>
               WorkoutsCompanion(
             id: id,
             name: name,
-            repitition: repitition,
-            repititionType: repititionType,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String name,
-            required int repitition,
-            required String repititionType,
           }) =>
               WorkoutsCompanion.insert(
             id: id,
             name: name,
-            repitition: repitition,
-            repititionType: repititionType,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) =>

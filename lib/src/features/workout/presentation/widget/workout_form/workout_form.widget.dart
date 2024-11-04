@@ -8,7 +8,6 @@ import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dar
 import 'package:fit_chrono/src/features/workout/presentation/provider/add_workout/add_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
-import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_type_field.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,18 +34,17 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
 
   bool get isSubmitEnabled => isEditMode ? (widget.workout != _workout) : true;
 
-  bool get isReps {
-    return _workout.measure == WorkoutMeasureDto.reps;
-  }
+  // bool get isReps {
+  //   return _workout.measure == WorkoutMeasureDto.reps;
+  // }
 
   bool get canPop {
     if (isEditMode) {
       return widget.workout == _workout;
     }
 
-    return _workout.name.isEmpty &&
-        _workout.muscles.isEmpty &&
-        _workout.count == 0;
+    return _workout.name.isEmpty && _workout.muscles.isEmpty;
+    // _workout.count == 0;
   }
 
   @override
@@ -57,13 +55,13 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
     }
   }
 
-  void onMeasureChanged(WorkoutMeasureDto? measure) {
-    setState(() {
-      _workout = _workout.copyWith(
-        measure: measure,
-      );
-    });
-  }
+  // void onMeasureChanged(WorkoutMeasureDto? measure) {
+  //   setState(() {
+  //     _workout = _workout.copyWith(
+  //       measure: measure,
+  //     );
+  //   });
+  // }
 
   void onMuscleDelete(int id) {
     setState(() {
@@ -92,13 +90,13 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
     );
   }
 
-  void setCount(String? value) {
-    final count = int.tryParse(value ?? "");
+  // void setCount(String? value) {
+  //   final count = int.tryParse(value ?? "");
 
-    _workout = _workout.copyWith(
-      count: count,
-    );
-  }
+  //   _workout = _workout.copyWith(
+  //     count: count,
+  //   );
+  // }
 
   void setMuscles(List<MuscleMapDto> muscles) {
     setState(() {
@@ -158,56 +156,56 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 250),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: TextFormField(
-                        initialValue: _workout.count == 0
-                            ? null
-                            : _workout.count.toString(),
-                        decoration: InputDecoration(
-                          label: Text(isReps ? "Count" : "Seconds"),
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: false,
-                          signed: false,
-                        ),
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        validator: (value) => requiredValidator(
-                          isReps ? "Count" : "Seconds",
-                          value,
-                        ),
-                        onSaved: setCount,
-                        onChanged: isEditMode
-                            ? (value) {
-                                setState(() {
-                                  setCount(value);
-                                });
-                              }
-                            : null,
-                        enabled: areTextFieldsEnabled,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    MuscleTypeField(
-                      value: _workout.measure,
-                      onChanged: onMeasureChanged,
-                      isEnabled: areTextFieldsEnabled,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Align(
+            // alignment: Alignment.centerLeft,
+            //   child: ConstrainedBox(
+            //     constraints: const BoxConstraints(maxWidth: 250),
+            //     child: Row(
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         Expanded(
+            //           flex: 2,
+            //           child: TextFormField(
+            //             initialValue: _workout.count == 0
+            //                 ? null
+            //                 : _workout.count.toString(),
+            //             decoration: InputDecoration(
+            //               label: Text(isReps ? "Count" : "Seconds"),
+            //             ),
+            //             keyboardType: const TextInputType.numberWithOptions(
+            //               decimal: false,
+            //               signed: false,
+            //             ),
+            //             inputFormatters: <TextInputFormatter>[
+            //               FilteringTextInputFormatter.digitsOnly,
+            //             ],
+            //             validator: (value) => requiredValidator(
+            //               isReps ? "Count" : "Seconds",
+            //               value,
+            //             ),
+            //             onSaved: setCount,
+            //             onChanged: isEditMode
+            //                 ? (value) {
+            //                     setState(() {
+            //                       setCount(value);
+            //                     });
+            //                   }
+            //                 : null,
+            //             enabled: areTextFieldsEnabled,
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           width: 20,
+            //         ),
+            //         MuscleTypeField(
+            //           value: _workout.measure,
+            //           onChanged: onMeasureChanged,
+            //           isEnabled: areTextFieldsEnabled,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
             ),

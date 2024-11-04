@@ -4,19 +4,19 @@ class WorkoutEntity {
   final int id;
   final String name;
   final List<MuscleMapEntity> muscles;
-  final WorkoutMeasureEntity measure;
-  final int count;
+  // final WorkoutMeasureEntity measure;
+  // final int count;
 
   const WorkoutEntity({
     required this.id,
     required this.name,
     required this.muscles,
-    required this.measure,
-    required this.count,
+    // required this.measure,
+    // required this.count,
   });
 }
 
-enum WorkoutMeasureEntity {
-  time,
-  reps,
-}
+// enum WorkoutMeasureEntity {
+//   time,
+//   reps,
+// }
