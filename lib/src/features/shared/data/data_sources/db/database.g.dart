@@ -369,8 +369,8 @@ class $MuscleMapsForWorkoutsTable extends MuscleMapsForWorkouts
       'workout_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES workouts (id)'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES workouts (id) ON DELETE CASCADE'));
   static const VerificationMeta _muscleMapIdMeta =
       const VerificationMeta('muscleMapId');
   @override
@@ -378,8 +378,8 @@ class $MuscleMapsForWorkoutsTable extends MuscleMapsForWorkouts
       'muscle_map_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES muscle_maps (id)'));
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES muscle_maps (id) ON DELETE CASCADE'));
   @override
   List<GeneratedColumn> get $columns => [workoutId, muscleMapId];
   @override
@@ -577,6 +577,25 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [muscleMaps, workouts, muscleMapsForWorkouts];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
+        [
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('workouts',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('muscle_maps_for_workouts', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('muscle_maps',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('muscle_maps_for_workouts', kind: UpdateKind.delete),
+            ],
+          ),
+        ],
+      );
 }
 
 typedef $$MuscleMapsTableCreateCompanionBuilder = MuscleMapsCompanion Function({
