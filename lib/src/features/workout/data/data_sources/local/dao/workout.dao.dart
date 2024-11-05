@@ -180,7 +180,28 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
 
   Future<void> deleteWorkout(int id) async {
     try {
-      // await transaction(() {});
+      final query = (select(workouts)..where((tbl) => tbl.id.equals(id)));
+
+      final workoutList = await query.get();
+
+      if (workoutList.length > 1) {
+        final errorMsg = multipleRecordsFound("delete your workout");
+        throw AppError(message: errorMsg);
+      }
+      if (workoutList.isEmpty) {
+        final errorMsg = doesNotExistMsg("workout you're trying to delete");
+        throw AppError(message: errorMsg);
+      }
+
+      await transaction(() async {
+        final workout = workoutList.first;
+
+        await (delete(muscleMapsForWorkouts)
+              ..where((tbl) => tbl.workoutId.equals(workout.id)))
+            .go();
+
+        await (delete(workouts)..where((tbl) => tbl.id.equals(id))).go();
+      });
     } catch (e) {
       if (e is AppError) rethrow;
       final errorMsg = somethingWentWrongMsg("deleting your workout");
