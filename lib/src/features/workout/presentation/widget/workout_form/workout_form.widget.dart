@@ -6,6 +6,7 @@ import 'package:fit_chrono/src/features/shared/presentation/widgets/button_loade
 import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/add_workout/add_workout.provider.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
 import 'package:flutter/material.dart';
@@ -109,12 +110,16 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
   @override
   Widget build(BuildContext context) {
     final addWorkoutStatus = ref.watch(addWorkoutProvider);
-    final updateWorkoutState = ref.watch(updateWorkoutProvider);
+    final updateWorkoutStatus = ref.watch(updateWorkoutProvider);
+    final deleteWorkoutStatus = ref.watch(deleteWorkoutProvider);
 
     final isAddLoading = addWorkoutStatus is DataLoading;
-    final isUpdateLoading = updateWorkoutState is DataLoading;
+    final isUpdateLoading = updateWorkoutStatus is DataLoading;
+    final isDeleteLoading = deleteWorkoutStatus?.isLoading ?? false;
 
-    final areTextFieldsEnabled = !isAddLoading && !isUpdateLoading;
+    final areTextFieldsEnabled =
+        !isAddLoading && !isUpdateLoading && !isDeleteLoading;
+    final isSubmitButtonEnabled = isSubmitEnabled && areTextFieldsEnabled;
 
     return PopScope(
       canPop: false,
@@ -232,9 +237,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               height: 25,
             ),
             FilledButton(
-              onPressed: isSubmitEnabled && !isAddLoading && !isUpdateLoading
-                  ? handleSubmit
-                  : null,
+              onPressed: isSubmitButtonEnabled ? handleSubmit : null,
               child: !isAddLoading && !isUpdateLoading
                   ? const Text("Save")
                   : const ButtonLoaderWidget(),

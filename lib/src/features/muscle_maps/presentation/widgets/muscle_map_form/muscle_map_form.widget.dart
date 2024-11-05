@@ -3,6 +3,7 @@ import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/delete_muscle_map/delete_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_spinner/custom_spinner.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
@@ -83,18 +84,20 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   @override
   void dispose() {
     super.dispose();
-    print("Disposed form widget");
   }
 
   @override
   Widget build(BuildContext context) {
     final addMuscleMapStatus = ref.watch(addMuscleMapProvider);
     final updateMuscleMapStatus = ref.watch(updateMuscleMapProvider);
+    final deleteMuscleMapStatus = ref.watch(deleteMuscleMapProvider);
 
     final isAddLoading = addMuscleMapStatus is DataLoading;
     final isUpdateLoading = updateMuscleMapStatus is DataLoading;
+    final isDeleteLoading = deleteMuscleMapStatus?.isLoading ?? false;
 
-    final isLoading = isEditMode ? isUpdateLoading : isAddLoading;
+    final isLoading =
+        isEditMode ? (isUpdateLoading || isDeleteLoading) : isAddLoading;
 
     void setName(String value) {
       setState(() {

@@ -1,7 +1,11 @@
+import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WorkoutDetailAppbarWidget extends StatelessWidget {
+class WorkoutDetailAppbarWidget extends ConsumerWidget {
   const WorkoutDetailAppbarWidget({
     super.key,
     required this.workout,
@@ -10,9 +14,26 @@ class WorkoutDetailAppbarWidget extends StatelessWidget {
   final WorkoutDto workout;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    void onDelete() {
+      ref.read(deleteWorkoutProvider.notifier).go(workout.id);
+    }
+
+    final updateWorkoutStatus = ref.watch(updateWorkoutProvider);
+    final deleteWorkoutStatus = ref.watch(deleteWorkoutProvider);
+
+    final isLoading = (updateWorkoutStatus?.isLoading ?? false) ||
+        (deleteWorkoutStatus?.isLoading ?? false);
+
     return AppBar(
       title: const Text("Workout"),
+      actions: [
+        IconButton(
+          onPressed: isLoading ? null : onDelete,
+          icon: const Icon(Icons.delete),
+          color: Theme.of(context).colorScheme.error,
+        ),
+      ],
     );
   }
 }

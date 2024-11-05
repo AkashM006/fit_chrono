@@ -19,8 +19,8 @@ Future<bool?> showConfirmMuscleMapDeleteDialog(context) async {
   return canDelete;
 }
 
-class MuscleMapAppbarWidget extends ConsumerWidget {
-  const MuscleMapAppbarWidget({
+class MuscleMapDetailAppbarWidget extends ConsumerWidget {
+  const MuscleMapDetailAppbarWidget({
     super.key,
     required this.muscleMap,
   });
