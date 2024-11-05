@@ -6,4 +6,5 @@ abstract class WorkoutRepository {
   Future<DataState<void>> addWorkout(WorkoutEntity workout);
   Future<DataState<WorkoutEntity>> getWorkout(int id);
   Future<DataState<void>> updateWorkout(WorkoutEntity workout);
+  Future<DataState<void>> deleteWorkout(int id);
 }
