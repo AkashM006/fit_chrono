@@ -35,6 +35,10 @@ class WorkoutService {
     await _appDatabase.workoutDao
         .updateWorkout(WorkoutModel.fromEntity(workout));
   }
+
+  Future<void> deleteWorkout(int id) {
+    return _appDatabase.workoutDao.deleteWorkout(id);
+  }
 }
 
 @riverpod

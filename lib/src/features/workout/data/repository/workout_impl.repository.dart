@@ -42,8 +42,9 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
 
   @override
   Future<DataState<void>> deleteWorkout(int id) {
-    // TODO: implement deleteWorkout
-    throw UnimplementedError();
+    return safeExecute(
+      () => _workoutService.deleteWorkout(id),
+    );
   }
 }
 
