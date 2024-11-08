@@ -7,6 +7,7 @@ import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/sche
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/dao/workout.dao.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/muscle_maps_for_workouts.schema.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/workout.schema.dart';
+import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/dao/workout_wave.dao.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workouts_in_wave.schema.dart';
 import 'package:path_provider/path_provider.dart';
@@ -29,6 +30,7 @@ part 'database.g.dart';
   daos: [
     MuscleMapDao,
     WorkoutDao,
+    WorkoutWaveDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {

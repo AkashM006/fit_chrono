@@ -1079,6 +1079,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $WorkoutsInWavesTable(this);
   late final MuscleMapDao muscleMapDao = MuscleMapDao(this as AppDatabase);
   late final WorkoutDao workoutDao = WorkoutDao(this as AppDatabase);
+  late final WorkoutWaveDao workoutWaveDao =
+      WorkoutWaveDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

@@ -73,15 +73,15 @@ class WorkoutModel {
   }
 }
 
-enum WorkoutMeasureModel {
-  time,
-  reps,
-}
+// enum WorkoutMeasureModel {
+//   time,
+//   reps,
+// }
 
-Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
-  "time": WorkoutMeasureModel.time,
-  "reps": WorkoutMeasureModel.reps,
-};
+// Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
+//   "time": WorkoutMeasureModel.time,
+//   "reps": WorkoutMeasureModel.reps,
+// };
 
 // class WorkoutMeasureModelMapper {
 //   static WorkoutMeasureModel fromEntity(WorkoutMeasureEntity measure) {
