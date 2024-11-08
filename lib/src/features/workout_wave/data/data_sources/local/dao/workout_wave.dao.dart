@@ -1,4 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:fit_chrono/src/core/utils/custom_error.util.dart';
+import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/modal/workout_wave.model.dart';
@@ -11,12 +13,18 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
   WorkoutWaveDao(super.key);
 
   Stream<List<WorkoutWaveModel>> watchWorkoutWaves() {
-    return select(workoutWaves).watch().map(
+    return select(workoutWaves)
+        .watch()
+        .map(
           (workoutWaves) => workoutWaves
               .map(
                 (workoutWave) => WorkoutWaveModel.fromDbModel(workoutWave),
               )
               .toList(),
-        );
+        )
+        .handleError((error) {
+      final errorMsg = somethingWentWrongMsg("getting your workout waves");
+      throw AppError(message: errorMsg);
+    });
   }
 }

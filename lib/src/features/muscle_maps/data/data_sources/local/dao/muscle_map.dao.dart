@@ -13,18 +13,19 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
   MuscleMapDao(super.key);
 
   Stream<List<MuscleMapModel>> watchMuscleMaps() {
-    try {
-      return select(muscleMaps).watch().map(
-            (muscleMapList) => muscleMapList
-                .map(
-                  (muscleMap) => MuscleMapModel.fromDbModel(muscleMap),
-                )
-                .toList(),
-          );
-    } catch (e) {
+    return select(muscleMaps)
+        .watch()
+        .map(
+          (muscleMapList) => muscleMapList
+              .map(
+                (muscleMap) => MuscleMapModel.fromDbModel(muscleMap),
+              )
+              .toList(),
+        )
+        .handleError((error) {
       final errorMsg = somethingWentWrongMsg("getting you workouts");
       throw AppError(message: errorMsg);
-    }
+    });
   }
 
   Future<void> addMuscleMap(MuscleMapModel muscleMap) async {

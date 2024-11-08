@@ -5,7 +5,8 @@ import 'package:fit_chrono/src/features/workout/presentation/provider/update_wor
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WorkoutDetailAppbarWidget extends ConsumerWidget {
+class WorkoutDetailAppbarWidget extends ConsumerWidget
+    implements PreferredSizeWidget {
   const WorkoutDetailAppbarWidget({
     super.key,
     required this.workout,
@@ -36,4 +37,7 @@ class WorkoutDetailAppbarWidget extends ConsumerWidget {
       ],
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

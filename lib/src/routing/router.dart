@@ -4,7 +4,9 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_form
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_form.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workouts.screen.dart';
-import 'package:fit_chrono/src/features/workout/workout_detail.screen.dart';
+import 'package:fit_chrono/src/features/workout/presentation/workout_detail.screen.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/workout_wave_form.screen.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/workout_waves.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +18,8 @@ enum PAGES {
   workouts,
   workoutForm,
   workoutDetail,
+  workoutWaves,
+  workoutWavesForm,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -35,6 +39,10 @@ extension AppRoutesExtension on PAGES {
         return '/workout-form';
       case PAGES.workoutDetail:
         return '/workout-detail';
+      case PAGES.workoutWaves:
+        return '/workout-waves';
+      case PAGES.workoutWavesForm:
+        return '/workout-waves-form';
     }
   }
 
@@ -54,6 +62,10 @@ extension AppRoutesExtension on PAGES {
         return "Workout Form";
       case PAGES.workoutDetail:
         return "Workout Detail";
+      case PAGES.workoutWaves:
+        return "Workout Waves";
+      case PAGES.workoutWavesForm:
+        return "Workout Waves Form";
     }
   }
 
@@ -91,6 +103,10 @@ extension AppRoutesExtension on PAGES {
             id: resultId,
           );
         };
+      case PAGES.workoutWaves:
+        return (context, routerState) => const WorkoutWavesScreen();
+      case PAGES.workoutWavesForm:
+        return (context, routerState) => const WorkoutWaveFormScreen();
     }
   }
 }

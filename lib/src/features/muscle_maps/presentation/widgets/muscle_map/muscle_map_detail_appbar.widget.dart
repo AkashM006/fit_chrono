@@ -19,7 +19,8 @@ Future<bool?> showConfirmMuscleMapDeleteDialog(context) async {
   return canDelete;
 }
 
-class MuscleMapDetailAppbarWidget extends ConsumerWidget {
+class MuscleMapDetailAppbarWidget extends ConsumerWidget
+    implements PreferredSizeWidget {
   const MuscleMapDetailAppbarWidget({
     super.key,
     required this.muscleMap,
@@ -56,4 +57,7 @@ class MuscleMapDetailAppbarWidget extends ConsumerWidget {
       ],
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

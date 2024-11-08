@@ -10,7 +10,7 @@ class CustomAppbarWidget<T> extends StatelessWidget
   });
 
   final AsyncValue<T> asyncData;
-  final Widget Function(BuildContext context, T data) builder;
+  final PreferredSizeWidget Function(BuildContext context, T data) builder;
 
   @override
   Widget build(BuildContext context) {
