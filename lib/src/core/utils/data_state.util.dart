@@ -27,7 +27,6 @@ class DataLoading<T> extends DataState<T> {}
 extension DataStateExtension<T> on DataState<T> {
   bool get isLoading => this is DataLoading;
 
-  // Used to set state data
   R fold<R>({
     required R Function(T data) onSuccess,
     required R Function(CustomError error) onFailure,
@@ -38,7 +37,6 @@ extension DataStateExtension<T> on DataState<T> {
     return onFailure((this as DataFailure<T>).error);
   }
 
-  // Used to handle UI
   void on({
     required void Function(T data) success,
     required void Function(CustomError error) failed,

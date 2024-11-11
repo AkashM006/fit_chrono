@@ -1,0 +1,2 @@
+1. Refactor all shared dialog widgeets (Use maybe only one base dialog widget and reuse them by providing parameters)
+2. Remove exception handling in all providers
