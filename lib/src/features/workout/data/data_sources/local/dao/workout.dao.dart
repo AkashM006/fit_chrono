@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/core/utils/custom_error.util.dart';
+import 'package:fit_chrono/src/core/utils/error_handler.util.dart';
 import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
@@ -54,156 +55,152 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
   }
 
   Future<void> addWorkout(WorkoutModel workout) async {
-    try {
-      await transaction(() async {
-        final workoutId = await into(workouts).insert(
-          workout.toCompanion(),
-        );
+    handleError(
+      () async {
+        await transaction(() async {
+          final workoutId = await into(workouts).insert(
+            workout.toCompanion(),
+          );
 
-        if (workout.muscles.isEmpty) return;
+          if (workout.muscles.isEmpty) return;
 
-        await batch((batch) {
-          batch.insertAll(
-              muscleMapsForWorkouts,
-              workout.muscles
-                  .map(
-                    (muscle) => MuscleMapsForWorkoutsCompanion.insert(
-                      workoutId: workoutId,
-                      muscleMapId: muscle.id,
-                    ),
-                  )
-                  .toList());
+          await batch((batch) {
+            batch.insertAll(
+                muscleMapsForWorkouts,
+                workout.muscles
+                    .map(
+                      (muscle) => MuscleMapsForWorkoutsCompanion.insert(
+                        workoutId: workoutId,
+                        muscleMapId: muscle.id,
+                      ),
+                    )
+                    .toList());
+          });
         });
-      });
-    } catch (e) {
-      final errorMsg = somethingWentWrongMsg("adding your workout");
-      throw AppError(message: errorMsg);
-    }
+      },
+      "adding your workout",
+    );
   }
 
   Future<WorkoutModel> getWorkout(int id) async {
-    try {
-      final query = select(workouts).join([
-        leftOuterJoin(muscleMapsForWorkouts,
-            muscleMapsForWorkouts.workoutId.equalsExp(workouts.id)),
-        leftOuterJoin(muscleMaps,
-            muscleMapsForWorkouts.muscleMapId.equalsExp(muscleMaps.id)),
-      ])
-        ..where(workouts.id.equals(id));
+    return handleError(
+      () async {
+        final query = select(workouts).join([
+          leftOuterJoin(muscleMapsForWorkouts,
+              muscleMapsForWorkouts.workoutId.equalsExp(workouts.id)),
+          leftOuterJoin(muscleMaps,
+              muscleMapsForWorkouts.muscleMapId.equalsExp(muscleMaps.id)),
+        ])
+          ..where(workouts.id.equals(id));
 
-      final result = await query.get();
+        final result = await query.get();
 
-      if (result.isEmpty) {
-        final errorMsg = doesNotExistMsg("workout");
-        throw AppError(message: errorMsg);
-      }
-
-      final workout = result.first.readTable(workouts);
-      final List<MuscleMap> muscles = [];
-
-      for (var row in result) {
-        final muscleMap = row.readTableOrNull(muscleMaps);
-
-        if (muscleMap != null) {
-          muscles.add(muscleMap);
+        if (result.isEmpty) {
+          final errorMsg = doesNotExistMsg("workout");
+          throw AppError(message: errorMsg);
         }
-      }
 
-      final resultWorkout = WorkoutModel.fromDbModel(workout);
-      final muscleModels =
-          muscles.map((muscle) => MuscleMapModel.fromDbModel(muscle)).toList();
+        final workout = result.first.readTable(workouts);
+        final List<MuscleMap> muscles = [];
 
-      resultWorkout.setMuscles(muscleModels);
+        for (var row in result) {
+          final muscleMap = row.readTableOrNull(muscleMaps);
 
-      return resultWorkout;
-    } catch (e) {
-      if (e is AppError) {
-        rethrow;
-      }
-      final errorMsg = somethingWentWrongMsg("getting your workout");
-      throw AppError(message: errorMsg);
-    }
+          if (muscleMap != null) {
+            muscles.add(muscleMap);
+          }
+        }
+
+        final resultWorkout = WorkoutModel.fromDbModel(workout);
+        final muscleModels = muscles
+            .map((muscle) => MuscleMapModel.fromDbModel(muscle))
+            .toList();
+
+        resultWorkout.setMuscles(muscleModels);
+
+        return resultWorkout;
+      },
+      "getting your workout",
+    );
   }
 
   Future<void> updateWorkout(
     WorkoutModel workout,
   ) async {
-    try {
-      final query = (select(workouts)
-        ..where(
-          (tbl) => tbl.id.equals(workout.id),
-        ));
+    handleError(
+      () async {
+        final query = (select(workouts)
+          ..where(
+            (tbl) => tbl.id.equals(workout.id),
+          ));
 
-      final result = await query.getSingleOrNull();
+        final result = await query.getSingleOrNull();
 
-      if (result == null) {
-        final errorMsg = doesNotExistMsg("workout you're trying update");
-        throw AppError(
-          message: errorMsg,
-        );
-      }
+        if (result == null) {
+          final errorMsg = doesNotExistMsg("workout you're trying update");
+          throw AppError(
+            message: errorMsg,
+          );
+        }
 
-      await transaction(() async {
-        await (update(workouts)
-              ..where(
-                (tbl) => tbl.id.equals(workout.id),
-              ))
-            .write(workout.toCompanion());
+        await transaction(() async {
+          await (update(workouts)
+                ..where(
+                  (tbl) => tbl.id.equals(workout.id),
+                ))
+              .write(workout.toCompanion());
 
-        await (delete(muscleMapsForWorkouts)
-              ..where(
-                (tbl) => tbl.workoutId.equals(workout.id),
-              ))
-            .go();
+          await (delete(muscleMapsForWorkouts)
+                ..where(
+                  (tbl) => tbl.workoutId.equals(workout.id),
+                ))
+              .go();
 
-        await batch((batch) {
-          batch.insertAll(
-              muscleMapsForWorkouts,
-              workout.muscles
-                  .map(
-                    (muscle) => MuscleMapsForWorkoutsCompanion.insert(
-                      workoutId: workout.id,
-                      muscleMapId: muscle.id,
-                    ),
-                  )
-                  .toList());
+          await batch((batch) {
+            batch.insertAll(
+                muscleMapsForWorkouts,
+                workout.muscles
+                    .map(
+                      (muscle) => MuscleMapsForWorkoutsCompanion.insert(
+                        workoutId: workout.id,
+                        muscleMapId: muscle.id,
+                      ),
+                    )
+                    .toList());
+          });
         });
-      });
-    } catch (e) {
-      if (e is AppError) rethrow;
-      final errorMsg = somethingWentWrongMsg("updating your workout");
-      throw AppError(message: errorMsg);
-    }
+      },
+      "updating your workout",
+    );
   }
 
   Future<void> deleteWorkout(int id) async {
-    try {
-      final query = (select(workouts)..where((tbl) => tbl.id.equals(id)));
+    handleError(
+      () async {
+        final query = (select(workouts)..where((tbl) => tbl.id.equals(id)));
 
-      final workoutList = await query.get();
+        final workoutList = await query.get();
 
-      if (workoutList.length > 1) {
-        final errorMsg = multipleRecordsFound("delete your workout");
-        throw AppError(message: errorMsg);
-      }
-      if (workoutList.isEmpty) {
-        final errorMsg = doesNotExistMsg("workout you're trying to delete");
-        throw AppError(message: errorMsg);
-      }
+        if (workoutList.length > 1) {
+          final errorMsg = multipleRecordsFound("delete your workout");
+          throw AppError(message: errorMsg);
+        }
+        if (workoutList.isEmpty) {
+          final errorMsg = doesNotExistMsg("workout you're trying to delete");
+          throw AppError(message: errorMsg);
+        }
 
-      await transaction(() async {
-        final workout = workoutList.first;
+        await transaction(() async {
+          final workout = workoutList.first;
 
-        await (delete(muscleMapsForWorkouts)
-              ..where((tbl) => tbl.workoutId.equals(workout.id)))
-            .go();
+          await (delete(muscleMapsForWorkouts)
+                ..where((tbl) => tbl.workoutId.equals(workout.id)))
+              .go();
 
-        await (delete(workouts)..where((tbl) => tbl.id.equals(id))).go();
-      });
-    } catch (e) {
-      if (e is AppError) rethrow;
-      final errorMsg = somethingWentWrongMsg("deleting your workout");
-      throw AppError(message: errorMsg);
-    }
+          await (delete(workouts)..where((tbl) => tbl.id.equals(id))).go();
+        });
+      },
+      "deleting your workout",
+    );
   }
 }
