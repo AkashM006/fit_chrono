@@ -3,4 +3,4 @@
 3. Use handleError() function in dao level to avoid code repetition (DONE)
 4. Add another util function to project (Refer Notion) (DONE)
 5. Handle 404 page in go_router (DONE)
-6. Integrate drift db viewer to app (IN PROGRESS)
+6. Integrate drift db viewer to app (DONE)
