@@ -6,7 +6,7 @@ final routeItems = [
   {
     'emoji': "💪",
     'title': "Muscle Maps",
-    'path': PAGES.notFound.path,
+    'path': PAGES.muscleMaps.path,
   },
   {
     'emoji': "🏋️",

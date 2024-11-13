@@ -19,19 +19,19 @@ class App extends StatelessWidget {
     ]);
 
     return MaterialApp.router(
-      title: appName,
+      title: kAppName,
       routerConfig: router,
       themeMode: ThemeMode.system,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: seedColor,
+          seedColor: kSeedColor,
           brightness: Brightness.light,
         ),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: seedColor,
+          seedColor: kSeedColor,
           brightness: Brightness.dark,
         ),
         useMaterial3: true,

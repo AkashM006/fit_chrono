@@ -1,13 +1,19 @@
+import 'dart:async';
+
+import 'package:fit_chrono/src/core/constants/settings.dart';
 import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_detail.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_form.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.screen.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/not_found.screen.dart';
+import 'package:fit_chrono/src/features/shared/presentation/drift_debug.screen.dart';
+import 'package:fit_chrono/src/features/shared/presentation/not_found.screen.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/debugger_wrapper/debugger_wrapper.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_form.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workouts.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_detail.screen.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/workout_wave_form.screen.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/workout_waves.screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,6 +27,7 @@ enum PAGES {
   workoutDetail,
   workoutWaves,
   workoutWavesForm,
+  driftDebug,
   notFound,
 }
 
@@ -45,6 +52,8 @@ extension AppRoutesExtension on PAGES {
         return '/workout-waves';
       case PAGES.workoutWavesForm:
         return '/workout-waves-form';
+      case PAGES.driftDebug:
+        return '/drift-debug';
       case PAGES.notFound:
         return '/*';
     }
@@ -70,6 +79,8 @@ extension AppRoutesExtension on PAGES {
         return "Workout Waves";
       case PAGES.workoutWavesForm:
         return "Workout Waves Form";
+      case PAGES.driftDebug:
+        return "Drift Debug";
       case PAGES.notFound:
         return "Not Found";
     }
@@ -113,8 +124,23 @@ extension AppRoutesExtension on PAGES {
         return (context, routerState) => const WorkoutWavesScreen();
       case PAGES.workoutWavesForm:
         return (context, routerState) => const WorkoutWaveFormScreen();
+      case PAGES.driftDebug:
+        return (context, routerState) => const DriftDebugScreen();
       case PAGES.notFound:
         return (context, routerState) => const NotFoundScreen();
+    }
+  }
+
+  FutureOr<String?> Function(BuildContext context, GoRouterState state)
+      get redirect {
+    switch (this) {
+      case PAGES.driftDebug:
+        return (context, routerState) {
+          if (!kDebugMode && !kHideDebugDb) return PAGES.notFound.path;
+          return null;
+        };
+      default:
+        return (context, routerState) => null;
     }
   }
 }
@@ -124,7 +150,15 @@ final List<RouteBase> routes = PAGES.values
       (route) => GoRoute(
         path: route.path,
         name: route.name,
-        builder: route.builder,
+        builder: (context, state) {
+          final child = route.builder(context, state);
+          if (kDebugMode &&
+              (route.name != PAGES.driftDebug.name) &&
+              !kHideDebugDb) {
+            return DebuggerWrapper(child: child);
+          }
+          return child;
+        },
       ),
     )
     .toList();
