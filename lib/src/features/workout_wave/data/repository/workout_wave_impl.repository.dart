@@ -16,7 +16,7 @@ class WorkoutWaveImplRepository implements WorkoutWaveRepostiory {
   }
 
   @override
-  Future<void> addWorkoutWave(WorkoutWaveWithWorkoutEntity workoutWave) {
+  Future<void> addWorkoutWave(WorkoutWaveWithWorkoutsEntity workoutWave) {
     // TODO: implement addWorkoutWave
     throw UnimplementedError();
   }

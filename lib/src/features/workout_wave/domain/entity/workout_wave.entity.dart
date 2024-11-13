@@ -12,12 +12,12 @@ class WorkoutWaveEntity {
   });
 }
 
-class WorkoutWaveWithWorkoutEntity {
+class WorkoutWaveWithWorkoutsEntity {
   final WorkoutWaveEntity workoutWave;
-  final List<WorkoutEntity> workouts;
+  final List<WorkoutWithMeasureEntity> workoutsWithMeasurement;
 
-  const WorkoutWaveWithWorkoutEntity({
+  const WorkoutWaveWithWorkoutsEntity({
     required this.workoutWave,
-    required this.workouts,
+    required this.workoutsWithMeasurement,
   });
 }
