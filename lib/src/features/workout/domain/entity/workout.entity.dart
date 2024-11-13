@@ -15,11 +15,13 @@ class WorkoutEntity {
 class WorkoutWithMeasureEntity {
   final int id;
   final WorkoutEntity workoutEntity;
+  final WorkoutMeasureEntity measure;
   final int count;
 
   const WorkoutWithMeasureEntity({
     required this.id,
     required this.workoutEntity,
+    required this.measure,
     required this.count,
   });
 }
