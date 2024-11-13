@@ -14,6 +14,12 @@ class WorkoutWaveImplRepository implements WorkoutWaveRepostiory {
   Stream<List<WorkoutWaveEntity>> watchWorkoutWaves() {
     return _workoutWaveService.watchWorkoutWaves();
   }
+
+  @override
+  Future<void> addWorkoutWave(WorkoutWaveWithWorkoutEntity workoutWave) {
+    // TODO: implement addWorkoutWave
+    throw UnimplementedError();
+  }
 }
 
 @riverpod
