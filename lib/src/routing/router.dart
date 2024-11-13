@@ -2,6 +2,7 @@ import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_detail.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_form.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.screen.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/not_found.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_form.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workouts.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_detail.screen.dart';
@@ -20,6 +21,7 @@ enum PAGES {
   workoutDetail,
   workoutWaves,
   workoutWavesForm,
+  notFound,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -43,6 +45,8 @@ extension AppRoutesExtension on PAGES {
         return '/workout-waves';
       case PAGES.workoutWavesForm:
         return '/workout-waves-form';
+      case PAGES.notFound:
+        return '/*';
     }
   }
 
@@ -66,6 +70,8 @@ extension AppRoutesExtension on PAGES {
         return "Workout Waves";
       case PAGES.workoutWavesForm:
         return "Workout Waves Form";
+      case PAGES.notFound:
+        return "Not Found";
     }
   }
 
@@ -107,6 +113,8 @@ extension AppRoutesExtension on PAGES {
         return (context, routerState) => const WorkoutWavesScreen();
       case PAGES.workoutWavesForm:
         return (context, routerState) => const WorkoutWaveFormScreen();
+      case PAGES.notFound:
+        return (context, routerState) => const NotFoundScreen();
     }
   }
 }
@@ -126,4 +134,5 @@ final navigatorKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: navigatorKey,
   routes: routes,
+  errorBuilder: (context, state) => const NotFoundScreen(),
 );
