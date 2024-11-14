@@ -6,7 +6,7 @@ import 'package:fit_chrono/src/features/workout/domain/repository/workout.reposi
 class GetWorkoutUsecase extends Usecase<Future<DataState<WorkoutEntity>>, int> {
   final WorkoutRepository _workoutRepository;
 
-  GetWorkoutUsecase(this._workoutRepository);
+  const GetWorkoutUsecase(this._workoutRepository);
 
   @override
   Future<DataState<WorkoutEntity>> call({required int params}) {

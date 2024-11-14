@@ -7,7 +7,7 @@ class UpdateMuscleMapUsecase
     extends Usecase<Future<DataState<void>>, MuscleMapEntity> {
   final MuscleMapRepository _muscleMapRepository;
 
-  UpdateMuscleMapUsecase(this._muscleMapRepository);
+  const UpdateMuscleMapUsecase(this._muscleMapRepository);
 
   @override
   Future<DataState<void>> call({required MuscleMapEntity params}) {

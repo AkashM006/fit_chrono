@@ -5,7 +5,7 @@ import 'package:fit_chrono/src/features/muscle_maps/domain/repository/muscle_map
 class DeleteMuscleMapUsecase extends Usecase<Future<DataState<void>>, int> {
   final MuscleMapRepository _muscleMapRepository;
 
-  DeleteMuscleMapUsecase(this._muscleMapRepository);
+  const DeleteMuscleMapUsecase(this._muscleMapRepository);
 
   @override
   Future<DataState<void>> call({required int params}) {

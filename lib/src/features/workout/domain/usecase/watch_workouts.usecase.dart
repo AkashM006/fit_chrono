@@ -5,7 +5,7 @@ import 'package:fit_chrono/src/features/workout/domain/repository/workout.reposi
 class WatchWorkoutsUsecase extends Usecase<Stream<List<WorkoutEntity>>, void> {
   final WorkoutRepository _workoutRepository;
 
-  WatchWorkoutsUsecase(this._workoutRepository);
+  const WatchWorkoutsUsecase(this._workoutRepository);
 
   @override
   Stream<List<WorkoutEntity>> call({void params}) {

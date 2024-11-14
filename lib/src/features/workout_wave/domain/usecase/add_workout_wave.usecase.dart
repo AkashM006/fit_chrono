@@ -7,7 +7,7 @@ class AddWorkoutWaveUsecase extends Usecase<Future<DataState<void>>,
     WorkoutWaveWithWorkoutsMeasureEntity> {
   final WorkoutWaveRepostiory _workoutWaveRepostiory;
 
-  AddWorkoutWaveUsecase(this._workoutWaveRepostiory);
+  const AddWorkoutWaveUsecase(this._workoutWaveRepostiory);
 
   @override
   Future<DataState<void>> call({

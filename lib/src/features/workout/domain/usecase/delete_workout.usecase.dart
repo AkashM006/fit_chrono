@@ -5,7 +5,7 @@ import 'package:fit_chrono/src/features/workout/domain/repository/workout.reposi
 class DeleteWorkoutUsecase extends Usecase<Future<DataState<void>>, int> {
   final WorkoutRepository _workoutRepository;
 
-  DeleteWorkoutUsecase(this._workoutRepository);
+  const DeleteWorkoutUsecase(this._workoutRepository);
 
   @override
   Future<DataState<void>> call({required int params}) =>

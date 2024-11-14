@@ -7,7 +7,7 @@ class AddWorkoutUsecase
     extends Usecase<Future<DataState<void>>, WorkoutEntity> {
   final WorkoutRepository _workoutRepository;
 
-  AddWorkoutUsecase(this._workoutRepository);
+  const AddWorkoutUsecase(this._workoutRepository);
 
   @override
   Future<DataState<void>> call({required WorkoutEntity params}) {

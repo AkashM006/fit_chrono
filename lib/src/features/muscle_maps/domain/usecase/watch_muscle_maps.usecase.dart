@@ -6,7 +6,7 @@ class WatchMuscleMapsUsecase
     extends Usecase<Stream<List<MuscleMapEntity>>, void> {
   final MuscleMapRepository _muscleMapRepository;
 
-  WatchMuscleMapsUsecase(this._muscleMapRepository);
+  const WatchMuscleMapsUsecase(this._muscleMapRepository);
 
   @override
   Stream<List<MuscleMapEntity>> call({void params}) {

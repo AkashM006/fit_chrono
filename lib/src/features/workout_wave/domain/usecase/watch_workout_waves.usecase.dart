@@ -6,7 +6,7 @@ class WatchWorkoutWavesUsecase
     extends Usecase<Stream<List<WorkoutWaveEntity>>, void> {
   final WorkoutWaveRepostiory _workoutWaveRepostiory;
 
-  WatchWorkoutWavesUsecase(this._workoutWaveRepostiory);
+  const WatchWorkoutWavesUsecase(this._workoutWaveRepostiory);
 
   @override
   Stream<List<WorkoutWaveEntity>> call({void params}) {
