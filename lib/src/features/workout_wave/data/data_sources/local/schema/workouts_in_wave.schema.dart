@@ -13,6 +13,8 @@ class WorkoutsInWaves extends Table {
         #id,
         onDelete: KeyAction.cascade,
       )();
-  IntColumn get repitition => integer()();
-  TextColumn get repititionType => text()();
+  IntColumn get position => integer()();
+
+  @override
+  Set<Column> get primaryKey => {workoutId, workoutWaveId, position};
 }

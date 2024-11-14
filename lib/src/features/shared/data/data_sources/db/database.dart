@@ -26,6 +26,7 @@ part 'database.g.dart';
     MuscleMapsForWorkouts,
     WorkoutWaves,
     WorkoutsInWaves,
+    WorkoutsWithMeasurement,
   ],
   daos: [
     MuscleMapDao,
