@@ -15,9 +15,11 @@ class WorkoutWaveEntity {
 class WorkoutWaveWithWorkoutsEntity {
   final WorkoutWaveEntity workoutWave;
   final List<WorkoutWithMeasureEntity> workoutsWithMeasurement;
+  final int position;
 
   const WorkoutWaveWithWorkoutsEntity({
     required this.workoutWave,
     required this.workoutsWithMeasurement,
+    required this.position,
   });
 }
