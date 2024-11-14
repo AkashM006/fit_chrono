@@ -16,5 +16,11 @@ class WorkoutsInWaves extends Table {
   IntColumn get position => integer()();
 
   @override
-  Set<Column> get primaryKey => {workoutId, workoutWaveId, position};
+  List<Set<Column>> get uniqueKeys => [
+        {
+          workoutId,
+          workoutWaveId,
+          position,
+        },
+      ];
 }

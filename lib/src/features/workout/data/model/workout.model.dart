@@ -7,26 +7,18 @@ class WorkoutModel {
   int _id;
   String _name;
   List<MuscleMapModel> _muscles;
-  // WorkoutMeasureModel _measure;
-  // int _count;
 
   WorkoutModel({
     required int id,
     required String name,
     required List<MuscleMapModel> muscles,
-    // required WorkoutMeasureModel measure,
-    // required int count,
   })  : _id = id,
         _name = name,
         _muscles = muscles;
-  // _measure = measure,
-  // _count = count;
 
   int get id => _id;
   String get name => _name;
   List<MuscleMapModel> get muscles => _muscles;
-  // WorkoutMeasureModel get measure => _measure;
-  // int get count => _count;
 
   factory WorkoutModel.fromEntity(WorkoutEntity workout) {
     return WorkoutModel(
@@ -35,8 +27,6 @@ class WorkoutModel {
       muscles: workout.muscles
           .map((muscle) => MuscleMapModel.fromEntity(muscle))
           .toList(),
-      // measure: WorkoutMeasureModelMapper.fromEntity(workout.measure),
-      // count: workout.count,
     );
   }
 
@@ -45,8 +35,6 @@ class WorkoutModel {
       id: workout.id,
       name: workout.name,
       muscles: [],
-      // measure: WorkoutMeasureModelMapper.fromString(workout.repititionType),
-      // count: workout.repitition,
     );
   }
 
@@ -55,16 +43,12 @@ class WorkoutModel {
       id: id,
       name: name,
       muscles: muscles.map((muscle) => muscle.toEntity()).toList(),
-      // measure: WorkoutMeasureModelMapper.toEntity(measure),
-      // count: count,
     );
   }
 
   WorkoutsCompanion toCompanion() {
     return WorkoutsCompanion(
       name: Value(name),
-      // repitition: Value(count),
-      // repititionType: Value(measure.toString()),
     );
   }
 
@@ -73,38 +57,101 @@ class WorkoutModel {
   }
 }
 
-// enum WorkoutMeasureModel {
-//   time,
-//   reps,
-// }
+class WorkoutWithMeasureModel {
+  final int _id;
+  final WorkoutModel _workout;
+  final WorkoutMeasureModel _measure;
+  final int _count;
 
-// Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
-//   "time": WorkoutMeasureModel.time,
-//   "reps": WorkoutMeasureModel.reps,
-// };
+  const WorkoutWithMeasureModel({
+    required int id,
+    required WorkoutModel workout,
+    required WorkoutMeasureModel measure,
+    required int count,
+  })  : _id = id,
+        _workout = workout,
+        _measure = measure,
+        _count = count;
 
-// class WorkoutMeasureModelMapper {
-//   static WorkoutMeasureModel fromEntity(WorkoutMeasureEntity measure) {
-//     switch (measure) {
-//       case WorkoutMeasureEntity.time:
-//         return WorkoutMeasureModel.time;
-//       case WorkoutMeasureEntity.reps:
-//         return WorkoutMeasureModel.reps;
-//     }
-//   }
+  int get id => _id;
+  WorkoutModel get workout => _workout;
+  WorkoutMeasureModel get measure => _measure;
+  int get count => _count;
 
-//   static WorkoutMeasureEntity toEntity(WorkoutMeasureModel measure) {
-//     switch (measure) {
-//       case WorkoutMeasureModel.reps:
-//         return WorkoutMeasureEntity.reps;
-//       case WorkoutMeasureModel.time:
-//         return WorkoutMeasureEntity.time;
-//     }
-//   }
+  factory WorkoutWithMeasureModel.fromEntity(
+    WorkoutWithMeasureEntity workoutWithMeasure,
+  ) {
+    return WorkoutWithMeasureModel(
+      id: workoutWithMeasure.id,
+      workout: WorkoutModel.fromEntity(workoutWithMeasure.workoutEntity),
+      measure: WorkoutMeasureModelMapper.fromEntity(workoutWithMeasure.measure),
+      count: workoutWithMeasure.count,
+    );
+  }
 
-//   static WorkoutMeasureModel fromString(String text) {
-//     final result = stringMappedtoMeasure[text];
+  factory WorkoutWithMeasureModel.fromDbModel(
+    WorkoutsWithMeasure workoutWithMeasure,
+    Workout workout,
+  ) {
+    return WorkoutWithMeasureModel(
+      id: workoutWithMeasure.id,
+      workout: WorkoutModel.fromDbModel(workout),
+      measure: WorkoutMeasureModelMapper.fromString(
+          workoutWithMeasure.repititionType),
+      count: workoutWithMeasure.repitition,
+    );
+  }
 
-//     return result ?? WorkoutMeasureModel.reps;
-//   }
-// }
+  WorkoutWithMeasureEntity toEntity() {
+    return WorkoutWithMeasureEntity(
+      id: id,
+      workoutEntity: workout.toEntity(),
+      measure: WorkoutMeasureModelMapper.toEntity(measure),
+      count: count,
+    );
+  }
+
+  WorkoutsWithMeasuresCompanion toCompanion() {
+    return WorkoutsWithMeasuresCompanion(
+      workoutId: Value(workout.id),
+      repitition: Value(count),
+      repititionType: Value(measure.toString()),
+    );
+  }
+}
+
+enum WorkoutMeasureModel {
+  time,
+  reps,
+}
+
+Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
+  "time": WorkoutMeasureModel.time,
+  "reps": WorkoutMeasureModel.reps,
+};
+
+class WorkoutMeasureModelMapper {
+  static WorkoutMeasureModel fromEntity(WorkoutMeasureEntity measure) {
+    switch (measure) {
+      case WorkoutMeasureEntity.time:
+        return WorkoutMeasureModel.time;
+      case WorkoutMeasureEntity.reps:
+        return WorkoutMeasureModel.reps;
+    }
+  }
+
+  static WorkoutMeasureEntity toEntity(WorkoutMeasureModel measure) {
+    switch (measure) {
+      case WorkoutMeasureModel.reps:
+        return WorkoutMeasureEntity.reps;
+      case WorkoutMeasureModel.time:
+        return WorkoutMeasureEntity.time;
+    }
+  }
+
+  static WorkoutMeasureModel fromString(String text) {
+    final result = stringMappedtoMeasure[text];
+
+    return result ?? WorkoutMeasureModel.reps;
+  }
+}

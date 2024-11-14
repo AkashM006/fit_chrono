@@ -841,7 +841,11 @@ class $WorkoutsInWavesTable extends WorkoutsInWaves
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {workoutId, workoutWaveId, position};
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+        {workoutId, workoutWaveId, position},
+      ];
   @override
   WorkoutsInWave map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -1019,12 +1023,12 @@ class WorkoutsInWavesCompanion extends UpdateCompanion<WorkoutsInWave> {
   }
 }
 
-class $WorkoutsWithMeasurementTable extends WorkoutsWithMeasurement
-    with TableInfo<$WorkoutsWithMeasurementTable, WorkoutsWithMeasurementData> {
+class $WorkoutsWithMeasuresTable extends WorkoutsWithMeasures
+    with TableInfo<$WorkoutsWithMeasuresTable, WorkoutsWithMeasure> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $WorkoutsWithMeasurementTable(this.attachedDatabase, [this._alias]);
+  $WorkoutsWithMeasuresTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1062,10 +1066,10 @@ class $WorkoutsWithMeasurementTable extends WorkoutsWithMeasurement
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'workouts_with_measurement';
+  static const String $name = 'workouts_with_measures';
   @override
   VerificationContext validateIntegrity(
-      Insertable<WorkoutsWithMeasurementData> instance,
+      Insertable<WorkoutsWithMeasure> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1104,10 +1108,9 @@ class $WorkoutsWithMeasurementTable extends WorkoutsWithMeasurement
         {workoutId, repitition, repititionType},
       ];
   @override
-  WorkoutsWithMeasurementData map(Map<String, dynamic> data,
-      {String? tablePrefix}) {
+  WorkoutsWithMeasure map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return WorkoutsWithMeasurementData(
+    return WorkoutsWithMeasure(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       workoutId: attachedDatabase.typeMapping
@@ -1120,18 +1123,18 @@ class $WorkoutsWithMeasurementTable extends WorkoutsWithMeasurement
   }
 
   @override
-  $WorkoutsWithMeasurementTable createAlias(String alias) {
-    return $WorkoutsWithMeasurementTable(attachedDatabase, alias);
+  $WorkoutsWithMeasuresTable createAlias(String alias) {
+    return $WorkoutsWithMeasuresTable(attachedDatabase, alias);
   }
 }
 
-class WorkoutsWithMeasurementData extends DataClass
-    implements Insertable<WorkoutsWithMeasurementData> {
+class WorkoutsWithMeasure extends DataClass
+    implements Insertable<WorkoutsWithMeasure> {
   final int id;
   final int workoutId;
   final int repitition;
   final String repititionType;
-  const WorkoutsWithMeasurementData(
+  const WorkoutsWithMeasure(
       {required this.id,
       required this.workoutId,
       required this.repitition,
@@ -1146,8 +1149,8 @@ class WorkoutsWithMeasurementData extends DataClass
     return map;
   }
 
-  WorkoutsWithMeasurementCompanion toCompanion(bool nullToAbsent) {
-    return WorkoutsWithMeasurementCompanion(
+  WorkoutsWithMeasuresCompanion toCompanion(bool nullToAbsent) {
+    return WorkoutsWithMeasuresCompanion(
       id: Value(id),
       workoutId: Value(workoutId),
       repitition: Value(repitition),
@@ -1155,10 +1158,10 @@ class WorkoutsWithMeasurementData extends DataClass
     );
   }
 
-  factory WorkoutsWithMeasurementData.fromJson(Map<String, dynamic> json,
+  factory WorkoutsWithMeasure.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return WorkoutsWithMeasurementData(
+    return WorkoutsWithMeasure(
       id: serializer.fromJson<int>(json['id']),
       workoutId: serializer.fromJson<int>(json['workoutId']),
       repitition: serializer.fromJson<int>(json['repitition']),
@@ -1176,17 +1179,16 @@ class WorkoutsWithMeasurementData extends DataClass
     };
   }
 
-  WorkoutsWithMeasurementData copyWith(
+  WorkoutsWithMeasure copyWith(
           {int? id, int? workoutId, int? repitition, String? repititionType}) =>
-      WorkoutsWithMeasurementData(
+      WorkoutsWithMeasure(
         id: id ?? this.id,
         workoutId: workoutId ?? this.workoutId,
         repitition: repitition ?? this.repitition,
         repititionType: repititionType ?? this.repititionType,
       );
-  WorkoutsWithMeasurementData copyWithCompanion(
-      WorkoutsWithMeasurementCompanion data) {
-    return WorkoutsWithMeasurementData(
+  WorkoutsWithMeasure copyWithCompanion(WorkoutsWithMeasuresCompanion data) {
+    return WorkoutsWithMeasure(
       id: data.id.present ? data.id.value : this.id,
       workoutId: data.workoutId.present ? data.workoutId.value : this.workoutId,
       repitition:
@@ -1199,7 +1201,7 @@ class WorkoutsWithMeasurementData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('WorkoutsWithMeasurementData(')
+    return (StringBuffer('WorkoutsWithMeasure(')
           ..write('id: $id, ')
           ..write('workoutId: $workoutId, ')
           ..write('repitition: $repitition, ')
@@ -1213,26 +1215,26 @@ class WorkoutsWithMeasurementData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is WorkoutsWithMeasurementData &&
+      (other is WorkoutsWithMeasure &&
           other.id == this.id &&
           other.workoutId == this.workoutId &&
           other.repitition == this.repitition &&
           other.repititionType == this.repititionType);
 }
 
-class WorkoutsWithMeasurementCompanion
-    extends UpdateCompanion<WorkoutsWithMeasurementData> {
+class WorkoutsWithMeasuresCompanion
+    extends UpdateCompanion<WorkoutsWithMeasure> {
   final Value<int> id;
   final Value<int> workoutId;
   final Value<int> repitition;
   final Value<String> repititionType;
-  const WorkoutsWithMeasurementCompanion({
+  const WorkoutsWithMeasuresCompanion({
     this.id = const Value.absent(),
     this.workoutId = const Value.absent(),
     this.repitition = const Value.absent(),
     this.repititionType = const Value.absent(),
   });
-  WorkoutsWithMeasurementCompanion.insert({
+  WorkoutsWithMeasuresCompanion.insert({
     this.id = const Value.absent(),
     required int workoutId,
     required int repitition,
@@ -1240,7 +1242,7 @@ class WorkoutsWithMeasurementCompanion
   })  : workoutId = Value(workoutId),
         repitition = Value(repitition),
         repititionType = Value(repititionType);
-  static Insertable<WorkoutsWithMeasurementData> custom({
+  static Insertable<WorkoutsWithMeasure> custom({
     Expression<int>? id,
     Expression<int>? workoutId,
     Expression<int>? repitition,
@@ -1254,12 +1256,12 @@ class WorkoutsWithMeasurementCompanion
     });
   }
 
-  WorkoutsWithMeasurementCompanion copyWith(
+  WorkoutsWithMeasuresCompanion copyWith(
       {Value<int>? id,
       Value<int>? workoutId,
       Value<int>? repitition,
       Value<String>? repititionType}) {
-    return WorkoutsWithMeasurementCompanion(
+    return WorkoutsWithMeasuresCompanion(
       id: id ?? this.id,
       workoutId: workoutId ?? this.workoutId,
       repitition: repitition ?? this.repitition,
@@ -1287,7 +1289,7 @@ class WorkoutsWithMeasurementCompanion
 
   @override
   String toString() {
-    return (StringBuffer('WorkoutsWithMeasurementCompanion(')
+    return (StringBuffer('WorkoutsWithMeasuresCompanion(')
           ..write('id: $id, ')
           ..write('workoutId: $workoutId, ')
           ..write('repitition: $repitition, ')
@@ -1307,8 +1309,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $WorkoutWavesTable workoutWaves = $WorkoutWavesTable(this);
   late final $WorkoutsInWavesTable workoutsInWaves =
       $WorkoutsInWavesTable(this);
-  late final $WorkoutsWithMeasurementTable workoutsWithMeasurement =
-      $WorkoutsWithMeasurementTable(this);
+  late final $WorkoutsWithMeasuresTable workoutsWithMeasures =
+      $WorkoutsWithMeasuresTable(this);
   late final MuscleMapDao muscleMapDao = MuscleMapDao(this as AppDatabase);
   late final WorkoutDao workoutDao = WorkoutDao(this as AppDatabase);
   late final WorkoutWaveDao workoutWaveDao =
@@ -1323,7 +1325,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         muscleMapsForWorkouts,
         workoutWaves,
         workoutsInWaves,
-        workoutsWithMeasurement
+        workoutsWithMeasures
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -1360,7 +1362,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
             on: TableUpdateQuery.onTableName('workouts',
                 limitUpdateKind: UpdateKind.delete),
             result: [
-              TableUpdate('workouts_with_measurement', kind: UpdateKind.delete),
+              TableUpdate('workouts_with_measures', kind: UpdateKind.delete),
             ],
           ),
         ],
@@ -1627,21 +1629,21 @@ final class $$WorkoutsTableReferences
         manager.$state.copyWith(prefetchedData: cache));
   }
 
-  static MultiTypedResultKey<$WorkoutsWithMeasurementTable,
-      List<WorkoutsWithMeasurementData>> _workoutsWithMeasurementRefsTable(
+  static MultiTypedResultKey<$WorkoutsWithMeasuresTable,
+      List<WorkoutsWithMeasure>> _workoutsWithMeasuresRefsTable(
           _$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(db.workoutsWithMeasurement,
+      MultiTypedResultKey.fromTable(db.workoutsWithMeasures,
           aliasName: $_aliasNameGenerator(
-              db.workouts.id, db.workoutsWithMeasurement.workoutId));
+              db.workouts.id, db.workoutsWithMeasures.workoutId));
 
-  $$WorkoutsWithMeasurementTableProcessedTableManager
-      get workoutsWithMeasurementRefs {
-    final manager = $$WorkoutsWithMeasurementTableTableManager(
-            $_db, $_db.workoutsWithMeasurement)
-        .filter((f) => f.workoutId.id($_item.id));
+  $$WorkoutsWithMeasuresTableProcessedTableManager
+      get workoutsWithMeasuresRefs {
+    final manager =
+        $$WorkoutsWithMeasuresTableTableManager($_db, $_db.workoutsWithMeasures)
+            .filter((f) => f.workoutId.id($_item.id));
 
     final cache =
-        $_typedResult.readTableOrNull(_workoutsWithMeasurementRefsTable($_db));
+        $_typedResult.readTableOrNull(_workoutsWithMeasuresRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -1706,26 +1708,25 @@ class $$WorkoutsTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> workoutsWithMeasurementRefs(
-      Expression<bool> Function($$WorkoutsWithMeasurementTableFilterComposer f)
+  Expression<bool> workoutsWithMeasuresRefs(
+      Expression<bool> Function($$WorkoutsWithMeasuresTableFilterComposer f)
           f) {
-    final $$WorkoutsWithMeasurementTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.workoutsWithMeasurement,
-            getReferencedColumn: (t) => t.workoutId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$WorkoutsWithMeasurementTableFilterComposer(
-                  $db: $db,
-                  $table: $db.workoutsWithMeasurement,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+    final $$WorkoutsWithMeasuresTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.workoutsWithMeasures,
+        getReferencedColumn: (t) => t.workoutId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$WorkoutsWithMeasuresTableFilterComposer(
+              $db: $db,
+              $table: $db.workoutsWithMeasures,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 }
@@ -1805,21 +1806,21 @@ class $$WorkoutsTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> workoutsWithMeasurementRefs<T extends Object>(
-      Expression<T> Function($$WorkoutsWithMeasurementTableAnnotationComposer a)
+  Expression<T> workoutsWithMeasuresRefs<T extends Object>(
+      Expression<T> Function($$WorkoutsWithMeasuresTableAnnotationComposer a)
           f) {
-    final $$WorkoutsWithMeasurementTableAnnotationComposer composer =
+    final $$WorkoutsWithMeasuresTableAnnotationComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.workoutsWithMeasurement,
+            referencedTable: $db.workoutsWithMeasures,
             getReferencedColumn: (t) => t.workoutId,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$WorkoutsWithMeasurementTableAnnotationComposer(
+                $$WorkoutsWithMeasuresTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.workoutsWithMeasurement,
+                  $table: $db.workoutsWithMeasures,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -1843,7 +1844,7 @@ class $$WorkoutsTableTableManager extends RootTableManager<
     PrefetchHooks Function(
         {bool muscleMapsForWorkoutsRefs,
         bool workoutsInWavesRefs,
-        bool workoutsWithMeasurementRefs})> {
+        bool workoutsWithMeasuresRefs})> {
   $$WorkoutsTableTableManager(_$AppDatabase db, $WorkoutsTable table)
       : super(TableManagerState(
           db: db,
@@ -1877,13 +1878,13 @@ class $$WorkoutsTableTableManager extends RootTableManager<
           prefetchHooksCallback: (
               {muscleMapsForWorkoutsRefs = false,
               workoutsInWavesRefs = false,
-              workoutsWithMeasurementRefs = false}) {
+              workoutsWithMeasuresRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (muscleMapsForWorkoutsRefs) db.muscleMapsForWorkouts,
                 if (workoutsInWavesRefs) db.workoutsInWaves,
-                if (workoutsWithMeasurementRefs) db.workoutsWithMeasurement
+                if (workoutsWithMeasuresRefs) db.workoutsWithMeasures
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
@@ -1912,14 +1913,14 @@ class $$WorkoutsTableTableManager extends RootTableManager<
                             (item, referencedItems) => referencedItems
                                 .where((e) => e.workoutId == item.id),
                         typedResults: items),
-                  if (workoutsWithMeasurementRefs)
+                  if (workoutsWithMeasuresRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$WorkoutsTableReferences
-                            ._workoutsWithMeasurementRefsTable(db),
+                            ._workoutsWithMeasuresRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$WorkoutsTableReferences(db, table, p0)
-                                .workoutsWithMeasurementRefs,
+                                .workoutsWithMeasuresRefs,
                         referencedItemsForCurrentItem:
                             (item, referencedItems) => referencedItems
                                 .where((e) => e.workoutId == item.id),
@@ -1945,7 +1946,7 @@ typedef $$WorkoutsTableProcessedTableManager = ProcessedTableManager<
     PrefetchHooks Function(
         {bool muscleMapsForWorkoutsRefs,
         bool workoutsInWavesRefs,
-        bool workoutsWithMeasurementRefs})>;
+        bool workoutsWithMeasuresRefs})>;
 typedef $$MuscleMapsForWorkoutsTableCreateCompanionBuilder
     = MuscleMapsForWorkoutsCompanion Function({
   required int workoutId,
@@ -2802,29 +2803,29 @@ typedef $$WorkoutsInWavesTableProcessedTableManager = ProcessedTableManager<
     (WorkoutsInWave, $$WorkoutsInWavesTableReferences),
     WorkoutsInWave,
     PrefetchHooks Function({bool workoutId, bool workoutWaveId})>;
-typedef $$WorkoutsWithMeasurementTableCreateCompanionBuilder
-    = WorkoutsWithMeasurementCompanion Function({
+typedef $$WorkoutsWithMeasuresTableCreateCompanionBuilder
+    = WorkoutsWithMeasuresCompanion Function({
   Value<int> id,
   required int workoutId,
   required int repitition,
   required String repititionType,
 });
-typedef $$WorkoutsWithMeasurementTableUpdateCompanionBuilder
-    = WorkoutsWithMeasurementCompanion Function({
+typedef $$WorkoutsWithMeasuresTableUpdateCompanionBuilder
+    = WorkoutsWithMeasuresCompanion Function({
   Value<int> id,
   Value<int> workoutId,
   Value<int> repitition,
   Value<String> repititionType,
 });
 
-final class $$WorkoutsWithMeasurementTableReferences extends BaseReferences<
-    _$AppDatabase, $WorkoutsWithMeasurementTable, WorkoutsWithMeasurementData> {
-  $$WorkoutsWithMeasurementTableReferences(
+final class $$WorkoutsWithMeasuresTableReferences extends BaseReferences<
+    _$AppDatabase, $WorkoutsWithMeasuresTable, WorkoutsWithMeasure> {
+  $$WorkoutsWithMeasuresTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
   static $WorkoutsTable _workoutIdTable(_$AppDatabase db) =>
       db.workouts.createAlias($_aliasNameGenerator(
-          db.workoutsWithMeasurement.workoutId, db.workouts.id));
+          db.workoutsWithMeasures.workoutId, db.workouts.id));
 
   $$WorkoutsTableProcessedTableManager? get workoutId {
     if ($_item.workoutId == null) return null;
@@ -2837,9 +2838,9 @@ final class $$WorkoutsWithMeasurementTableReferences extends BaseReferences<
   }
 }
 
-class $$WorkoutsWithMeasurementTableFilterComposer
-    extends Composer<_$AppDatabase, $WorkoutsWithMeasurementTable> {
-  $$WorkoutsWithMeasurementTableFilterComposer({
+class $$WorkoutsWithMeasuresTableFilterComposer
+    extends Composer<_$AppDatabase, $WorkoutsWithMeasuresTable> {
+  $$WorkoutsWithMeasuresTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2877,9 +2878,9 @@ class $$WorkoutsWithMeasurementTableFilterComposer
   }
 }
 
-class $$WorkoutsWithMeasurementTableOrderingComposer
-    extends Composer<_$AppDatabase, $WorkoutsWithMeasurementTable> {
-  $$WorkoutsWithMeasurementTableOrderingComposer({
+class $$WorkoutsWithMeasuresTableOrderingComposer
+    extends Composer<_$AppDatabase, $WorkoutsWithMeasuresTable> {
+  $$WorkoutsWithMeasuresTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2917,9 +2918,9 @@ class $$WorkoutsWithMeasurementTableOrderingComposer
   }
 }
 
-class $$WorkoutsWithMeasurementTableAnnotationComposer
-    extends Composer<_$AppDatabase, $WorkoutsWithMeasurementTable> {
-  $$WorkoutsWithMeasurementTableAnnotationComposer({
+class $$WorkoutsWithMeasuresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $WorkoutsWithMeasuresTable> {
+  $$WorkoutsWithMeasuresTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2956,31 +2957,30 @@ class $$WorkoutsWithMeasurementTableAnnotationComposer
   }
 }
 
-class $$WorkoutsWithMeasurementTableTableManager extends RootTableManager<
+class $$WorkoutsWithMeasuresTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $WorkoutsWithMeasurementTable,
-    WorkoutsWithMeasurementData,
-    $$WorkoutsWithMeasurementTableFilterComposer,
-    $$WorkoutsWithMeasurementTableOrderingComposer,
-    $$WorkoutsWithMeasurementTableAnnotationComposer,
-    $$WorkoutsWithMeasurementTableCreateCompanionBuilder,
-    $$WorkoutsWithMeasurementTableUpdateCompanionBuilder,
-    (WorkoutsWithMeasurementData, $$WorkoutsWithMeasurementTableReferences),
-    WorkoutsWithMeasurementData,
+    $WorkoutsWithMeasuresTable,
+    WorkoutsWithMeasure,
+    $$WorkoutsWithMeasuresTableFilterComposer,
+    $$WorkoutsWithMeasuresTableOrderingComposer,
+    $$WorkoutsWithMeasuresTableAnnotationComposer,
+    $$WorkoutsWithMeasuresTableCreateCompanionBuilder,
+    $$WorkoutsWithMeasuresTableUpdateCompanionBuilder,
+    (WorkoutsWithMeasure, $$WorkoutsWithMeasuresTableReferences),
+    WorkoutsWithMeasure,
     PrefetchHooks Function({bool workoutId})> {
-  $$WorkoutsWithMeasurementTableTableManager(
-      _$AppDatabase db, $WorkoutsWithMeasurementTable table)
+  $$WorkoutsWithMeasuresTableTableManager(
+      _$AppDatabase db, $WorkoutsWithMeasuresTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$WorkoutsWithMeasurementTableFilterComposer(
-                  $db: db, $table: table),
+              $$WorkoutsWithMeasuresTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$WorkoutsWithMeasurementTableOrderingComposer(
+              $$WorkoutsWithMeasuresTableOrderingComposer(
                   $db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$WorkoutsWithMeasurementTableAnnotationComposer(
+              $$WorkoutsWithMeasuresTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -2988,7 +2988,7 @@ class $$WorkoutsWithMeasurementTableTableManager extends RootTableManager<
             Value<int> repitition = const Value.absent(),
             Value<String> repititionType = const Value.absent(),
           }) =>
-              WorkoutsWithMeasurementCompanion(
+              WorkoutsWithMeasuresCompanion(
             id: id,
             workoutId: workoutId,
             repitition: repitition,
@@ -3000,7 +3000,7 @@ class $$WorkoutsWithMeasurementTableTableManager extends RootTableManager<
             required int repitition,
             required String repititionType,
           }) =>
-              WorkoutsWithMeasurementCompanion.insert(
+              WorkoutsWithMeasuresCompanion.insert(
             id: id,
             workoutId: workoutId,
             repitition: repitition,
@@ -3009,7 +3009,7 @@ class $$WorkoutsWithMeasurementTableTableManager extends RootTableManager<
           withReferenceMapper: (p0) => p0
               .map((e) => (
                     e.readTable(table),
-                    $$WorkoutsWithMeasurementTableReferences(db, table, e)
+                    $$WorkoutsWithMeasuresTableReferences(db, table, e)
                   ))
               .toList(),
           prefetchHooksCallback: ({workoutId = false}) {
@@ -3033,9 +3033,9 @@ class $$WorkoutsWithMeasurementTableTableManager extends RootTableManager<
                   state = state.withJoin(
                     currentTable: table,
                     currentColumn: table.workoutId,
-                    referencedTable: $$WorkoutsWithMeasurementTableReferences
+                    referencedTable: $$WorkoutsWithMeasuresTableReferences
                         ._workoutIdTable(db),
-                    referencedColumn: $$WorkoutsWithMeasurementTableReferences
+                    referencedColumn: $$WorkoutsWithMeasuresTableReferences
                         ._workoutIdTable(db)
                         .id,
                   ) as T;
@@ -3051,18 +3051,18 @@ class $$WorkoutsWithMeasurementTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$WorkoutsWithMeasurementTableProcessedTableManager
+typedef $$WorkoutsWithMeasuresTableProcessedTableManager
     = ProcessedTableManager<
         _$AppDatabase,
-        $WorkoutsWithMeasurementTable,
-        WorkoutsWithMeasurementData,
-        $$WorkoutsWithMeasurementTableFilterComposer,
-        $$WorkoutsWithMeasurementTableOrderingComposer,
-        $$WorkoutsWithMeasurementTableAnnotationComposer,
-        $$WorkoutsWithMeasurementTableCreateCompanionBuilder,
-        $$WorkoutsWithMeasurementTableUpdateCompanionBuilder,
-        (WorkoutsWithMeasurementData, $$WorkoutsWithMeasurementTableReferences),
-        WorkoutsWithMeasurementData,
+        $WorkoutsWithMeasuresTable,
+        WorkoutsWithMeasure,
+        $$WorkoutsWithMeasuresTableFilterComposer,
+        $$WorkoutsWithMeasuresTableOrderingComposer,
+        $$WorkoutsWithMeasuresTableAnnotationComposer,
+        $$WorkoutsWithMeasuresTableCreateCompanionBuilder,
+        $$WorkoutsWithMeasuresTableUpdateCompanionBuilder,
+        (WorkoutsWithMeasure, $$WorkoutsWithMeasuresTableReferences),
+        WorkoutsWithMeasure,
         PrefetchHooks Function({bool workoutId})>;
 
 class $AppDatabaseManager {
@@ -3078,9 +3078,8 @@ class $AppDatabaseManager {
       $$WorkoutWavesTableTableManager(_db, _db.workoutWaves);
   $$WorkoutsInWavesTableTableManager get workoutsInWaves =>
       $$WorkoutsInWavesTableTableManager(_db, _db.workoutsInWaves);
-  $$WorkoutsWithMeasurementTableTableManager get workoutsWithMeasurement =>
-      $$WorkoutsWithMeasurementTableTableManager(
-          _db, _db.workoutsWithMeasurement);
+  $$WorkoutsWithMeasuresTableTableManager get workoutsWithMeasures =>
+      $$WorkoutsWithMeasuresTableTableManager(_db, _db.workoutsWithMeasures);
 }
 
 // **************************************************************************

@@ -5,7 +5,7 @@ class Workouts extends Table {
   TextColumn get name => text()();
 }
 
-class WorkoutsWithMeasurement extends Table {
+class WorkoutsWithMeasures extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get workoutId =>
       integer().references(Workouts, #id, onDelete: KeyAction.cascade)();

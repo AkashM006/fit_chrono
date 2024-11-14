@@ -1,4 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
+import 'package:fit_chrono/src/features/workout/data/model/workout.model.dart';
 import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.entity.dart';
 
 class WorkoutWaveModel {
@@ -42,5 +44,24 @@ class WorkoutWaveModel {
     );
   }
 
-  // todo: Implement toCompanion method
+  WorkoutWavesCompanion toCompanion() {
+    return WorkoutWavesCompanion(
+      name: Value(name),
+      times: Value(times),
+    );
+  }
+}
+
+class WorkoutWaveWithWorkoutsMeasureModel {
+  final WorkoutWaveModel _workoutWave;
+  final List<WorkoutWithMeasureModel> _workouts;
+
+  const WorkoutWaveWithWorkoutsMeasureModel({
+    required WorkoutWaveModel workoutWave,
+    required List<WorkoutWithMeasureModel> workouts,
+  })  : _workoutWave = workoutWave,
+        _workouts = workouts;
+
+  WorkoutWaveModel get workoutWave => _workoutWave;
+  List<WorkoutWithMeasureModel> get workouts => _workouts;
 }
