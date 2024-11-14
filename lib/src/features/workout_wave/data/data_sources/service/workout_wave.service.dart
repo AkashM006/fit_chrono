@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
+import 'package:fit_chrono/src/features/workout_wave/data/modal/workout_wave.model.dart';
 import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,6 +18,16 @@ class WorkoutWaveService {
               )
               .toList(),
         );
+  }
+
+  Future<void> addWorkoutWave(
+    WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutMeasures,
+  ) {
+    return _database.workoutWaveDao.addWorkoutWave(
+      WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
+        workoutWaveWithWorkoutMeasures,
+      ),
+    );
   }
 }
 

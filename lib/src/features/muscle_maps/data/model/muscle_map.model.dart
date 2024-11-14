@@ -42,4 +42,12 @@ class MuscleMapModel {
       name: Value(name),
     );
   }
+
+  @override
+  bool operator ==(covariant MuscleMapModel other) {
+    return name == other.name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
 }

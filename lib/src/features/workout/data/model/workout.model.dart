@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dart';
+import 'package:collection/collection.dart';
 
 class WorkoutModel {
   int _id;
@@ -55,6 +56,24 @@ class WorkoutModel {
   void setMuscles(List<MuscleMapModel> muscles) {
     _muscles = muscles;
   }
+
+  @override
+  bool operator ==(covariant WorkoutModel other) {
+    if (name != other.name) return false;
+
+    return const ListEquality().equals(muscles, other.muscles);
+  }
+
+  @override
+  int get hashCode {
+    int hashCode = name.hashCode;
+
+    for (var muscle in muscles) {
+      hashCode = hashCode ^ muscle.hashCode;
+    }
+
+    return hashCode;
+  }
 }
 
 class WorkoutWithMeasureModel {
@@ -62,21 +81,25 @@ class WorkoutWithMeasureModel {
   final WorkoutModel _workout;
   final WorkoutMeasureModel _measure;
   final int _count;
+  final int _position;
 
   const WorkoutWithMeasureModel({
     required int id,
     required WorkoutModel workout,
     required WorkoutMeasureModel measure,
     required int count,
+    int position = -1,
   })  : _id = id,
         _workout = workout,
         _measure = measure,
-        _count = count;
+        _count = count,
+        _position = position;
 
   int get id => _id;
   WorkoutModel get workout => _workout;
   WorkoutMeasureModel get measure => _measure;
   int get count => _count;
+  int get position => _position;
 
   factory WorkoutWithMeasureModel.fromEntity(
     WorkoutWithMeasureEntity workoutWithMeasure,
@@ -86,19 +109,23 @@ class WorkoutWithMeasureModel {
       workout: WorkoutModel.fromEntity(workoutWithMeasure.workoutEntity),
       measure: WorkoutMeasureModelMapper.fromEntity(workoutWithMeasure.measure),
       count: workoutWithMeasure.count,
+      position: workoutWithMeasure.position,
     );
   }
 
-  factory WorkoutWithMeasureModel.fromDbModel(
-    WorkoutsWithMeasure workoutWithMeasure,
-    Workout workout,
-  ) {
+  factory WorkoutWithMeasureModel.fromDbModel({
+    required WorkoutsWithMeasure workoutWithMeasure,
+    required Workout workout,
+    int position = -1,
+  }) {
     return WorkoutWithMeasureModel(
       id: workoutWithMeasure.id,
       workout: WorkoutModel.fromDbModel(workout),
       measure: WorkoutMeasureModelMapper.fromString(
-          workoutWithMeasure.repititionType),
+        workoutWithMeasure.repititionType,
+      ),
       count: workoutWithMeasure.repitition,
+      position: position,
     );
   }
 
@@ -108,6 +135,7 @@ class WorkoutWithMeasureModel {
       workoutEntity: workout.toEntity(),
       measure: WorkoutMeasureModelMapper.toEntity(measure),
       count: count,
+      position: position,
     );
   }
 
@@ -116,6 +144,29 @@ class WorkoutWithMeasureModel {
       workoutId: Value(workout.id),
       repitition: Value(count),
       repititionType: Value(measure.toString()),
+    );
+  }
+
+  @override
+  bool operator ==(covariant WorkoutWithMeasureModel other) {
+    return workout == other.workout &&
+        measure == other.measure &&
+        count == other.count;
+  }
+
+  @override
+  int get hashCode => workout.hashCode ^ measure.hashCode ^ count.hashCode;
+
+  WorkoutWithMeasureModel copyWith({
+    int? id,
+    int? position,
+  }) {
+    return WorkoutWithMeasureModel(
+      id: id ?? this.id,
+      workout: workout,
+      measure: measure,
+      count: count,
+      position: position ?? this.position,
     );
   }
 }
