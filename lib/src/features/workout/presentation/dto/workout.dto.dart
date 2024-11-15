@@ -98,32 +98,118 @@ class WorkoutDto {
   }
 }
 
-// enum WorkoutMeasureDto {
-//   time,
-//   reps,
-// }
+class WorkoutWithMeasureDto {
+  final int _id;
+  final WorkoutDto _workout;
+  final WorkoutMeasureDto _workoutMeasure;
+  final int _count;
+  final int _position;
 
-// Map<String, WorkoutMeasureDto> stringMappedtoMeasure = {
-//   "time": WorkoutMeasureDto.time,
-//   "reps": WorkoutMeasureDto.reps,
-// };
+  const WorkoutWithMeasureDto({
+    int id = -1,
+    required WorkoutDto workout,
+    required WorkoutMeasureDto workoutMeasure,
+    required int count,
+    required int position,
+  })  : _id = id,
+        _workout = workout,
+        _workoutMeasure = workoutMeasure,
+        _count = count,
+        _position = position;
 
-// class WorkoutMeasureModelMapper {
-//   static WorkoutMeasureDto fromEntity(WorkoutMeasureEntity measure) {
-//     switch (measure) {
-//       case WorkoutMeasureEntity.time:
-//         return WorkoutMeasureDto.time;
-//       case WorkoutMeasureEntity.reps:
-//         return WorkoutMeasureDto.reps;
-//     }
-//   }
+  int get id => _id;
+  WorkoutDto get workout => _workout;
+  WorkoutMeasureDto get workoutMeasure => _workoutMeasure;
+  int get count => _count;
+  int get position => _position;
 
-//   static WorkoutMeasureEntity toEntity(WorkoutMeasureDto measure) {
-//     switch (measure) {
-//       case WorkoutMeasureDto.reps:
-//         return WorkoutMeasureEntity.reps;
-//       case WorkoutMeasureDto.time:
-//         return WorkoutMeasureEntity.time;
-//     }
-//   }
-// }
+  factory WorkoutWithMeasureDto.fromEntity(
+    WorkoutWithMeasureEntity workoutWithMeasure,
+  ) {
+    return WorkoutWithMeasureDto(
+      workout: WorkoutDto.fromEntity(workoutWithMeasure.workoutEntity),
+      workoutMeasure:
+          WorkoutMeasureDtoMapper.fromEntity(workoutWithMeasure.measure),
+      count: workoutWithMeasure.count,
+      position: workoutWithMeasure.position,
+    );
+  }
+
+  WorkoutWithMeasureEntity toEntity() {
+    return WorkoutWithMeasureEntity(
+      id: id,
+      workoutEntity: workout.toEntity(),
+      measure: WorkoutMeasureDtoMapper.toEntity(workoutMeasure),
+      count: count,
+      position: position,
+    );
+  }
+
+  factory WorkoutWithMeasureDto.init() {
+    return WorkoutWithMeasureDto(
+      workout: WorkoutDto.init(),
+      workoutMeasure: WorkoutMeasureDto.time,
+      count: 0,
+      position: -1,
+    );
+  }
+
+  WorkoutWithMeasureDto copyWith({
+    WorkoutDto? workout,
+    WorkoutMeasureDto? workoutMeasure,
+    int? count,
+    int? position,
+  }) {
+    return WorkoutWithMeasureDto(
+      workout: workout ?? this.workout,
+      workoutMeasure: workoutMeasure ?? this.workoutMeasure,
+      count: count ?? this.count,
+      position: position ?? this.position,
+    );
+  }
+
+  @override
+  bool operator ==(covariant WorkoutWithMeasureDto other) {
+    return _workout == other.workout &&
+        _workoutMeasure == other.workoutMeasure &&
+        _count == other.count &&
+        _position == other.position;
+  }
+
+  @override
+  int get hashCode =>
+      _workout.hashCode ^
+      _workoutMeasure.hashCode ^
+      _count.hashCode ^
+      _position.hashCode;
+}
+
+enum WorkoutMeasureDto {
+  time,
+  reps,
+}
+
+Map<String, WorkoutMeasureDto> stringMappedtoMeasure = {
+  "time": WorkoutMeasureDto.time,
+  "reps": WorkoutMeasureDto.reps,
+};
+
+class WorkoutMeasureDtoMapper {
+  static WorkoutMeasureDto fromEntity(WorkoutMeasureEntity measure) {
+    switch (measure) {
+      case WorkoutMeasureEntity.time:
+        return WorkoutMeasureDto.time;
+      case WorkoutMeasureEntity.reps:
+        return WorkoutMeasureDto.reps;
+    }
+  }
+
+  static WorkoutMeasureEntity toEntity(WorkoutMeasureDto measure) {
+    switch (measure) {
+      case WorkoutMeasureDto.reps:
+        return WorkoutMeasureEntity.reps;
+      case WorkoutMeasureDto.time:
+        return WorkoutMeasureEntity.time;
+    }
+  }
+}
