@@ -127,9 +127,10 @@ class WorkoutWithMeasureDto {
     WorkoutWithMeasureEntity workoutWithMeasure,
   ) {
     return WorkoutWithMeasureDto(
-      workout: WorkoutDto.fromEntity(workoutWithMeasure.workoutEntity),
-      workoutMeasure:
-          WorkoutMeasureDtoMapper.fromEntity(workoutWithMeasure.measure),
+      workout: WorkoutDto.fromEntity(workoutWithMeasure.workout),
+      workoutMeasure: WorkoutMeasureDtoMapper.fromEntity(
+        workoutWithMeasure.workoutMeasure,
+      ),
       count: workoutWithMeasure.count,
       position: workoutWithMeasure.position,
     );
@@ -138,8 +139,8 @@ class WorkoutWithMeasureDto {
   WorkoutWithMeasureEntity toEntity() {
     return WorkoutWithMeasureEntity(
       id: id,
-      workoutEntity: workout.toEntity(),
-      measure: WorkoutMeasureDtoMapper.toEntity(workoutMeasure),
+      workout: workout.toEntity(),
+      workoutMeasure: WorkoutMeasureDtoMapper.toEntity(workoutMeasure),
       count: count,
       position: position,
     );

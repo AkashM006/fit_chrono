@@ -106,8 +106,10 @@ class WorkoutWithMeasureModel {
   ) {
     return WorkoutWithMeasureModel(
       id: workoutWithMeasure.id,
-      workout: WorkoutModel.fromEntity(workoutWithMeasure.workoutEntity),
-      measure: WorkoutMeasureModelMapper.fromEntity(workoutWithMeasure.measure),
+      workout: WorkoutModel.fromEntity(workoutWithMeasure.workout),
+      measure: WorkoutMeasureModelMapper.fromEntity(
+        workoutWithMeasure.workoutMeasure,
+      ),
       count: workoutWithMeasure.count,
       position: workoutWithMeasure.position,
     );
@@ -132,8 +134,8 @@ class WorkoutWithMeasureModel {
   WorkoutWithMeasureEntity toEntity() {
     return WorkoutWithMeasureEntity(
       id: id,
-      workoutEntity: workout.toEntity(),
-      measure: WorkoutMeasureModelMapper.toEntity(measure),
+      workout: workout.toEntity(),
+      workoutMeasure: WorkoutMeasureModelMapper.toEntity(measure),
       count: count,
       position: position,
     );
