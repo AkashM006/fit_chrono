@@ -54,23 +54,23 @@ class WorkoutWaveModel {
 
 class WorkoutWaveWithWorkoutsMeasureModel {
   final WorkoutWaveModel _workoutWave;
-  final List<WorkoutWithMeasureModel> _workouts;
+  final List<WorkoutWithMeasureModel> _workoutsWithMeasure;
 
   const WorkoutWaveWithWorkoutsMeasureModel({
     required WorkoutWaveModel workoutWave,
-    required List<WorkoutWithMeasureModel> workouts,
+    required List<WorkoutWithMeasureModel> workoutsWithMeasure,
   })  : _workoutWave = workoutWave,
-        _workouts = workouts;
+        _workoutsWithMeasure = workoutsWithMeasure;
 
   WorkoutWaveModel get workoutWave => _workoutWave;
-  List<WorkoutWithMeasureModel> get workouts => _workouts;
+  List<WorkoutWithMeasureModel> get workouts => _workoutsWithMeasure;
 
   factory WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
     WorkoutWaveWithWorkoutsMeasureEntity entity,
   ) {
     return WorkoutWaveWithWorkoutsMeasureModel(
       workoutWave: WorkoutWaveModel.fromEntity(entity.workoutWave),
-      workouts: entity.workoutsWithMeasurement
+      workoutsWithMeasure: entity.workoutsWithMeasure
           .map((workoutWithMeasurement) =>
               WorkoutWithMeasureModel.fromEntity(workoutWithMeasurement))
           .toList(),

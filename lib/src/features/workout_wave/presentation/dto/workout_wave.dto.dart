@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.entity.dart';
 
 class WorkoutWaveDto {
@@ -23,11 +24,11 @@ class WorkoutWaveDto {
     );
   }
 
-  factory WorkoutWaveDto.fromEntity(WorkoutWaveEntity entity) {
+  factory WorkoutWaveDto.fromEntity(WorkoutWaveEntity workoutWaveEntity) {
     return WorkoutWaveDto(
-      id: entity.id,
-      name: entity.name,
-      times: entity.times,
+      id: workoutWaveEntity.id,
+      name: workoutWaveEntity.name,
+      times: workoutWaveEntity.times,
     );
   }
 
@@ -57,4 +58,53 @@ class WorkoutWaveDto {
 
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ times.hashCode;
+}
+
+class WorkoutWaveWithWorkoutsMeasureDto {
+  final WorkoutWaveDto _workoutWave;
+  final List<WorkoutWithMeasureDto> _workoutsWithMeasure;
+
+  const WorkoutWaveWithWorkoutsMeasureDto({
+    required WorkoutWaveDto workoutWave,
+    required List<WorkoutWithMeasureDto> workoutsWithMeasure,
+  })  : _workoutWave = workoutWave,
+        _workoutsWithMeasure = workoutsWithMeasure;
+
+  WorkoutWaveDto get workoutWave => _workoutWave;
+  List<WorkoutWithMeasureDto> get workoutsWithMeasure => _workoutsWithMeasure;
+
+  factory WorkoutWaveWithWorkoutsMeasureDto.fromEntity(
+    WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutMeasureEntity,
+  ) {
+    return WorkoutWaveWithWorkoutsMeasureDto(
+      workoutWave: WorkoutWaveDto.fromEntity(
+          workoutWaveWithWorkoutMeasureEntity.workoutWave),
+      workoutsWithMeasure:
+          workoutWaveWithWorkoutMeasureEntity.workoutsWithMeasure
+              .map(
+                (workoutWithMeasureEntity) =>
+                    WorkoutWithMeasureDto.fromEntity(workoutWithMeasureEntity),
+              )
+              .toList(),
+    );
+  }
+
+  WorkoutWaveWithWorkoutsMeasureEntity toEntity() {
+    return WorkoutWaveWithWorkoutsMeasureEntity(
+      workoutWave: workoutWave.toEntity(),
+      workoutsWithMeasure: workoutsWithMeasure
+          .map((workoutWithMeasure) => workoutWithMeasure.toEntity())
+          .toList(),
+    );
+  }
+
+  WorkoutWaveWithWorkoutsMeasureDto copyWith({
+    WorkoutWaveDto? workoutWave,
+    List<WorkoutWithMeasureDto>? workoutsWithMeasure,
+  }) {
+    return WorkoutWaveWithWorkoutsMeasureDto(
+      workoutWave: workoutWave ?? this.workoutWave,
+      workoutsWithMeasure: workoutsWithMeasure ?? this.workoutsWithMeasure,
+    );
+  }
 }
