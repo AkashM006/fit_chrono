@@ -10,7 +10,6 @@ import 'package:fit_chrono/src/features/workout/presentation/provider/delete_wor
 import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 

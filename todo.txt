@@ -4,3 +4,4 @@
 4. Add another util function to project (Refer Notion) (DONE)
 5. Handle 404 page in go_router (DONE)
 6. Integrate drift db viewer to app (DONE)
+5. Implement pop scope in workout wave form
