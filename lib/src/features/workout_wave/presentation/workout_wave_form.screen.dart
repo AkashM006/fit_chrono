@@ -1,4 +1,5 @@
 import 'package:fit_chrono/src/features/shared/presentation/widgets/form_container/form_container.widget.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_wave_description.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,8 +10,10 @@ class WorkoutWaveFormScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(),
-      body: FormContainerWidget(
-        children: [],
+      body: const FormContainerWidget(
+        children: [
+          WorkoutWaveDescriptionWidget(),
+        ],
       ),
     );
   }
