@@ -30,7 +30,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<void> addMuscleMap(MuscleMapModel muscleMap) async {
-    handleError(
+    return handleError(
       () async {
         await into(muscleMaps).insert(muscleMap.toCompanion());
       },
@@ -62,7 +62,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<void> updateMuscleMap(int id, MuscleMapModel muscleMap) async {
-    handleError(
+    return handleError(
       () async {
         final query = (select(muscleMaps)
           ..where(
@@ -89,7 +89,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<void> deleteMuscleMap(int id) async {
-    handleError(
+    return handleError(
       () async {
         final query = (select(muscleMaps)
           ..where(

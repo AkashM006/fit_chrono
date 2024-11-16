@@ -16,8 +16,6 @@ class AddWorkoutWave extends _$AddWorkoutWave {
   ) async {
     state = DataLoading();
 
-    await Future.delayed(const Duration(seconds: 5));
-
     final workoutWaveRepostiory = ref.read(workoutWaveImplRepositoryProvider);
 
     final result = await AddWorkoutWaveUsecase(workoutWaveRepostiory)(

@@ -11,4 +11,4 @@
 11. Change count in WorkoutWithMeasure to double from int
 12. Handle WorkoutWithMeasure edit in added workouts
 13. Rename all update to edit and remove to delete
-14. Change workout wave form screen's layout (The workouts list must take as musch as possible and the rest must take intrinsic height)
+14. Change workout wave form screen's layout (The workouts list must take as musch as possible and the rest must take intrinsic height) (DONE)

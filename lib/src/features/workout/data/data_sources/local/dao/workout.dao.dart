@@ -55,7 +55,7 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
   }
 
   Future<void> addWorkout(WorkoutModel workout) async {
-    handleError(
+    return handleError(
       () async {
         await transaction(() async {
           final workoutId = await into(workouts).insert(
@@ -127,7 +127,7 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
   Future<void> updateWorkout(
     WorkoutModel workout,
   ) async {
-    handleError(
+    return handleError(
       () async {
         final query = (select(workouts)
           ..where(
@@ -175,7 +175,7 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
   }
 
   Future<void> deleteWorkout(int id) async {
-    handleError(
+    return handleError(
       () async {
         final query = (select(workouts)..where((tbl) => tbl.id.equals(id)));
 
