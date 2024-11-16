@@ -9,3 +9,4 @@
 9. Time/reps field must only accept numbers
 10. Run dart run custom_lint --fix to upgrade to the new riverpod and fix lint issues (View mail for more information)
 11. Change count in WorkoutWithMeasure to double from int
+12. Handle WorkoutWithMeasure edit in added workouts

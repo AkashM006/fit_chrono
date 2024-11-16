@@ -8,12 +8,14 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
     required this.workoutsWithMeasure,
     required this.workoutWaveName,
     required this.onWorkoutMeasureAdd,
+    required this.onAddedWorkoutWithMeasureRemove,
   });
 
   final List<WorkoutWithMeasureDto> workoutsWithMeasure;
   final String workoutWaveName;
   final void Function(WorkoutWithMeasureDto workoutWithMeasure)
       onWorkoutMeasureAdd;
+  final void Function(int index) onAddedWorkoutWithMeasureRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +28,37 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
       );
     }
 
-    final listWidgets = workoutsWithMeasure
-        .map((workoutWithMeasure) => ListTile(
-              title: Text(workoutWithMeasure.workout.name),
-            ))
-        .toList();
+    void onAddedWorkoutWithMeasureEdit(
+      WorkoutWithMeasureDto workoutWithMeasure,
+    ) {}
+
+    final listWidgets =
+        workoutsWithMeasure.asMap().entries.map((workoutWithMeasureEntry) {
+      final workoutWithMeasure = workoutWithMeasureEntry.value;
+      final index = workoutWithMeasureEntry.key;
+      final workoutCount =
+          '${workoutWithMeasure.count}${workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.time ? 's' : 'x'}';
+      return ListTile(
+        title: Text(workoutWithMeasure.workout.name),
+        subtitle: Text(workoutCount),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: () =>
+                  onAddedWorkoutWithMeasureEdit(workoutWithMeasure),
+              icon: const Icon(Icons.edit),
+              color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
+            ),
+            IconButton(
+              onPressed: () => onAddedWorkoutWithMeasureRemove(index),
+              icon: const Icon(Icons.delete),
+              color: Theme.of(context).colorScheme.error,
+            ),
+          ],
+        ),
+      );
+    }).toList();
 
     return Column(
       children: [

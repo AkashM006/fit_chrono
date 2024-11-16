@@ -33,6 +33,12 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
     });
   }
 
+  void onAddedWorkoutWithMeasureRemove(int index) {
+    setState(() {
+      _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -60,6 +66,7 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
               workoutWaveName:
                   _workoutWaveWithWorkoutsMeasureDto.workoutWave.name,
               onWorkoutMeasureAdd: onWorkoutMeasureAdd,
+              onAddedWorkoutWithMeasureRemove: onAddedWorkoutWithMeasureRemove,
             ),
           ],
         ),
