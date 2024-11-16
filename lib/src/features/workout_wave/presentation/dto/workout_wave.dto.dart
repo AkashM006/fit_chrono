@@ -107,4 +107,11 @@ class WorkoutWaveWithWorkoutsMeasureDto {
       workoutsWithMeasure: workoutsWithMeasure ?? this.workoutsWithMeasure,
     );
   }
+
+  factory WorkoutWaveWithWorkoutsMeasureDto.init() {
+    return WorkoutWaveWithWorkoutsMeasureDto(
+      workoutWave: WorkoutWaveDto.init(),
+      workoutsWithMeasure: [],
+    );
+  }
 }

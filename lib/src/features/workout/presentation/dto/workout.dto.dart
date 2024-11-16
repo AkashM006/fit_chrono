@@ -169,7 +169,17 @@ class WorkoutWithMeasureDto {
 
 enum WorkoutMeasureDto {
   time,
-  reps,
+  reps;
+
+  @override
+  String toString() {
+    switch (this) {
+      case WorkoutMeasureDto.time:
+        return "Time";
+      case WorkoutMeasureDto.reps:
+        return "Reps";
+    }
+  }
 }
 
 Map<String, WorkoutMeasureDto> stringMappedtoMeasure = {

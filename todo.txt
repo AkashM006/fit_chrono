@@ -4,4 +4,8 @@
 4. Add another util function to project (Refer Notion) (DONE)
 5. Handle 404 page in go_router (DONE)
 6. Integrate drift db viewer to app (DONE)
-5. Implement pop scope in workout wave form
+7. Implement pop scope in workout wave form
+8. Implement search for searchable workout list
+9. Time/reps field must only accept numbers
+10. Run dart run custom_lint --fix to upgrade to the new riverpod and fix lint issues (View mail for more information)
+11. Change count in WorkoutWithMeasure to double from int
