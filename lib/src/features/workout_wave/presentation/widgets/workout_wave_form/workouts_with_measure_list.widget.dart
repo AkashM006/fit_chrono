@@ -8,6 +8,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
     required this.workoutsWithMeasure,
     required this.workoutWaveName,
     required this.onWorkoutMeasureAdd,
+    required this.onAddedWorkoutWithMeasureEdit,
     required this.onAddedWorkoutWithMeasureRemove,
   });
 
@@ -15,6 +16,8 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
   final String workoutWaveName;
   final void Function(WorkoutWithMeasureDto workoutWithMeasure)
       onWorkoutMeasureAdd;
+  final void Function(int index, WorkoutWithMeasureDto workoutWithMeasure)
+      onAddedWorkoutWithMeasureEdit;
   final void Function(int index) onAddedWorkoutWithMeasureRemove;
 
   @override
@@ -28,9 +31,19 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
       );
     }
 
-    void onAddedWorkoutWithMeasureEdit(
+    void onEditWorkoutWithMeasure(
+      int index,
       WorkoutWithMeasureDto workoutWithMeasure,
-    ) {}
+    ) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => WorkoutFormDialogWidget(
+          onWorkoutMeasureAdd: (workoutWithMeasure) =>
+              onAddedWorkoutWithMeasureEdit(index, workoutWithMeasure),
+          workoutWithMeasure: workoutWithMeasure,
+        ),
+      );
+    }
 
     final listWidgets =
         workoutsWithMeasure.asMap().entries.map((workoutWithMeasureEntry) {
@@ -45,8 +58,10 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: () =>
-                  onAddedWorkoutWithMeasureEdit(workoutWithMeasure),
+              onPressed: () => onEditWorkoutWithMeasure(
+                index,
+                workoutWithMeasure,
+              ),
               icon: const Icon(Icons.edit),
               color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
             ),

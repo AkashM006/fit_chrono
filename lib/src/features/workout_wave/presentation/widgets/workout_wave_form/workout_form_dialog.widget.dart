@@ -16,9 +16,11 @@ enum Time {
 class WorkoutFormDialogWidget extends ConsumerStatefulWidget {
   const WorkoutFormDialogWidget({
     super.key,
+    this.workoutWithMeasure,
     required this.onWorkoutMeasureAdd,
   });
 
+  final WorkoutWithMeasureDto? workoutWithMeasure;
   final void Function(WorkoutWithMeasureDto workoutWithMeasure)
       onWorkoutMeasureAdd;
 
@@ -33,6 +35,17 @@ class _WorkoutFormDialogWidgetState
   final TextEditingController _workoutNameController = TextEditingController();
   WorkoutWithMeasureDto _workoutWithMeasure = WorkoutWithMeasureDto.init();
   Time _selectedTime = Time.seconds;
+
+  bool get isEditMode => widget.workoutWithMeasure != null;
+
+  @override
+  void initState() {
+    super.initState();
+    if (isEditMode) {
+      _workoutWithMeasure = widget.workoutWithMeasure!;
+      _workoutNameController.text = widget.workoutWithMeasure!.workout.name;
+    }
+  }
 
   @override
   void dispose() {
@@ -73,7 +86,6 @@ class _WorkoutFormDialogWidgetState
 
   void onAddWorkoutWithMeasure() {
     if (!_formKey.currentState!.validate()) return;
-
     _formKey.currentState!.save();
 
     if (_workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.time &&
@@ -224,7 +236,7 @@ class _WorkoutFormDialogWidgetState
               ),
               FilledButton(
                 onPressed: onAddWorkoutWithMeasure,
-                child: const Text("Add"),
+                child: Text(isEditMode ? "Edit" : "Add"),
               ),
             ],
           ),
