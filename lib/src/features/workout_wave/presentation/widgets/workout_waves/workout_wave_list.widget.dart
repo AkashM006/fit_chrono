@@ -23,6 +23,7 @@ class WorkoutWaveListWidget extends StatelessWidget {
 
         return ListTile(
           title: Text(workoutWave.name),
+          trailing: const Icon(Icons.arrow_right),
         );
       },
     );

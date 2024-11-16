@@ -62,6 +62,16 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
       return;
     }
 
+    _formKey.currentState!.save();
+
+    final workoutsWithMeasure =
+        _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure;
+
+    for (var i = 0; i < workoutsWithMeasure.length; i++) {
+      workoutsWithMeasure[i] = workoutsWithMeasure[i].copyWith(
+        position: i,
+      );
+    }
     ref
         .read(addWorkoutWaveProvider.notifier)
         .go(_workoutWaveWithWorkoutsMeasureDto);

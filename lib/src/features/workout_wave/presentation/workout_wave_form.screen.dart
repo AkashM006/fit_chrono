@@ -38,6 +38,7 @@ class WorkoutWaveFormScreen extends ConsumerWidget {
       isLoading: isLoading,
       children: [
         Scaffold(
+          resizeToAvoidBottomInset: true,
           appBar: AppBar(),
           body: const FormContainerWidget(
             isScroll: false,

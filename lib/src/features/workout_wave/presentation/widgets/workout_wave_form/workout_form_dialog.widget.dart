@@ -159,8 +159,6 @@ class _WorkoutFormDialogWidgetState
     );
 
     return SizedBox(
-      height: double.infinity,
-      width: double.infinity,
       child: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(20, 20, 20, keyboardSpace + 20),
         child: Form(

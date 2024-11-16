@@ -25,6 +25,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
     void onNewWorkoutWithMeasure() {
       showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (context) => WorkoutFormDialogWidget(
           onWorkoutMeasureAdd: onWorkoutMeasureAdd,
         ),
@@ -37,6 +38,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
     ) {
       showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (context) => WorkoutFormDialogWidget(
           onWorkoutMeasureAdd: (workoutWithMeasure) =>
               onAddedWorkoutWithMeasureEdit(index, workoutWithMeasure),

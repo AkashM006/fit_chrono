@@ -2,6 +2,7 @@ import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/workouts.provider.dart';
+import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +25,10 @@ class _SearchableWorkoutListWidgetState
   Widget build(BuildContext context) {
     final workouts = ref.watch(workoutsProvider);
 
+    void onAddWorkout() {
+      context.push(PAGES.workoutForm.path);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Select a workout"),
@@ -42,6 +47,14 @@ class _SearchableWorkoutListWidgetState
             ),
             const SizedBox(
               height: 20,
+            ),
+            OutlinedButton.icon(
+              onPressed: onAddWorkout,
+              icon: const Icon(Icons.add),
+              label: const Text("Add Workout"),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Expanded(
               child: CustomScrollView(
