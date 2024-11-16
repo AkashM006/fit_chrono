@@ -1,6 +1,7 @@
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_wave_error_dialog.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workouts_with_measure_list.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,7 +50,16 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
     });
   }
 
-  void onCreateWorkoutWave() {}
+  void onCreateWorkoutWave() {
+    if (!_formKey.currentState!.validate()) return;
+
+    if (_workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => const WorkoutWaveErrorDialogWidget(),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

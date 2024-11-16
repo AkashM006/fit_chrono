@@ -78,13 +78,6 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          // Align(
-          //   alignment: Alignment.centerLeft,
-          // child: Text(
-          //   "Workouts in your wave",
-          //   style: Theme.of(context).textTheme.titleMedium,
-          // ),
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
