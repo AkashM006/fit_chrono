@@ -4,21 +4,30 @@ import 'package:flutter/material.dart';
 class FormContainerWidget extends StatelessWidget {
   const FormContainerWidget({
     super.key,
+    this.isScroll = true,
     required this.children,
   });
 
   final List<Widget> children;
+  final bool isScroll;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: AppOffsets.screenPadding,
-      child: ConstrainedBox(
-        constraints: AppOffsets.formWidthConstraint,
-        child: Column(
-          children: children,
-        ),
+    final constrainedBox = ConstrainedBox(
+      constraints: AppOffsets.formWidthConstraint,
+      child: Column(
+        children: children,
       ),
     );
+
+    return isScroll
+        ? SingleChildScrollView(
+            padding: AppOffsets.screenPadding,
+            child: constrainedBox,
+          )
+        : Padding(
+            padding: AppOffsets.screenPadding,
+            child: constrainedBox,
+          );
   }
 }

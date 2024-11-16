@@ -49,37 +49,50 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
     });
   }
 
+  void onCreateWorkoutWave() {}
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
       child: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              initialValue: _workoutWaveWithWorkoutsMeasureDto.workoutWave.name,
-              decoration: const InputDecoration(
-                label: Text("Workout Wave Name"),
+        child: Expanded(
+          child: Column(
+            children: [
+              TextFormField(
+                initialValue:
+                    _workoutWaveWithWorkoutsMeasureDto.workoutWave.name,
+                decoration: const InputDecoration(
+                  label: Text("Workout Wave Name"),
+                ),
+                textCapitalization: TextCapitalization.sentences,
+                validator: (value) =>
+                    cannotBeginWithDigitValidator("Workout wave name", value),
+                onSaved: setWaveName,
+                maxLength: 32,
               ),
-              textCapitalization: TextCapitalization.sentences,
-              validator: (value) =>
-                  cannotBeginWithDigitValidator("Workout wave name", value),
-              onSaved: setWaveName,
-              maxLength: 32,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            WorkoutsWithMeasureListWidget(
-              workoutsWithMeasure:
-                  _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure,
-              workoutWaveName:
-                  _workoutWaveWithWorkoutsMeasureDto.workoutWave.name,
-              onWorkoutMeasureAdd: onWorkoutMeasureAdd,
-              onAddedWorkoutWithMeasureRemove: onAddedWorkoutWithMeasureRemove,
-              onAddedWorkoutWithMeasureEdit: onAddedWorkoutWithMeasureEdit,
-            ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              WorkoutsWithMeasureListWidget(
+                workoutsWithMeasure:
+                    _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure,
+                workoutWaveName:
+                    _workoutWaveWithWorkoutsMeasureDto.workoutWave.name,
+                onWorkoutMeasureAdd: onWorkoutMeasureAdd,
+                onAddedWorkoutWithMeasureRemove:
+                    onAddedWorkoutWithMeasureRemove,
+                onAddedWorkoutWithMeasureEdit: onAddedWorkoutWithMeasureEdit,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              FilledButton(
+                onPressed: onCreateWorkoutWave,
+                child: const Text("Go"),
+              ),
+            ],
+          ),
         ),
       ),
     );

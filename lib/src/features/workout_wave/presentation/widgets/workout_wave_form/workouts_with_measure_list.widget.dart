@@ -75,43 +75,57 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
       );
     }).toList();
 
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Workouts in your wave",
-            style: Theme.of(context).textTheme.titleMedium,
+    return Expanded(
+      child: Column(
+        children: [
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          // child: Text(
+          //   "Workouts in your wave",
+          //   style: Theme.of(context).textTheme.titleMedium,
+          // ),
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Workouts",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              TextButton.icon(
+                onPressed: onNewWorkoutWithMeasure,
+                icon: const Icon(Icons.add),
+                label: const Text("Add Workout"),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const Divider(
-          height: 0.5,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        TextButton.icon(
-          onPressed: onNewWorkoutWithMeasure,
-          icon: const Icon(Icons.add),
-          label: const Text("Add Workout"),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        if (workoutsWithMeasure.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              "It looks empty here! 🏋️ Add a workout to fill it up!",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
+          const Divider(
+            height: 0.5,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          if (workoutsWithMeasure.isEmpty)
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    "It looks empty here! 🏋️ Add a workout to fill it up!",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
             ),
-          ),
-        if (workoutsWithMeasure.isNotEmpty) ...listWidgets,
-      ],
+          if (workoutsWithMeasure.isNotEmpty)
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(children: listWidgets),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

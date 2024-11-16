@@ -12,6 +12,7 @@ class WorkoutWaveFormScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: const FormContainerWidget(
+        isScroll: false,
         children: [
           WorkoutWaveDescriptionWidget(),
           SizedBox(
