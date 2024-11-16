@@ -77,6 +77,17 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
         .go(_workoutWaveWithWorkoutsMeasureDto);
   }
 
+  void onReorder(int oldIndex, int newIndex) {
+    print("Old: $oldIndex, new: $newIndex");
+    setState(() {
+      if (oldIndex < newIndex) newIndex -= 1;
+      final item = _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
+          .removeAt(oldIndex);
+      _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
+          .insert(newIndex, item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -109,6 +120,7 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
                 onAddedWorkoutWithMeasureRemove:
                     onAddedWorkoutWithMeasureRemove,
                 onAddedWorkoutWithMeasureEdit: onAddedWorkoutWithMeasureEdit,
+                onReorder: onReorder,
               ),
               const SizedBox(
                 height: 10,

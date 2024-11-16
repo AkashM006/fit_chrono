@@ -12,5 +12,6 @@
 12. Handle WorkoutWithMeasure edit in added workouts
 13. Rename all update to edit and remove to delete
 14. Change workout wave form screen's layout (The workouts list must take as musch as possible and the rest must take intrinsic height) (DONE)
-15. Need to fill the position correctly for workouts in workout waves, name is not stored
-16. Add ability to change the position of the workouts in workout wave
+15. Need to fill the position correctly for workouts in workout waves, name is not stored (DONE)
+16. Add ability to change the position of the workouts in workout wave (DONE)
+17. Add a field in WorkoutWithMeasureDto to store a unique value such to keep problems with ReorderableListView away

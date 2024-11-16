@@ -10,6 +10,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
     required this.onWorkoutMeasureAdd,
     required this.onAddedWorkoutWithMeasureEdit,
     required this.onAddedWorkoutWithMeasureRemove,
+    required this.onReorder,
   });
 
   final List<WorkoutWithMeasureDto> workoutsWithMeasure;
@@ -19,6 +20,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
   final void Function(int index, WorkoutWithMeasureDto workoutWithMeasure)
       onAddedWorkoutWithMeasureEdit;
   final void Function(int index) onAddedWorkoutWithMeasureRemove;
+  final void Function(int oldIndex, int newIndex) onReorder;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
       final workoutCount =
           '${workoutWithMeasure.count}${workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.time ? 's' : 'x'}';
       return ListTile(
+        key: ValueKey(workoutWithMeasure),
         title: Text(workoutWithMeasure.workout.name),
         subtitle: Text(workoutCount),
         trailing: Row(
@@ -115,8 +118,12 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
             ),
           if (workoutsWithMeasure.isNotEmpty)
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(children: listWidgets),
+              // child: SingleChildScrollView(
+              //   child: Column(children: listWidgets),
+              // ),
+              child: ReorderableListView(
+                onReorder: onReorder,
+                children: listWidgets,
               ),
             ),
         ],
