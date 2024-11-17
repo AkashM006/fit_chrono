@@ -4,12 +4,12 @@
 4. Add another util function to project (Refer Notion) (DONE)
 5. Handle 404 page in go_router (DONE)
 6. Integrate drift db viewer to app (DONE)
-7. Implement pop scope in workout wave form
+7. Implement pop scope in workout wave form (DONE)
 8. Implement search for searchable workout list
 9. Time/reps field must only accept numbers
 10. Run dart run custom_lint --fix to upgrade to the new riverpod and fix lint issues (View mail for more information)
-11. Change count in WorkoutWithMeasure to double from int
-12. Handle WorkoutWithMeasure edit in added workouts
+11. Change count in WorkoutWithMeasure to double from int (OVERTHINKING)
+12. Handle WorkoutWithMeasure edit in added workouts (DONE)
 13. Rename all update to edit and remove to delete
 14. Change workout wave form screen's layout (The workouts list must take as musch as possible and the rest must take intrinsic height) (DONE)
 15. Need to fill the position correctly for workouts in workout waves, name is not stored (DONE)

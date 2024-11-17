@@ -115,48 +115,85 @@ class _WorkoutFormDialogWidgetState
 
     final countTextFieldWidth = SizeConfig.safeBlockHorizontal * 45;
 
-    final repsFormField = SizedBox(
-      width: countTextFieldWidth,
-      child: TextFormField(
-        initialValue: _workoutWithMeasure.count.toString(),
-        decoration: const InputDecoration(
-          label: Text("Reps"),
-        ),
-        validator: (value) => numberGreaterThanZero("Reps", value),
-        onSaved: setCount,
-      ),
-    );
+    // final repsFormField = SizedBox(
+    //   width: countTextFieldWidth,
+    //   child: TextFormField(
+    //     initialValue: _workoutWithMeasure.count.toString(),
+    //     decoration: const InputDecoration(
+    //       label: Text("Reps"),
+    //     ),
+    //     validator: (value) => numberGreaterThanZero("Reps", value),
+    //     onSaved: setCount,
+    //   ),
+    // );
 
-    final timeFormField = Row(
+    // final timeFormField = Row(
+    //   children: [
+    //     SizedBox(
+    //       width: countTextFieldWidth,
+    //       child: TextFormField(
+    //         initialValue: _workoutWithMeasure.count.toString(),
+    //         decoration: const InputDecoration(
+    //           label: Text("Time"),
+    //         ),
+    //         validator: (value) => numberGreaterThanZero("Time", value),
+    //         onSaved: setCount,
+    //       ),
+    //     ),
+    //     const SizedBox(
+    //       width: 20,
+    //     ),
+    //     DropdownButton<Time>(
+    //       value: _selectedTime,
+    //       items: Time.values
+    //           .map(
+    //             (time) => DropdownMenuItem<Time>(
+    //               value: time,
+    //               child: Text(time.name.toString().capitalize()),
+    //             ),
+    //           )
+    //           .toList(),
+    //       onChanged: onTimeChanged,
+    //     )
+    //   ],
+    // );
+    final isReps = _workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.reps;
+    final measureLabel = isReps ? "Reps" : "Time";
+
+    final measureFormField = Row(
       children: [
         SizedBox(
           width: countTextFieldWidth,
           child: TextFormField(
             initialValue: _workoutWithMeasure.count.toString(),
-            decoration: const InputDecoration(
-              label: Text("Time"),
+            decoration: InputDecoration(
+              label: Text(measureLabel),
             ),
-            validator: (value) => numberGreaterThanZero("Time", value),
+            validator: (value) => numberGreaterThanZero(measureLabel, value),
             onSaved: setCount,
           ),
         ),
-        const SizedBox(
-          width: 20,
-        ),
-        DropdownButton<Time>(
-          value: _selectedTime,
-          items: Time.values
-              .map(
-                (time) => DropdownMenuItem<Time>(
-                  value: time,
-                  child: Text(time.name.toString().capitalize()),
-                ),
-              )
-              .toList(),
-          onChanged: onTimeChanged,
-        )
+        if (!isReps)
+          const SizedBox(
+            width: 20,
+          ),
+        if (!isReps)
+          DropdownButton<Time>(
+            value: _selectedTime,
+            items: Time.values
+                .map(
+                  (time) => DropdownMenuItem<Time>(
+                    value: time,
+                    child: Text(time.name.toString().capitalize()),
+                  ),
+                )
+                .toList(),
+            onChanged: onTimeChanged,
+          )
       ],
     );
+
+    final actionLabel = isEditMode ? "Edit" : "Add";
 
     return SizedBox(
       child: SingleChildScrollView(
@@ -167,7 +204,7 @@ class _WorkoutFormDialogWidgetState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Add Workout",
+                "$actionLabel Workout",
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               const SizedBox(
@@ -226,15 +263,13 @@ class _WorkoutFormDialogWidgetState
               const SizedBox(
                 height: 20,
               ),
-              _workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.reps
-                  ? repsFormField
-                  : timeFormField,
+              measureFormField,
               const SizedBox(
                 height: 30,
               ),
               FilledButton(
                 onPressed: onAddWorkoutWithMeasure,
-                child: Text(isEditMode ? "Edit" : "Add"),
+                child: Text(actionLabel),
               ),
             ],
           ),
