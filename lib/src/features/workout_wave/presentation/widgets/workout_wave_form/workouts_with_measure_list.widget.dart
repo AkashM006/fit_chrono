@@ -56,7 +56,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
       final workoutCount =
           '${workoutWithMeasure.count}${workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.time ? 's' : 'x'}';
       return ListTile(
-        key: ValueKey(workoutWithMeasure),
+        key: ValueKey(workoutWithMeasure.uniqueId),
         title: Text(workoutWithMeasure.workout.name),
         subtitle: Text(workoutCount),
         trailing: Row(

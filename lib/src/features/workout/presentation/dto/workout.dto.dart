@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/core/utils/uuid.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dart';
 
@@ -82,6 +83,7 @@ class WorkoutDto {
 
 class WorkoutWithMeasureDto {
   final int _id;
+  final String _uniqueId;
   final WorkoutDto _workout;
   final WorkoutMeasureDto _workoutMeasure;
   final int _count;
@@ -89,17 +91,20 @@ class WorkoutWithMeasureDto {
 
   const WorkoutWithMeasureDto({
     int id = -1,
+    String uniqueId = '',
     required WorkoutDto workout,
     required WorkoutMeasureDto workoutMeasure,
     required int count,
     required int position,
   })  : _id = id,
+        _uniqueId = uniqueId,
         _workout = workout,
         _workoutMeasure = workoutMeasure,
         _count = count,
         _position = position;
 
   int get id => _id;
+  String get uniqueId => _uniqueId;
   WorkoutDto get workout => _workout;
   WorkoutMeasureDto get workoutMeasure => _workoutMeasure;
   int get count => _count;
@@ -130,6 +135,7 @@ class WorkoutWithMeasureDto {
 
   factory WorkoutWithMeasureDto.init() {
     return WorkoutWithMeasureDto(
+      uniqueId: uuid.v4(),
       workout: WorkoutDto.init(),
       workoutMeasure: WorkoutMeasureDto.time,
       count: 0,
