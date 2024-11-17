@@ -16,4 +16,5 @@
 16. Add ability to change the position of the workouts in workout wave (DONE)
 17. Add a field in WorkoutWithMeasureDto to store a unique value such to keep problems with ReorderableListView away (DONE)
 18. Add PopScope to StackWithLoaderWidget (Later: If required then for other screens)
-19. When getting input or showing the time of a workout, show as minutes and seconds instead of just seconds
+19. When getting input or showing the time of a workout, show as minutes and seconds instead of just seconds (DONE)
+20. Find out a neat way to chain validators
