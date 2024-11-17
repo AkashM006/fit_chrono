@@ -1,5 +1,6 @@
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.entity.dart';
+import 'package:collection/collection.dart';
 
 class WorkoutWaveDto {
   final int _id;
@@ -113,5 +114,24 @@ class WorkoutWaveWithWorkoutsMeasureDto {
       workoutWave: WorkoutWaveDto.init(),
       workoutsWithMeasure: [],
     );
+  }
+
+  @override
+  bool operator ==(covariant WorkoutWaveWithWorkoutsMeasureDto other) {
+    if (workoutWave != other.workoutWave) return false;
+
+    return const ListEquality()
+        .equals(workoutsWithMeasure, other.workoutsWithMeasure);
+  }
+
+  @override
+  int get hashCode {
+    var result = workoutWave.hashCode;
+
+    for (var workout in workoutsWithMeasure) {
+      result ^= workout.hashCode;
+    }
+
+    return result;
   }
 }
