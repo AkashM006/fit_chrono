@@ -118,9 +118,6 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
             ),
           if (workoutsWithMeasure.isNotEmpty)
             Expanded(
-              // child: SingleChildScrollView(
-              //   child: Column(children: listWidgets),
-              // ),
               child: ReorderableListView(
                 onReorder: onReorder,
                 children: listWidgets,

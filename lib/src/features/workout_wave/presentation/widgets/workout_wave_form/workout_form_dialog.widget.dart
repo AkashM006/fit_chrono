@@ -5,6 +5,7 @@ import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_radio
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workouts/searchable_workout_list.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -115,48 +116,6 @@ class _WorkoutFormDialogWidgetState
 
     final countTextFieldWidth = SizeConfig.safeBlockHorizontal * 45;
 
-    // final repsFormField = SizedBox(
-    //   width: countTextFieldWidth,
-    //   child: TextFormField(
-    //     initialValue: _workoutWithMeasure.count.toString(),
-    //     decoration: const InputDecoration(
-    //       label: Text("Reps"),
-    //     ),
-    //     validator: (value) => numberGreaterThanZero("Reps", value),
-    //     onSaved: setCount,
-    //   ),
-    // );
-
-    // final timeFormField = Row(
-    //   children: [
-    //     SizedBox(
-    //       width: countTextFieldWidth,
-    //       child: TextFormField(
-    //         initialValue: _workoutWithMeasure.count.toString(),
-    //         decoration: const InputDecoration(
-    //           label: Text("Time"),
-    //         ),
-    //         validator: (value) => numberGreaterThanZero("Time", value),
-    //         onSaved: setCount,
-    //       ),
-    //     ),
-    //     const SizedBox(
-    //       width: 20,
-    //     ),
-    //     DropdownButton<Time>(
-    //       value: _selectedTime,
-    //       items: Time.values
-    //           .map(
-    //             (time) => DropdownMenuItem<Time>(
-    //               value: time,
-    //               child: Text(time.name.toString().capitalize()),
-    //             ),
-    //           )
-    //           .toList(),
-    //       onChanged: onTimeChanged,
-    //     )
-    //   ],
-    // );
     final isReps = _workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.reps;
     final measureLabel = isReps ? "Reps" : "Time";
 
@@ -169,8 +128,12 @@ class _WorkoutFormDialogWidgetState
             decoration: InputDecoration(
               label: Text(measureLabel),
             ),
+            keyboardType: const TextInputType.numberWithOptions(),
             validator: (value) => numberGreaterThanZero(measureLabel, value),
             onSaved: setCount,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
           ),
         ),
         if (!isReps)
