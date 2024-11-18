@@ -8,4 +8,7 @@ abstract class WorkoutWaveRepostiory {
   );
   Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>>
       getWorkoutWaveWithWorkouts(int id);
+  Future<DataState<void>> editWorkoutWave(
+    WorkoutWaveWithWorkoutsMeasureEntity workoutWave,
+  );
 }
