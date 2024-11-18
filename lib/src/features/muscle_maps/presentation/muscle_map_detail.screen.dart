@@ -1,11 +1,11 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
-import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/delete_muscle_map/delete_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/get_muscle_map/get_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map/muscle_map_detail_appbar.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/entity_not_found.screen.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async_appbar/custom_async_appbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
@@ -28,37 +28,17 @@ class MuscleMapDetailScreen extends ConsumerWidget {
       context.pushReplacement(PAGES.muscleMapForm.path);
     }
 
-    final messageConstraints = AppOffsets.messageWidthConstaint;
-
     if (id == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Not Found"),
-        ),
-        body: Center(
-          child: ConstrainedBox(
-            constraints: messageConstraints,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "It seems like we couldn't locate that muscle map. Don't worry, even the strongest have weak spots!",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontStyle: FontStyle.italic,
-                      ),
-                ),
-                SizedBox(
-                  height: SizeConfig.safeBlockVertical * 2,
-                ),
-                TextButton(
-                  onPressed: onNewMuscleMap,
-                  child: const Text("Add Muscle Map"),
-                ),
-              ],
-            ),
+      return EntityNotFoundScreen(
+        title: "💪",
+        content:
+            "It seems like we couldn't locate that muscle map. Don't worry, even the strongest have weak spots!",
+        actions: [
+          TextButton(
+            onPressed: onNewMuscleMap,
+            child: const Text("Add Muscle Map"),
           ),
-        ),
+        ],
       );
     }
 

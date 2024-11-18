@@ -1,11 +1,14 @@
+import 'package:fit_chrono/src/features/shared/presentation/entity_not_found.screen.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async_appbar/custom_async_appbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/form_container/form_container.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/stack_with_loader/stack_with_loader.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/provider/get_workout_wave/get_workout_wave.provider.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_wave_form.widget.dart';
+import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkoutWaveDetailScreen extends ConsumerWidget {
   const WorkoutWaveDetailScreen({
@@ -18,10 +21,20 @@ class WorkoutWaveDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (id == null) {
-      return const Scaffold(
-        body: Center(
-          child: Text("Not Found!"),
-        ),
+      void onNewWorkoutWave() =>
+          context.pushReplacement(PAGES.workoutWavesForm.path);
+
+      return EntityNotFoundScreen(
+        title: "🌊",
+        content:
+            "Uh-oh! This Workout Wave seems to have drifted away. Ready to make a splash? Create a new wave and get moving!",
+        actions: [
+          OutlinedButton.icon(
+            onPressed: onNewWorkoutWave,
+            label: const Text("Add Workout Wave"),
+            icon: const Icon(Icons.add),
+          )
+        ],
       );
     }
 
@@ -36,7 +49,10 @@ class WorkoutWaveDetailScreen extends ConsumerWidget {
           appBar: CustomAsyncAppBar(
             asyncData: workoutWaveWithWorkouts,
             builder: (context, data) => AppBar(
-              title: Text(data.workoutWave.name),
+              title: Text(
+                data.workoutWave.name,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           body: AsyncValueBuilderWidget(

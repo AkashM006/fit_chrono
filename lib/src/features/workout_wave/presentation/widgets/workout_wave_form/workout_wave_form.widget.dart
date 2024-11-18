@@ -44,28 +44,42 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
     super.initState();
     if (isEditMode) {
       _workoutWaveWithWorkoutsMeasureDto =
-          widget.workoutWaveWithWorkoutsMeasure!;
+          widget.workoutWaveWithWorkoutsMeasure!.copyWith();
     }
   }
 
   void setWaveName(String? value) {
     _workoutWaveWithWorkoutsMeasureDto =
         _workoutWaveWithWorkoutsMeasureDto.copyWith(
-      workoutWave:
-          _workoutWaveWithWorkoutsMeasureDto.workoutWave.copyWith(name: value),
+      workoutWave: _workoutWaveWithWorkoutsMeasureDto.workoutWave.copyWith(
+        name: value,
+      ),
     );
   }
 
   void onWorkoutMeasureAdd(WorkoutWithMeasureDto workoutWithMeasure) {
     setState(() {
-      _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
-          .add(workoutWithMeasure);
+      final newList = [
+        ..._workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
+      ];
+      newList.add(workoutWithMeasure);
+      _workoutWaveWithWorkoutsMeasureDto =
+          _workoutWaveWithWorkoutsMeasureDto.copyWith(
+        workoutsWithMeasure: newList,
+      );
     });
   }
 
   void onAddedWorkoutWithMeasureRemove(int index) {
     setState(() {
-      _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure.removeAt(index);
+      final newList = [
+        ..._workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
+      ];
+      newList.removeAt(index);
+      _workoutWaveWithWorkoutsMeasureDto =
+          _workoutWaveWithWorkoutsMeasureDto.copyWith(
+        workoutsWithMeasure: newList,
+      );
     });
   }
 
@@ -74,8 +88,14 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
     WorkoutWithMeasureDto workoutWithMeasure,
   ) {
     setState(() {
-      _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure[index] =
-          workoutWithMeasure;
+      final newList = [
+        ..._workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
+      ];
+      newList[index] = workoutWithMeasure;
+      _workoutWaveWithWorkoutsMeasureDto =
+          _workoutWaveWithWorkoutsMeasureDto.copyWith(
+        workoutsWithMeasure: newList,
+      );
     });
   }
 
@@ -169,7 +189,7 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
               ),
               FilledButton(
                 onPressed: onCreateWorkoutWave,
-                child: const Text("Go"),
+                child: Text(isEditMode ? "Edit" : "Go"),
               ),
             ],
           ),
