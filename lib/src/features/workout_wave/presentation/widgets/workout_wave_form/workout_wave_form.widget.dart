@@ -3,6 +3,7 @@ import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/provider/add_workout_wave/add_workout_wave.provider.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/provider/edit_workout_wave/edit_workout_wave.provider.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_wave_error_dialog.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workouts_with_measure_list.widget.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,13 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
   }
 
   bool get isEditMode => widget.workoutWaveWithWorkoutsMeasure != null;
+
+  bool get isSubmitEnabled {
+    if (!isEditMode) return true;
+
+    return widget.workoutWaveWithWorkoutsMeasure !=
+        _workoutWaveWithWorkoutsMeasureDto;
+  }
 
   @override
   void initState() {
@@ -120,8 +128,16 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
         position: i,
       );
     }
+
+    if (!isEditMode) {
+      ref
+          .read(addWorkoutWaveProvider.notifier)
+          .go(_workoutWaveWithWorkoutsMeasureDto);
+      return;
+    }
+
     ref
-        .read(addWorkoutWaveProvider.notifier)
+        .read(editWorkoutWaveProvider.notifier)
         .go(_workoutWaveWithWorkoutsMeasureDto);
   }
 
@@ -167,7 +183,11 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
                 validator: (value) =>
                     cannotBeginWithDigitValidator("Workout wave name", value),
                 onSaved: setWaveName,
-                onChanged: setWaveName,
+                onChanged: (value) {
+                  setState(() {
+                    setWaveName(value);
+                  });
+                },
                 maxLength: 32,
               ),
               const SizedBox(
@@ -188,7 +208,7 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
                 height: 10,
               ),
               FilledButton(
-                onPressed: onCreateWorkoutWave,
+                onPressed: isSubmitEnabled ? onCreateWorkoutWave : null,
                 child: Text(isEditMode ? "Edit" : "Go"),
               ),
             ],

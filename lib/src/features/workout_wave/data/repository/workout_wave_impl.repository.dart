@@ -14,34 +14,31 @@ class WorkoutWaveImplRepository extends BaseRepository
   WorkoutWaveImplRepository(this._workoutWaveService);
 
   @override
-  Stream<List<WorkoutWaveEntity>> watchWorkoutWaves() {
-    return _workoutWaveService.watchWorkoutWaves();
-  }
+  Stream<List<WorkoutWaveEntity>> watchWorkoutWaves() =>
+      _workoutWaveService.watchWorkoutWaves();
 
   @override
   Future<DataState<void>> addWorkoutWave(
     WorkoutWaveWithWorkoutsMeasureEntity workoutWave,
-  ) {
-    return safeExecute(
-      () => _workoutWaveService.addWorkoutWave(workoutWave),
-    );
-  }
+  ) =>
+      safeExecute(
+        () => _workoutWaveService.addWorkoutWave(workoutWave),
+      );
 
   @override
   Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>>
-      getWorkoutWaveWithWorkouts(int id) async {
-    return safeExecute(
-      () => _workoutWaveService.getWorkoutWaveWithWorkouts(id),
-    );
-  }
+      getWorkoutWaveWithWorkouts(int id) => safeExecute(
+            () => _workoutWaveService.getWorkoutWaveWithWorkouts(id),
+          );
 
   @override
   Future<DataState<void>> editWorkoutWave(
-    WorkoutWaveWithWorkoutsMeasureEntity workoutWave,
-  ) {
-    // TODO: implement editWorkoutWave
-    throw UnimplementedError();
-  }
+    WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutMeasures,
+  ) =>
+      safeExecute(
+        () => _workoutWaveService
+            .editWorkoutWaveWithWorkouts(workoutWaveWithWorkoutMeasures),
+      );
 }
 
 @riverpod
