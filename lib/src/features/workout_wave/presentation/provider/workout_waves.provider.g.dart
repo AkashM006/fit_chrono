@@ -6,7 +6,7 @@ part of 'workout_waves.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$workoutWavesHash() => r'c65083955910654b65482d037dff7e28619b08ba';
+String _$workoutWavesHash() => r'7d890f6e46b67c1e45267a1748da944024d48325';
 
 /// See also [workoutWaves].
 @ProviderFor(workoutWaves)

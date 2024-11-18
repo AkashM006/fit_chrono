@@ -28,23 +28,17 @@ class WorkoutWaveImplRepository extends BaseRepository
   }
 
   @override
-  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>> workoutWave(
-      int id) async {
-    safeExecute(() => _workoutWaveService.getWorkoutWaveWithWorkouts(id));
-    return DataSuccess(const WorkoutWaveWithWorkoutsMeasureEntity(
-      workoutWave: WorkoutWaveEntity(
-        id: 1,
-        name: "name",
-        times: 0,
-      ),
-      workoutsWithMeasure: [],
-    ));
+  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>>
+      getWorkoutWaveWithWorkouts(int id) async {
+    return safeExecute(
+      () => _workoutWaveService.getWorkoutWaveWithWorkouts(id),
+    );
   }
 }
 
 @riverpod
-WorkoutWaveImplRepository workoutWaveImplRepository(
-  WorkoutWaveImplRepositoryRef ref,
+WorkoutWaveImplRepository workoutWaveImpl(
+  WorkoutWaveImplRef ref,
 ) {
   final workoutWaveService = ref.watch(workoutWaveServiceProvider);
 

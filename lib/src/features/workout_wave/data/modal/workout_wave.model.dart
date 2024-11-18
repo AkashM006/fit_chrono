@@ -63,7 +63,7 @@ class WorkoutWaveWithWorkoutsMeasureModel {
         _workoutsWithMeasure = workoutsWithMeasure;
 
   WorkoutWaveModel get workoutWave => _workoutWave;
-  List<WorkoutWithMeasureModel> get workouts => _workoutsWithMeasure;
+  List<WorkoutWithMeasureModel> get workoutsWithMeasure => _workoutsWithMeasure;
 
   factory WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
     WorkoutWaveWithWorkoutsMeasureEntity entity,
@@ -74,6 +74,29 @@ class WorkoutWaveWithWorkoutsMeasureModel {
           .map((workoutWithMeasurement) =>
               WorkoutWithMeasureModel.fromEntity(workoutWithMeasurement))
           .toList(),
+    );
+  }
+
+  factory WorkoutWaveWithWorkoutsMeasureModel.fromDbModel(
+    WorkoutWave workoutWaveDetail,
+    List<WorkoutsInWave> positionDetails,
+    List<WorkoutsWithMeasure> countDetails,
+    List<Workout> workoutDetails,
+  ) {
+    final workoutWaveModel = WorkoutWaveModel.fromDbModel(workoutWaveDetail);
+
+    return WorkoutWaveWithWorkoutsMeasureModel(
+      workoutWave: workoutWaveModel,
+      workoutsWithMeasure: [],
+    );
+  }
+
+  WorkoutWaveWithWorkoutsMeasureEntity toEntity() {
+    return WorkoutWaveWithWorkoutsMeasureEntity(
+      workoutsWithMeasure: workoutsWithMeasure
+          .map((workoutWithMeasure) => workoutWithMeasure.toEntity())
+          .toList(),
+      workoutWave: workoutWave.toEntity(),
     );
   }
 

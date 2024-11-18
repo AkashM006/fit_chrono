@@ -6,5 +6,6 @@ abstract class WorkoutWaveRepostiory {
   Future<DataState<void>> addWorkoutWave(
     WorkoutWaveWithWorkoutsMeasureEntity workoutWave,
   );
-  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>> workoutWave(int id);
+  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>>
+      getWorkoutWaveWithWorkouts(int id);
 }

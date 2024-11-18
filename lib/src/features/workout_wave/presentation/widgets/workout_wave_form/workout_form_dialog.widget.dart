@@ -221,43 +221,6 @@ class _WorkoutFormDialogWidgetState
       ],
     );
 
-    // final measureFormField = Row(
-    //   children: [
-    //     SizedBox(
-    //       width: countTextFieldWidth,
-    //       child: TextFormField(
-    //         initialValue: _workoutWithMeasure.count.toString(),
-    //         decoration: InputDecoration(
-    //           label: Text(measureLabel),
-    //         ),
-    //         keyboardType: const TextInputType.numberWithOptions(),
-    //         validator: (value) => numberGreaterThanZero(measureLabel, value),
-    //         onSaved: setCount,
-    //         inputFormatters: [
-    //           FilteringTextInputFormatter.digitsOnly,
-    //         ],
-    //       ),
-    //     ),
-    //     if (!isReps)
-    //       const SizedBox(
-    //         width: 20,
-    //       ),
-    //     if (!isReps)
-    //       DropdownButton<Time>(
-    //         value: _selectedTime,
-    //         items: Time.values
-    //             .map(
-    //               (time) => DropdownMenuItem<Time>(
-    //                 value: time,
-    //                 child: Text(time.name.toString().capitalize()),
-    //               ),
-    //             )
-    //             .toList(),
-    //         onChanged: onTimeChanged,
-    //       )
-    //   ],
-    // );
-
     final actionLabel = isEditMode ? "Edit" : "Add";
 
     return SingleChildScrollView(

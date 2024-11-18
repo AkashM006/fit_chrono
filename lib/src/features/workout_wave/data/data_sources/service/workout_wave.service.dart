@@ -30,8 +30,12 @@ class WorkoutWaveService {
     );
   }
 
-  Future<void> getWorkoutWaveWithWorkouts(int id) {
-    return _database.workoutWaveDao.getWorkoutWaveWithWorkouts(id);
+  Future<WorkoutWaveWithWorkoutsMeasureEntity> getWorkoutWaveWithWorkouts(
+    int id,
+  ) async {
+    final result =
+        await _database.workoutWaveDao.getWorkoutWaveWithWorkouts(id);
+    return result.toEntity();
   }
 }
 

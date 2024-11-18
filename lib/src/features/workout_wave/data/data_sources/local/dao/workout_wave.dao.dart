@@ -48,7 +48,7 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
         // 2. then insert the workouts with their measurements and get all their ids
         // Check the workout with measure that are already present in db and get their ids
         final workoutMeasuresCompanions = workoutWaveWithWorkoutMeasures
-            .workouts
+            .workoutsWithMeasure
             .map((workoutWithMeasure) => workoutWithMeasure.toCompanion())
             .toList();
 
@@ -95,7 +95,8 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
             workoutWithMeasure: workoutWithMeasure.id
         };
 
-        final workoutsWithMeasureList = workoutWaveWithWorkoutMeasures.workouts;
+        final workoutsWithMeasureList =
+            workoutWaveWithWorkoutMeasures.workoutsWithMeasure;
         for (var workoutWithMeasure in workoutsWithMeasureList) {
           if (!existingWorkoutsWithMeasureMap.containsKey(workoutWithMeasure)) {
             // add new workout with measure here and store the id
@@ -128,7 +129,10 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
     }, "adding your workout wave");
   }
 
-  Future<void> getWorkoutWaveWithWorkouts(int id) async => handleError(
+  Future<WorkoutWaveWithWorkoutsMeasureModel> getWorkoutWaveWithWorkouts(
+    int id,
+  ) async =>
+      handleError(
         () async {
           final query = select(workoutWaves).join([
             leftOuterJoin(
@@ -145,7 +149,8 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
               workouts.id.equalsExp(workoutsWithMeasures.workoutId),
             ),
           ])
-            ..where(workoutWaves.id.equals(id));
+            ..where(workoutWaves.id.equals(id))
+            ..orderBy([OrderingTerm.asc(workoutsInWaves.position)]);
 
           final result = await query.get();
 
@@ -155,13 +160,32 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
             throw AppError(message: errorMsg);
           }
 
-          final workoutWave = result.first.readTable(workoutWaves);
-          print("Workout wave Name: ${workoutWave.name}");
+          final workoutWaveDetail = result.first.readTable(workoutWaves);
+
+          final List<WorkoutsInWave> positionDetails = [];
+          final List<WorkoutsWithMeasure> countDetails = [];
+          final List<Workout> workoutDetails = [];
+
           for (var row in result) {
-            final workoutsInWavesList = row.readTableOrNull(workoutsInWaves);
-            print("Workouts In waves:");
-            print(workoutsInWavesList);
+            final positionDetail = row.readTableOrNull(workoutsInWaves);
+            final countDetail = row.readTableOrNull(workoutsWithMeasures);
+            final workoutDetail = row.readTableOrNull(workouts);
+
+            if (positionDetail == null ||
+                countDetail == null ||
+                workoutDetail == null) continue;
+
+            positionDetails.add(positionDetail);
+            countDetails.add(countDetail);
+            workoutDetails.add(workoutDetail);
           }
+
+          return WorkoutWaveWithWorkoutsMeasureModel.fromDbModel(
+            workoutWaveDetail,
+            positionDetails,
+            countDetails,
+            workoutDetails,
+          );
         },
         "getting your workout wave",
       );

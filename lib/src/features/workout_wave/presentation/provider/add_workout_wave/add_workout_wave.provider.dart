@@ -16,7 +16,7 @@ class AddWorkoutWave extends _$AddWorkoutWave {
   ) async {
     state = DataLoading();
 
-    final workoutWaveRepostiory = ref.read(workoutWaveImplRepositoryProvider);
+    final workoutWaveRepostiory = ref.read(workoutWaveImplProvider);
 
     final result = await AddWorkoutWaveUsecase(workoutWaveRepostiory)(
       params: workoutWaveWithWorkoutsMeasure.toEntity(),

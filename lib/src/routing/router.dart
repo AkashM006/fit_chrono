@@ -16,6 +16,7 @@ import 'package:fit_chrono/src/features/workout_wave/presentation/workout_waves.
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/workout_wave_detail.screen.dart';
 
 enum PAGES {
   home,
@@ -27,6 +28,7 @@ enum PAGES {
   workoutDetail,
   workoutWaves,
   workoutWavesForm,
+  workoutWaveDetail,
   driftDebug,
   notFound,
 }
@@ -52,6 +54,8 @@ extension AppRoutesExtension on PAGES {
         return '/workout-waves';
       case PAGES.workoutWavesForm:
         return '/workout-waves-form';
+      case PAGES.workoutWaveDetail:
+        return '/workout-wave-detail';
       case PAGES.driftDebug:
         return '/drift-debug';
       case PAGES.notFound:
@@ -79,6 +83,8 @@ extension AppRoutesExtension on PAGES {
         return "Workout Waves";
       case PAGES.workoutWavesForm:
         return "Workout Waves Form";
+      case PAGES.workoutWaveDetail:
+        return "Workout Wave Detail";
       case PAGES.driftDebug:
         return "Drift Debug";
       case PAGES.notFound:
@@ -122,6 +128,14 @@ extension AppRoutesExtension on PAGES {
         };
       case PAGES.workoutWaves:
         return (context, routerState) => const WorkoutWavesScreen();
+      case PAGES.workoutWaveDetail:
+        return (context, routerState) {
+          final id = routerState.uri.queryParameters['id'];
+          int? resultId;
+          if (id != null) resultId = int.tryParse(id);
+
+          return WorkoutWaveDetailScreen(id: resultId);
+        };
       case PAGES.workoutWavesForm:
         return (context, routerState) => const WorkoutWaveFormScreen();
       case PAGES.driftDebug:

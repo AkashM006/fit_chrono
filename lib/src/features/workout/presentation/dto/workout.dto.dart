@@ -134,8 +134,9 @@ class WorkoutWithMeasureDto {
   }
 
   factory WorkoutWithMeasureDto.init() {
+    final uid = uuid.v4();
     return WorkoutWithMeasureDto(
-      uniqueId: uuid.v4(),
+      uniqueId: uid,
       workout: WorkoutDto.init(),
       workoutMeasure: WorkoutMeasureDto.time,
       count: 0,
@@ -154,6 +155,7 @@ class WorkoutWithMeasureDto {
       workoutMeasure: workoutMeasure ?? this.workoutMeasure,
       count: count ?? this.count,
       position: position ?? this.position,
+      uniqueId: uniqueId,
     );
   }
 

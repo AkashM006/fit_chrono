@@ -7,7 +7,7 @@ part 'workout_waves.provider.g.dart';
 
 @riverpod
 Stream<List<WorkoutWaveDto>> workoutWaves(WorkoutWavesRef ref) {
-  final workoutWaveRepository = ref.watch(workoutWaveImplRepositoryProvider);
+  final workoutWaveRepository = ref.watch(workoutWaveImplProvider);
 
   final result = WatchWorkoutWavesUsecase(workoutWaveRepository)();
 
