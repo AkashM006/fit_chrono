@@ -28,9 +28,17 @@ class WorkoutWaveImplRepository extends BaseRepository
   }
 
   @override
-  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>> workoutWave(int id) {
-    // TODO: implement workoutWave
-    throw UnimplementedError();
+  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>> workoutWave(
+      int id) async {
+    safeExecute(() => _workoutWaveService.getWorkoutWaveWithWorkouts(id));
+    return DataSuccess(const WorkoutWaveWithWorkoutsMeasureEntity(
+      workoutWave: WorkoutWaveEntity(
+        id: 1,
+        name: "name",
+        times: 0,
+      ),
+      workoutsWithMeasure: [],
+    ));
   }
 }
 

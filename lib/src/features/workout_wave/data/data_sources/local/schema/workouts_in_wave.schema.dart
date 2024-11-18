@@ -3,7 +3,7 @@ import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/w
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 
 class WorkoutsInWaves extends Table {
-  IntColumn get workoutId => integer().references(
+  IntColumn get workoutWithMeasureId => integer().references(
         Workouts,
         #id,
         onDelete: KeyAction.cascade,
@@ -18,7 +18,7 @@ class WorkoutsInWaves extends Table {
   @override
   List<Set<Column>> get uniqueKeys => [
         {
-          workoutId,
+          workoutWithMeasureId,
           workoutWaveId,
           position,
         },

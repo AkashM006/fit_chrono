@@ -29,6 +29,10 @@ class WorkoutWaveService {
       ),
     );
   }
+
+  Future<void> getWorkoutWaveWithWorkouts(int id) {
+    return _database.workoutWaveDao.getWorkoutWaveWithWorkouts(id);
+  }
 }
 
 @riverpod

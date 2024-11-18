@@ -113,7 +113,7 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
                 .map(
                   (workoutWithMeasure) => WorkoutsInWavesCompanion(
                     position: Value(workoutWithMeasure.position),
-                    workoutId: Value(workoutWithMeasure.workout.id),
+                    workoutWithMeasureId: Value(workoutWithMeasure.workout.id),
                     workoutWaveId: Value(workoutWaveId),
                   ),
                 )
@@ -127,4 +127,42 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
       });
     }, "adding your workout wave");
   }
+
+  Future<void> getWorkoutWaveWithWorkouts(int id) async => handleError(
+        () async {
+          final query = select(workoutWaves).join([
+            leftOuterJoin(
+              workoutsInWaves,
+              workoutsInWaves.workoutWaveId.equalsExp(workoutWaves.id),
+            ),
+            leftOuterJoin(
+              workoutsWithMeasures,
+              workoutsWithMeasures.id
+                  .equalsExp(workoutsInWaves.workoutWithMeasureId),
+            ),
+            leftOuterJoin(
+              workouts,
+              workouts.id.equalsExp(workoutsWithMeasures.workoutId),
+            ),
+          ])
+            ..where(workoutWaves.id.equals(id));
+
+          final result = await query.get();
+
+          if (result.isEmpty) {
+            final errorMsg =
+                doesNotExistMsg("workout wave you're searching for");
+            throw AppError(message: errorMsg);
+          }
+
+          final workoutWave = result.first.readTable(workoutWaves);
+          print("Workout wave Name: ${workoutWave.name}");
+          for (var row in result) {
+            final workoutsInWavesList = row.readTableOrNull(workoutsInWaves);
+            print("Workouts In waves:");
+            print(workoutsInWavesList);
+          }
+        },
+        "getting your workout wave",
+      );
 }

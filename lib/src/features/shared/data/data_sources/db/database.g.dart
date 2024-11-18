@@ -781,11 +781,11 @@ class $WorkoutsInWavesTable extends WorkoutsInWaves
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $WorkoutsInWavesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _workoutIdMeta =
-      const VerificationMeta('workoutId');
+  static const VerificationMeta _workoutWithMeasureIdMeta =
+      const VerificationMeta('workoutWithMeasureId');
   @override
-  late final GeneratedColumn<int> workoutId = GeneratedColumn<int>(
-      'workout_id', aliasedName, false,
+  late final GeneratedColumn<int> workoutWithMeasureId = GeneratedColumn<int>(
+      'workout_with_measure_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
@@ -806,7 +806,8 @@ class $WorkoutsInWavesTable extends WorkoutsInWaves
       'position', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [workoutId, workoutWaveId, position];
+  List<GeneratedColumn> get $columns =>
+      [workoutWithMeasureId, workoutWaveId, position];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -817,11 +818,13 @@ class $WorkoutsInWavesTable extends WorkoutsInWaves
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('workout_id')) {
-      context.handle(_workoutIdMeta,
-          workoutId.isAcceptableOrUnknown(data['workout_id']!, _workoutIdMeta));
+    if (data.containsKey('workout_with_measure_id')) {
+      context.handle(
+          _workoutWithMeasureIdMeta,
+          workoutWithMeasureId.isAcceptableOrUnknown(
+              data['workout_with_measure_id']!, _workoutWithMeasureIdMeta));
     } else if (isInserting) {
-      context.missing(_workoutIdMeta);
+      context.missing(_workoutWithMeasureIdMeta);
     }
     if (data.containsKey('workout_wave_id')) {
       context.handle(
@@ -844,14 +847,14 @@ class $WorkoutsInWavesTable extends WorkoutsInWaves
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
   List<Set<GeneratedColumn>> get uniqueKeys => [
-        {workoutId, workoutWaveId, position},
+        {workoutWithMeasureId, workoutWaveId, position},
       ];
   @override
   WorkoutsInWave map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return WorkoutsInWave(
-      workoutId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}workout_id'])!,
+      workoutWithMeasureId: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}workout_with_measure_id'])!,
       workoutWaveId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}workout_wave_id'])!,
       position: attachedDatabase.typeMapping
@@ -866,17 +869,17 @@ class $WorkoutsInWavesTable extends WorkoutsInWaves
 }
 
 class WorkoutsInWave extends DataClass implements Insertable<WorkoutsInWave> {
-  final int workoutId;
+  final int workoutWithMeasureId;
   final int workoutWaveId;
   final int position;
   const WorkoutsInWave(
-      {required this.workoutId,
+      {required this.workoutWithMeasureId,
       required this.workoutWaveId,
       required this.position});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['workout_id'] = Variable<int>(workoutId);
+    map['workout_with_measure_id'] = Variable<int>(workoutWithMeasureId);
     map['workout_wave_id'] = Variable<int>(workoutWaveId);
     map['position'] = Variable<int>(position);
     return map;
@@ -884,7 +887,7 @@ class WorkoutsInWave extends DataClass implements Insertable<WorkoutsInWave> {
 
   WorkoutsInWavesCompanion toCompanion(bool nullToAbsent) {
     return WorkoutsInWavesCompanion(
-      workoutId: Value(workoutId),
+      workoutWithMeasureId: Value(workoutWithMeasureId),
       workoutWaveId: Value(workoutWaveId),
       position: Value(position),
     );
@@ -894,7 +897,8 @@ class WorkoutsInWave extends DataClass implements Insertable<WorkoutsInWave> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return WorkoutsInWave(
-      workoutId: serializer.fromJson<int>(json['workoutId']),
+      workoutWithMeasureId:
+          serializer.fromJson<int>(json['workoutWithMeasureId']),
       workoutWaveId: serializer.fromJson<int>(json['workoutWaveId']),
       position: serializer.fromJson<int>(json['position']),
     );
@@ -903,22 +907,24 @@ class WorkoutsInWave extends DataClass implements Insertable<WorkoutsInWave> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'workoutId': serializer.toJson<int>(workoutId),
+      'workoutWithMeasureId': serializer.toJson<int>(workoutWithMeasureId),
       'workoutWaveId': serializer.toJson<int>(workoutWaveId),
       'position': serializer.toJson<int>(position),
     };
   }
 
   WorkoutsInWave copyWith(
-          {int? workoutId, int? workoutWaveId, int? position}) =>
+          {int? workoutWithMeasureId, int? workoutWaveId, int? position}) =>
       WorkoutsInWave(
-        workoutId: workoutId ?? this.workoutId,
+        workoutWithMeasureId: workoutWithMeasureId ?? this.workoutWithMeasureId,
         workoutWaveId: workoutWaveId ?? this.workoutWaveId,
         position: position ?? this.position,
       );
   WorkoutsInWave copyWithCompanion(WorkoutsInWavesCompanion data) {
     return WorkoutsInWave(
-      workoutId: data.workoutId.present ? data.workoutId.value : this.workoutId,
+      workoutWithMeasureId: data.workoutWithMeasureId.present
+          ? data.workoutWithMeasureId.value
+          : this.workoutWithMeasureId,
       workoutWaveId: data.workoutWaveId.present
           ? data.workoutWaveId.value
           : this.workoutWaveId,
@@ -929,7 +935,7 @@ class WorkoutsInWave extends DataClass implements Insertable<WorkoutsInWave> {
   @override
   String toString() {
     return (StringBuffer('WorkoutsInWave(')
-          ..write('workoutId: $workoutId, ')
+          ..write('workoutWithMeasureId: $workoutWithMeasureId, ')
           ..write('workoutWaveId: $workoutWaveId, ')
           ..write('position: $position')
           ..write(')'))
@@ -937,43 +943,45 @@ class WorkoutsInWave extends DataClass implements Insertable<WorkoutsInWave> {
   }
 
   @override
-  int get hashCode => Object.hash(workoutId, workoutWaveId, position);
+  int get hashCode =>
+      Object.hash(workoutWithMeasureId, workoutWaveId, position);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is WorkoutsInWave &&
-          other.workoutId == this.workoutId &&
+          other.workoutWithMeasureId == this.workoutWithMeasureId &&
           other.workoutWaveId == this.workoutWaveId &&
           other.position == this.position);
 }
 
 class WorkoutsInWavesCompanion extends UpdateCompanion<WorkoutsInWave> {
-  final Value<int> workoutId;
+  final Value<int> workoutWithMeasureId;
   final Value<int> workoutWaveId;
   final Value<int> position;
   final Value<int> rowid;
   const WorkoutsInWavesCompanion({
-    this.workoutId = const Value.absent(),
+    this.workoutWithMeasureId = const Value.absent(),
     this.workoutWaveId = const Value.absent(),
     this.position = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   WorkoutsInWavesCompanion.insert({
-    required int workoutId,
+    required int workoutWithMeasureId,
     required int workoutWaveId,
     required int position,
     this.rowid = const Value.absent(),
-  })  : workoutId = Value(workoutId),
+  })  : workoutWithMeasureId = Value(workoutWithMeasureId),
         workoutWaveId = Value(workoutWaveId),
         position = Value(position);
   static Insertable<WorkoutsInWave> custom({
-    Expression<int>? workoutId,
+    Expression<int>? workoutWithMeasureId,
     Expression<int>? workoutWaveId,
     Expression<int>? position,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (workoutId != null) 'workout_id': workoutId,
+      if (workoutWithMeasureId != null)
+        'workout_with_measure_id': workoutWithMeasureId,
       if (workoutWaveId != null) 'workout_wave_id': workoutWaveId,
       if (position != null) 'position': position,
       if (rowid != null) 'rowid': rowid,
@@ -981,12 +989,12 @@ class WorkoutsInWavesCompanion extends UpdateCompanion<WorkoutsInWave> {
   }
 
   WorkoutsInWavesCompanion copyWith(
-      {Value<int>? workoutId,
+      {Value<int>? workoutWithMeasureId,
       Value<int>? workoutWaveId,
       Value<int>? position,
       Value<int>? rowid}) {
     return WorkoutsInWavesCompanion(
-      workoutId: workoutId ?? this.workoutId,
+      workoutWithMeasureId: workoutWithMeasureId ?? this.workoutWithMeasureId,
       workoutWaveId: workoutWaveId ?? this.workoutWaveId,
       position: position ?? this.position,
       rowid: rowid ?? this.rowid,
@@ -996,8 +1004,9 @@ class WorkoutsInWavesCompanion extends UpdateCompanion<WorkoutsInWave> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (workoutId.present) {
-      map['workout_id'] = Variable<int>(workoutId.value);
+    if (workoutWithMeasureId.present) {
+      map['workout_with_measure_id'] =
+          Variable<int>(workoutWithMeasureId.value);
     }
     if (workoutWaveId.present) {
       map['workout_wave_id'] = Variable<int>(workoutWaveId.value);
@@ -1014,7 +1023,7 @@ class WorkoutsInWavesCompanion extends UpdateCompanion<WorkoutsInWave> {
   @override
   String toString() {
     return (StringBuffer('WorkoutsInWavesCompanion(')
-          ..write('workoutId: $workoutId, ')
+          ..write('workoutWithMeasureId: $workoutWithMeasureId, ')
           ..write('workoutWaveId: $workoutWaveId, ')
           ..write('position: $position, ')
           ..write('rowid: $rowid')
@@ -1616,12 +1625,12 @@ final class $$WorkoutsTableReferences
       _workoutsInWavesRefsTable(_$AppDatabase db) =>
           MultiTypedResultKey.fromTable(db.workoutsInWaves,
               aliasName: $_aliasNameGenerator(
-                  db.workouts.id, db.workoutsInWaves.workoutId));
+                  db.workouts.id, db.workoutsInWaves.workoutWithMeasureId));
 
   $$WorkoutsInWavesTableProcessedTableManager get workoutsInWavesRefs {
     final manager =
         $$WorkoutsInWavesTableTableManager($_db, $_db.workoutsInWaves)
-            .filter((f) => f.workoutId.id($_item.id));
+            .filter((f) => f.workoutWithMeasureId.id($_item.id));
 
     final cache =
         $_typedResult.readTableOrNull(_workoutsInWavesRefsTable($_db));
@@ -1693,7 +1702,7 @@ class $$WorkoutsTableFilterComposer
         composer: this,
         getCurrentColumn: (t) => t.id,
         referencedTable: $db.workoutsInWaves,
-        getReferencedColumn: (t) => t.workoutId,
+        getReferencedColumn: (t) => t.workoutWithMeasureId,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
@@ -1791,7 +1800,7 @@ class $$WorkoutsTableAnnotationComposer
         composer: this,
         getCurrentColumn: (t) => t.id,
         referencedTable: $db.workoutsInWaves,
-        getReferencedColumn: (t) => t.workoutId,
+        getReferencedColumn: (t) => t.workoutWithMeasureId,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
@@ -1910,8 +1919,8 @@ class $$WorkoutsTableTableManager extends RootTableManager<
                             $$WorkoutsTableReferences(db, table, p0)
                                 .workoutsInWavesRefs,
                         referencedItemsForCurrentItem:
-                            (item, referencedItems) => referencedItems
-                                .where((e) => e.workoutId == item.id),
+                            (item, referencedItems) => referencedItems.where(
+                                (e) => e.workoutWithMeasureId == item.id),
                         typedResults: items),
                   if (workoutsWithMeasuresRefs)
                     await $_getPrefetchedData(
@@ -2483,14 +2492,14 @@ typedef $$WorkoutWavesTableProcessedTableManager = ProcessedTableManager<
     PrefetchHooks Function({bool workoutsInWavesRefs})>;
 typedef $$WorkoutsInWavesTableCreateCompanionBuilder = WorkoutsInWavesCompanion
     Function({
-  required int workoutId,
+  required int workoutWithMeasureId,
   required int workoutWaveId,
   required int position,
   Value<int> rowid,
 });
 typedef $$WorkoutsInWavesTableUpdateCompanionBuilder = WorkoutsInWavesCompanion
     Function({
-  Value<int> workoutId,
+  Value<int> workoutWithMeasureId,
   Value<int> workoutWaveId,
   Value<int> position,
   Value<int> rowid,
@@ -2501,15 +2510,16 @@ final class $$WorkoutsInWavesTableReferences extends BaseReferences<
   $$WorkoutsInWavesTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
-  static $WorkoutsTable _workoutIdTable(_$AppDatabase db) =>
-      db.workouts.createAlias(
-          $_aliasNameGenerator(db.workoutsInWaves.workoutId, db.workouts.id));
+  static $WorkoutsTable _workoutWithMeasureIdTable(_$AppDatabase db) =>
+      db.workouts.createAlias($_aliasNameGenerator(
+          db.workoutsInWaves.workoutWithMeasureId, db.workouts.id));
 
-  $$WorkoutsTableProcessedTableManager? get workoutId {
-    if ($_item.workoutId == null) return null;
+  $$WorkoutsTableProcessedTableManager? get workoutWithMeasureId {
+    if ($_item.workoutWithMeasureId == null) return null;
     final manager = $$WorkoutsTableTableManager($_db, $_db.workouts)
-        .filter((f) => f.id($_item.workoutId!));
-    final item = $_typedResult.readTableOrNull(_workoutIdTable($_db));
+        .filter((f) => f.id($_item.workoutWithMeasureId!));
+    final item =
+        $_typedResult.readTableOrNull(_workoutWithMeasureIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: [item]));
@@ -2542,10 +2552,10 @@ class $$WorkoutsInWavesTableFilterComposer
   ColumnFilters<int> get position => $composableBuilder(
       column: $table.position, builder: (column) => ColumnFilters(column));
 
-  $$WorkoutsTableFilterComposer get workoutId {
+  $$WorkoutsTableFilterComposer get workoutWithMeasureId {
     final $$WorkoutsTableFilterComposer composer = $composerBuilder(
         composer: this,
-        getCurrentColumn: (t) => t.workoutId,
+        getCurrentColumn: (t) => t.workoutWithMeasureId,
         referencedTable: $db.workouts,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
@@ -2595,10 +2605,10 @@ class $$WorkoutsInWavesTableOrderingComposer
   ColumnOrderings<int> get position => $composableBuilder(
       column: $table.position, builder: (column) => ColumnOrderings(column));
 
-  $$WorkoutsTableOrderingComposer get workoutId {
+  $$WorkoutsTableOrderingComposer get workoutWithMeasureId {
     final $$WorkoutsTableOrderingComposer composer = $composerBuilder(
         composer: this,
-        getCurrentColumn: (t) => t.workoutId,
+        getCurrentColumn: (t) => t.workoutWithMeasureId,
         referencedTable: $db.workouts,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
@@ -2648,10 +2658,10 @@ class $$WorkoutsInWavesTableAnnotationComposer
   GeneratedColumn<int> get position =>
       $composableBuilder(column: $table.position, builder: (column) => column);
 
-  $$WorkoutsTableAnnotationComposer get workoutId {
+  $$WorkoutsTableAnnotationComposer get workoutWithMeasureId {
     final $$WorkoutsTableAnnotationComposer composer = $composerBuilder(
         composer: this,
-        getCurrentColumn: (t) => t.workoutId,
+        getCurrentColumn: (t) => t.workoutWithMeasureId,
         referencedTable: $db.workouts,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
@@ -2700,7 +2710,7 @@ class $$WorkoutsInWavesTableTableManager extends RootTableManager<
     $$WorkoutsInWavesTableUpdateCompanionBuilder,
     (WorkoutsInWave, $$WorkoutsInWavesTableReferences),
     WorkoutsInWave,
-    PrefetchHooks Function({bool workoutId, bool workoutWaveId})> {
+    PrefetchHooks Function({bool workoutWithMeasureId, bool workoutWaveId})> {
   $$WorkoutsInWavesTableTableManager(
       _$AppDatabase db, $WorkoutsInWavesTable table)
       : super(TableManagerState(
@@ -2713,25 +2723,25 @@ class $$WorkoutsInWavesTableTableManager extends RootTableManager<
           createComputedFieldComposer: () =>
               $$WorkoutsInWavesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
-            Value<int> workoutId = const Value.absent(),
+            Value<int> workoutWithMeasureId = const Value.absent(),
             Value<int> workoutWaveId = const Value.absent(),
             Value<int> position = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               WorkoutsInWavesCompanion(
-            workoutId: workoutId,
+            workoutWithMeasureId: workoutWithMeasureId,
             workoutWaveId: workoutWaveId,
             position: position,
             rowid: rowid,
           ),
           createCompanionCallback: ({
-            required int workoutId,
+            required int workoutWithMeasureId,
             required int workoutWaveId,
             required int position,
             Value<int> rowid = const Value.absent(),
           }) =>
               WorkoutsInWavesCompanion.insert(
-            workoutId: workoutId,
+            workoutWithMeasureId: workoutWithMeasureId,
             workoutWaveId: workoutWaveId,
             position: position,
             rowid: rowid,
@@ -2742,7 +2752,8 @@ class $$WorkoutsInWavesTableTableManager extends RootTableManager<
                     $$WorkoutsInWavesTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: ({workoutId = false, workoutWaveId = false}) {
+          prefetchHooksCallback: (
+              {workoutWithMeasureId = false, workoutWaveId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -2759,14 +2770,15 @@ class $$WorkoutsInWavesTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic>>(state) {
-                if (workoutId) {
+                if (workoutWithMeasureId) {
                   state = state.withJoin(
                     currentTable: table,
-                    currentColumn: table.workoutId,
-                    referencedTable:
-                        $$WorkoutsInWavesTableReferences._workoutIdTable(db),
-                    referencedColumn:
-                        $$WorkoutsInWavesTableReferences._workoutIdTable(db).id,
+                    currentColumn: table.workoutWithMeasureId,
+                    referencedTable: $$WorkoutsInWavesTableReferences
+                        ._workoutWithMeasureIdTable(db),
+                    referencedColumn: $$WorkoutsInWavesTableReferences
+                        ._workoutWithMeasureIdTable(db)
+                        .id,
                   ) as T;
                 }
                 if (workoutWaveId) {
@@ -2802,7 +2814,7 @@ typedef $$WorkoutsInWavesTableProcessedTableManager = ProcessedTableManager<
     $$WorkoutsInWavesTableUpdateCompanionBuilder,
     (WorkoutsInWave, $$WorkoutsInWavesTableReferences),
     WorkoutsInWave,
-    PrefetchHooks Function({bool workoutId, bool workoutWaveId})>;
+    PrefetchHooks Function({bool workoutWithMeasureId, bool workoutWaveId})>;
 typedef $$WorkoutsWithMeasuresTableCreateCompanionBuilder
     = WorkoutsWithMeasuresCompanion Function({
   Value<int> id,
