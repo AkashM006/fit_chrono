@@ -28,21 +28,23 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
       WorkoutWaveWithWorkoutsMeasureDto.init();
 
   bool get canPop {
+    if (isEditMode) {
+      return _workoutWaveWithWorkoutsMeasureDto ==
+          widget.workoutWaveWithWorkoutsMeasure;
+    }
+
     return _workoutWaveWithWorkoutsMeasureDto ==
         WorkoutWaveWithWorkoutsMeasureDto.init();
   }
 
-  bool get isEdit => widget.workoutWaveWithWorkoutsMeasure != null;
+  bool get isEditMode => widget.workoutWaveWithWorkoutsMeasure != null;
 
   @override
   void initState() {
     super.initState();
-    if (isEdit) {
+    if (isEditMode) {
       _workoutWaveWithWorkoutsMeasureDto =
           widget.workoutWaveWithWorkoutsMeasure!;
-      print(
-        'length: ${widget.workoutWaveWithWorkoutsMeasure!.workoutsWithMeasure.length}',
-      );
     }
   }
 

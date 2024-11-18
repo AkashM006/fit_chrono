@@ -163,7 +163,7 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
           final workoutWaveDetail = result.first.readTable(workoutWaves);
 
           final List<WorkoutsInWave> positionDetails = [];
-          final List<WorkoutsWithMeasure> countDetails = [];
+          final List<WorkoutsWithMeasure> workoutsWIthMeasureDetails = [];
           final List<Workout> workoutDetails = [];
 
           for (var row in result) {
@@ -176,15 +176,15 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
                 workoutDetail == null) continue;
 
             positionDetails.add(positionDetail);
-            countDetails.add(countDetail);
+            workoutsWIthMeasureDetails.add(countDetail);
             workoutDetails.add(workoutDetail);
           }
 
           return WorkoutWaveWithWorkoutsMeasureModel.fromDbModel(
-            workoutWaveDetail,
-            positionDetails,
-            countDetails,
-            workoutDetails,
+            positionDetails: positionDetails,
+            workoutDetails: workoutDetails,
+            workoutWaveDetail: workoutWaveDetail,
+            workoutsWithMeasureDetails: workoutsWIthMeasureDetails,
           );
         },
         "getting your workout wave",

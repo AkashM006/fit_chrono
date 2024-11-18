@@ -77,17 +77,32 @@ class WorkoutWaveWithWorkoutsMeasureModel {
     );
   }
 
-  factory WorkoutWaveWithWorkoutsMeasureModel.fromDbModel(
-    WorkoutWave workoutWaveDetail,
-    List<WorkoutsInWave> positionDetails,
-    List<WorkoutsWithMeasure> countDetails,
-    List<Workout> workoutDetails,
-  ) {
+  factory WorkoutWaveWithWorkoutsMeasureModel.fromDbModel({
+    required WorkoutWave workoutWaveDetail,
+    required List<WorkoutsInWave> positionDetails,
+    required List<WorkoutsWithMeasure> workoutsWithMeasureDetails,
+    required List<Workout> workoutDetails,
+  }) {
     final workoutWaveModel = WorkoutWaveModel.fromDbModel(workoutWaveDetail);
+
+    final workoutWithMeasureList =
+        workoutDetails.asMap().entries.map((workoutWithMeasureEntry) {
+      final index = workoutWithMeasureEntry.key;
+
+      final workoutDetail = workoutDetails[index];
+      final positionDetail = positionDetails[index];
+      final workoutsWithMeasureDetail = workoutsWithMeasureDetails[index];
+
+      return WorkoutWithMeasureModel.fromDbModel(
+        workoutWithMeasure: workoutsWithMeasureDetail,
+        workout: workoutDetail,
+        position: positionDetail.position,
+      );
+    }).toList();
 
     return WorkoutWaveWithWorkoutsMeasureModel(
       workoutWave: workoutWaveModel,
-      workoutsWithMeasure: [],
+      workoutsWithMeasure: workoutWithMeasureList,
     );
   }
 
