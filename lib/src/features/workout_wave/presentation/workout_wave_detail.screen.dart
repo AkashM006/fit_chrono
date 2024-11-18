@@ -1,5 +1,9 @@
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async_appbar/custom_async_appbar.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/form_container/form_container.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/stack_with_loader/stack_with_loader.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/provider/get_workout_wave/get_workout_wave.provider.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_wave_form.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,14 +27,31 @@ class WorkoutWaveDetailScreen extends ConsumerWidget {
 
     final workoutWaveWithWorkouts = ref.watch(getWorkoutWaveProvider(id!));
 
-    return Scaffold(
-        body: AsyncValueBuilderWidget(
-      asyncValue: workoutWaveWithWorkouts,
-      builder: (context, data) => Center(
-        child: Text(
-          "Workout Wave Name: ${data.workoutWave.name}",
+    final isLoading = false;
+
+    return StackWithLoaderWidget(
+      isLoading: false,
+      children: [
+        Scaffold(
+          appBar: CustomAsyncAppBar(
+            asyncData: workoutWaveWithWorkouts,
+            builder: (context, data) => AppBar(
+              title: Text(data.workoutWave.name),
+            ),
+          ),
+          body: AsyncValueBuilderWidget(
+            asyncValue: workoutWaveWithWorkouts,
+            builder: (context, data) => FormContainerWidget(
+              isScroll: false,
+              children: [
+                WorkoutWaveFormWidget(
+                  workoutWaveWithWorkoutsMeasure: data,
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
-    ));
+      ],
+    );
   }
 }

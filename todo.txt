@@ -6,3 +6,4 @@
 18. Add PopScope to StackWithLoaderWidget (Later: If required then for other screens)
 20. Find out a neat way to chain validators
 21. Maybe implmement a watch<Entity> method for each get<Entity>
+22. Refactor all <Entity>_form and <Entity>_detail screens

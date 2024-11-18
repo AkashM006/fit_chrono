@@ -1,7 +1,7 @@
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async_appbar/custom_async_appbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/get_workout/get_workout.provider.dart';
@@ -76,7 +76,7 @@ class WorkoutDetailScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: CustomAppbarWidget(
+      appBar: CustomAsyncAppBar(
         asyncData: workout,
         builder: (context, data) => WorkoutDetailAppbarWidget(
           workout: data,

@@ -7,7 +7,7 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map/muscle_map_detail_appbar.widget.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async_appbar/custom_async_appbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +95,7 @@ class MuscleMapDetailScreen extends ConsumerWidget {
     final muscleMap = ref.watch(muscleMapProvider(id!));
 
     return Scaffold(
-      appBar: CustomAppbarWidget(
+      appBar: CustomAsyncAppBar(
         asyncData: muscleMap,
         builder: (context, data) => MuscleMapDetailAppbarWidget(
           muscleMap: data,

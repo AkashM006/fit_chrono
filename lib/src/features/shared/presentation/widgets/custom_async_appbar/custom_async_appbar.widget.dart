@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CustomAppbarWidget<T> extends StatelessWidget
+class CustomAsyncAppBar<T> extends StatelessWidget
     implements PreferredSizeWidget {
-  const CustomAppbarWidget({
+  const CustomAsyncAppBar({
     super.key,
     required this.asyncData,
     required this.builder,

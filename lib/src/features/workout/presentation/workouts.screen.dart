@@ -1,5 +1,5 @@
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_appbar/custom_appbar.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async_appbar/custom_async_appbar.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/workouts.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workouts/workouts_list.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
@@ -19,7 +19,7 @@ class WorkoutsScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: CustomAppbarWidget(
+      appBar: CustomAsyncAppBar(
         asyncData: workouts,
         builder: (context, data) => AppBar(
           title: const Text("Workouts"),

@@ -10,7 +10,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class WorkoutWaveFormWidget extends ConsumerStatefulWidget {
-  const WorkoutWaveFormWidget({super.key});
+  const WorkoutWaveFormWidget({
+    super.key,
+    this.workoutWaveWithWorkoutsMeasure,
+  });
+
+  final WorkoutWaveWithWorkoutsMeasureDto? workoutWaveWithWorkoutsMeasure;
 
   @override
   ConsumerState<WorkoutWaveFormWidget> createState() =>
@@ -25,6 +30,20 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
   bool get canPop {
     return _workoutWaveWithWorkoutsMeasureDto ==
         WorkoutWaveWithWorkoutsMeasureDto.init();
+  }
+
+  bool get isEdit => widget.workoutWaveWithWorkoutsMeasure != null;
+
+  @override
+  void initState() {
+    super.initState();
+    if (isEdit) {
+      _workoutWaveWithWorkoutsMeasureDto =
+          widget.workoutWaveWithWorkoutsMeasure!;
+      print(
+        'length: ${widget.workoutWaveWithWorkoutsMeasure!.workoutsWithMeasure.length}',
+      );
+    }
   }
 
   void setWaveName(String? value) {
