@@ -23,7 +23,9 @@ class AddWorkoutWave extends _$AddWorkoutWave {
     );
 
     state = result.fold(
-      onSuccess: (data) => DataSuccess("Added your workout wave"),
+      onSuccess: (data) => DataSuccess(
+        "🌊 Your Workout Wave is ready to roll! Time to ride the wave and crush those fitness goals! 🏋️‍♂️",
+      ),
       onFailure: (error) => DataFailure(error),
     );
   }
