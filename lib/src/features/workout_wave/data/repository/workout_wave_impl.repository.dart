@@ -26,6 +26,12 @@ class WorkoutWaveImplRepository extends BaseRepository
       () => _workoutWaveService.addWorkoutWave(workoutWave),
     );
   }
+
+  @override
+  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>> workoutWave(int id) {
+    // TODO: implement workoutWave
+    throw UnimplementedError();
+  }
 }
 
 @riverpod

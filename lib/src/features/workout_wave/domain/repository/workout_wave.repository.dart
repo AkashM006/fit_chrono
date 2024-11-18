@@ -4,5 +4,7 @@ import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.
 abstract class WorkoutWaveRepostiory {
   Stream<List<WorkoutWaveEntity>> watchWorkoutWaves();
   Future<DataState<void>> addWorkoutWave(
-      WorkoutWaveWithWorkoutsMeasureEntity workoutWave);
+    WorkoutWaveWithWorkoutsMeasureEntity workoutWave,
+  );
+  Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>> workoutWave(int id);
 }
