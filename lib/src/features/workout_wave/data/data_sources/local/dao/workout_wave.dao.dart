@@ -47,84 +47,10 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
             .insert(workoutWaveWithWorkoutMeasures.workoutWave.toCompanion()));
         // 2. then insert the workouts with their measurements and get all their ids
         // Check the workout with measure that are already present in db and get their ids
-        final workoutMeasuresCompanions = workoutWaveWithWorkoutMeasures
-            .workoutsWithMeasure
-            .map((workoutWithMeasure) => workoutWithMeasure.toCompanion())
-            .toList();
-
-        final conditions = workoutMeasuresCompanions
-            .map(
-              (workoutWithMeasure) =>
-                  workoutsWithMeasures.workoutId
-                      .equals(workoutWithMeasure.workoutId.value) &
-                  workoutsWithMeasures.repitition
-                      .equals(workoutWithMeasure.repitition.value) &
-                  workoutsWithMeasures.repititionType
-                      .equals(workoutWithMeasure.repititionType.value),
-            )
-            .toList();
-
-        final List<WorkoutWithMeasureModel> existingWorkoutsWithMeasureList =
-            [];
-        final existingCheckResult = await (select(workoutsWithMeasures)
-              ..where((tbl) => conditions.reduce((prev, expr) => prev | expr)))
-            .join([
-          leftOuterJoin(
-            workouts,
-            workoutsWithMeasures.workoutId.equalsExp(workouts.id),
-          )
-        ]).get();
-
-        // since the model requires data from two tables, joining them and constructing it
-        for (var row in existingCheckResult) {
-          final workoutMeasureData = row.readTable(workoutsWithMeasures);
-          final workoutData = row.readTableOrNull(workouts);
-
-          if (workoutData == null) continue;
-
-          final workoutWithMeasure = WorkoutWithMeasureModel.fromDbModel(
-            workoutWithMeasure: workoutMeasureData,
-            workout: workoutData,
-          );
-
-          existingWorkoutsWithMeasureList.add(workoutWithMeasure);
-        }
-
-        final existingWorkoutsWithMeasureMap = {
-          for (var workoutWithMeasure in existingWorkoutsWithMeasureList)
-            workoutWithMeasure: workoutWithMeasure.id
-        };
-
-        final workoutsWithMeasureList =
-            workoutWaveWithWorkoutMeasures.workoutsWithMeasure;
-        for (var workoutWithMeasure in workoutsWithMeasureList) {
-          if (!existingWorkoutsWithMeasureMap.containsKey(workoutWithMeasure)) {
-            // add new workout with measure here and store the id
-            // otherwise insert them and get the ids
-            final inserted = await into(workoutsWithMeasures)
-                .insertReturning(workoutWithMeasure.toCompanion());
-            existingWorkoutsWithMeasureList.add(
-              workoutWithMeasure.copyWith(id: inserted.id),
-            );
-          }
-        }
-        // then insert into relationship table
-        final workoutWaveWithWorkoutsMeasureCompanions =
-            existingWorkoutsWithMeasureList
-                .map(
-                  (workoutWithMeasure) => WorkoutsInWavesCompanion(
-                    position: Value(workoutWithMeasure.position),
-                    workoutWithMeasureId: Value(workoutWithMeasure.workout.id),
-                    workoutWaveId: Value(workoutWaveId),
-                  ),
-                )
-                .toList();
-        await batch((batch) {
-          batch.insertAll(
-            workoutsInWaves,
-            workoutWaveWithWorkoutsMeasureCompanions,
-          );
-        });
+        _insertWorkoutWithMeasurements(
+          workoutWaveWithWorkoutMeasures,
+          workoutWaveId,
+        );
       });
     }, "adding your workout wave");
   }
@@ -189,4 +115,111 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
         },
         "getting your workout wave",
       );
+
+  Future<void> _deleteWorkoutsInWavesMapping(int workoutWaveId) async {
+    await (delete(workoutsInWaves)
+          ..where((tbl) => tbl.workoutWaveId.equals(workoutWaveId)))
+        .go();
+  }
+
+  Future<void> editWorkoutWaveWithWorkout(
+    WorkoutWaveWithWorkoutsMeasureModel workoutWaveWithWorkoutMeasures,
+  ) =>
+      handleError(
+        () async {
+          await transaction(() async {
+            await _deleteWorkoutsInWavesMapping(
+              workoutWaveWithWorkoutMeasures.workoutWave.id,
+            );
+            await _insertWorkoutWithMeasurements(
+              workoutWaveWithWorkoutMeasures,
+              workoutWaveWithWorkoutMeasures.workoutWave.id,
+            );
+          });
+        },
+        "editing your workout wave",
+      );
+
+  Future<void> _insertWorkoutWithMeasurements(
+    WorkoutWaveWithWorkoutsMeasureModel workoutWaveWithWorkoutMeasures,
+    int workoutWaveId,
+  ) async {
+    final workoutMeasuresCompanions = workoutWaveWithWorkoutMeasures
+        .workoutsWithMeasure
+        .map((workoutWithMeasure) => workoutWithMeasure.toCompanion())
+        .toList();
+
+    final conditions = workoutMeasuresCompanions
+        .map(
+          (workoutWithMeasure) =>
+              workoutsWithMeasures.workoutId
+                  .equals(workoutWithMeasure.workoutId.value) &
+              workoutsWithMeasures.repitition
+                  .equals(workoutWithMeasure.repitition.value) &
+              workoutsWithMeasures.repititionType
+                  .equals(workoutWithMeasure.repititionType.value),
+        )
+        .toList();
+
+    final List<WorkoutWithMeasureModel> existingWorkoutsWithMeasureList = [];
+    final existingCheckResult = await (select(workoutsWithMeasures)
+          ..where((tbl) => conditions.reduce((prev, expr) => prev | expr)))
+        .join([
+      leftOuterJoin(
+        workouts,
+        workoutsWithMeasures.workoutId.equalsExp(workouts.id),
+      )
+    ]).get();
+
+    // since the model requires data from two tables, joining them and constructing it
+    for (var row in existingCheckResult) {
+      final workoutMeasureData = row.readTable(workoutsWithMeasures);
+      final workoutData = row.readTableOrNull(workouts);
+
+      if (workoutData == null) continue;
+
+      final workoutWithMeasure = WorkoutWithMeasureModel.fromDbModel(
+        workoutWithMeasure: workoutMeasureData,
+        workout: workoutData,
+      );
+
+      existingWorkoutsWithMeasureList.add(workoutWithMeasure);
+    }
+
+    final existingWorkoutsWithMeasureMap = {
+      for (var workoutWithMeasure in existingWorkoutsWithMeasureList)
+        workoutWithMeasure: workoutWithMeasure.id
+    };
+
+    final workoutsWithMeasureList =
+        workoutWaveWithWorkoutMeasures.workoutsWithMeasure;
+    for (var workoutWithMeasure in workoutsWithMeasureList) {
+      if (!existingWorkoutsWithMeasureMap.containsKey(workoutWithMeasure)) {
+        // add new workout with measure here and store the id
+        // otherwise insert them and get the ids
+        final inserted = await into(workoutsWithMeasures)
+            .insertReturning(workoutWithMeasure.toCompanion());
+        existingWorkoutsWithMeasureList.add(
+          workoutWithMeasure.copyWith(id: inserted.id),
+        );
+      }
+    }
+    // then insert into relationship table
+    final workoutWaveWithWorkoutsMeasureCompanions =
+        existingWorkoutsWithMeasureList
+            .map(
+              (workoutWithMeasure) => WorkoutsInWavesCompanion(
+                position: Value(workoutWithMeasure.position),
+                workoutWithMeasureId: Value(workoutWithMeasure.workout.id),
+                workoutWaveId: Value(workoutWaveId),
+              ),
+            )
+            .toList();
+    await batch((batch) {
+      batch.insertAll(
+        workoutsInWaves,
+        workoutWaveWithWorkoutsMeasureCompanions,
+      );
+    });
+  }
 }

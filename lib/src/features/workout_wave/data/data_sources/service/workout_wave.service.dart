@@ -37,6 +37,15 @@ class WorkoutWaveService {
         await _database.workoutWaveDao.getWorkoutWaveWithWorkouts(id);
     return result.toEntity();
   }
+
+  Future<void> editWorkoutWaveWithWorkouts(
+    WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutMeasures,
+  ) =>
+      _database.workoutWaveDao.editWorkoutWaveWithWorkout(
+        WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
+          workoutWaveWithWorkoutMeasures,
+        ),
+      );
 }
 
 @riverpod
