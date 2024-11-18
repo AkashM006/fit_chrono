@@ -7,3 +7,4 @@
 20. Find out a neat way to chain validators
 21. Maybe implmement a watch<Entity> method for each get<Entity>
 22. Refactor all <Entity>_form and <Entity>_detail screens
+23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required

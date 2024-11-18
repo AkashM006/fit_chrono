@@ -47,7 +47,7 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
             .insert(workoutWaveWithWorkoutMeasures.workoutWave.toCompanion()));
         // 2. then insert the workouts with their measurements and get all their ids
         // Check the workout with measure that are already present in db and get their ids
-        _insertWorkoutWithMeasurements(
+        await _insertWorkoutWithMeasurements(
           workoutWaveWithWorkoutMeasures,
           workoutWaveId,
         );
@@ -127,6 +127,11 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
   ) =>
       handleError(
         () async {
+          await (update(workoutWaves)
+                ..where((tbl) => tbl.id
+                    .equals(workoutWaveWithWorkoutMeasures.workoutWave.id)))
+              .write(workoutWaveWithWorkoutMeasures.workoutWave.toCompanion());
+
           await transaction(() async {
             await _deleteWorkoutsInWavesMapping(
               workoutWaveWithWorkoutMeasures.workoutWave.id,
