@@ -5,8 +5,10 @@ import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async
 import 'package:fit_chrono/src/features/shared/presentation/widgets/form_container/form_container.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/stack_with_loader/stack_with_loader.widget.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/provider/delete_workout_wave/delete_workout_wave.provider.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/provider/edit_workout_wave/edit_workout_wave.provider.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/provider/get_workout_wave/get_workout_wave.provider.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_detail/workout_wave_detail_appbar.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_wave_form.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
@@ -44,13 +46,30 @@ class WorkoutWaveDetailScreen extends ConsumerWidget {
     final workoutWaveWithWorkouts = ref.watch(getWorkoutWaveProvider(id!));
 
     final editWorkoutWaveStatus = ref.watch(editWorkoutWaveProvider);
+    final deleteWorkoutWaveStatus = ref.watch(deleteWorkoutWaveProvider);
 
     final isEditLoading = editWorkoutWaveStatus?.isLoading ?? false;
+    final isDeleteLoading = deleteWorkoutWaveStatus?.isLoading ?? false;
 
-    final isLoading = isEditLoading;
+    final isLoading = isEditLoading || isDeleteLoading;
 
     ref.listen(
       editWorkoutWaveProvider,
+      (previous, next) {
+        next?.on(
+          success: (data) {
+            showSnackBar(context, data);
+            context.pop();
+          },
+          failed: (error) {
+            showSnackBar(context, error.toString());
+          },
+        );
+      },
+    );
+
+    ref.listen(
+      deleteWorkoutWaveProvider,
       (previous, next) {
         next?.on(
           success: (data) {
@@ -70,12 +89,8 @@ class WorkoutWaveDetailScreen extends ConsumerWidget {
         Scaffold(
           appBar: CustomAsyncAppBar(
             asyncData: workoutWaveWithWorkouts,
-            builder: (context, data) => AppBar(
-              title: Text(
-                data.workoutWave.name,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            builder: (context, data) =>
+                WorkoutWaveDetailAppbarWidget(workoutWithWorkoutsMeasure: data),
           ),
           body: AsyncValueBuilderWidget(
             asyncValue: workoutWaveWithWorkouts,
