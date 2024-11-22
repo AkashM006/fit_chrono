@@ -116,12 +116,6 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
         "getting your workout wave",
       );
 
-  Future<void> _deleteWorkoutsInWavesMapping(int workoutWaveId) async {
-    await (delete(workoutsInWaves)
-          ..where((tbl) => tbl.workoutWaveId.equals(workoutWaveId)))
-        .go();
-  }
-
   Future<void> editWorkoutWaveWithWorkout(
     WorkoutWaveWithWorkoutsMeasureModel workoutWaveWithWorkoutMeasures,
   ) =>
@@ -144,6 +138,22 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
         },
         "editing your workout wave",
       );
+
+  Future<void> deleteWorkoutWave(int workoutWaveId) async =>
+      handleError(() async {
+        await transaction(() async {
+          await _deleteWorkoutsInWavesMapping(workoutWaveId);
+          await (delete(workoutWaves)
+                ..where((tbl) => tbl.id.equals(workoutWaveId)))
+              .go();
+        });
+      }, "trying to delete your workout wave");
+
+  Future<void> _deleteWorkoutsInWavesMapping(int workoutWaveId) async {
+    await (delete(workoutsInWaves)
+          ..where((tbl) => tbl.workoutWaveId.equals(workoutWaveId)))
+        .go();
+  }
 
   Future<void> _insertWorkoutWithMeasurements(
     WorkoutWaveWithWorkoutsMeasureModel workoutWaveWithWorkoutMeasures,

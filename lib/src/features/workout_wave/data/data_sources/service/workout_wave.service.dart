@@ -46,6 +46,9 @@ class WorkoutWaveService {
           workoutWaveWithWorkoutMeasures,
         ),
       );
+
+  Future<void> deleteWorkoutWave(int workoutWaveId) =>
+      _database.workoutWaveDao.deleteWorkoutWave(workoutWaveId);
 }
 
 @riverpod
