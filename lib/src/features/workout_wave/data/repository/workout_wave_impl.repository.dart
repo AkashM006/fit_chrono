@@ -39,6 +39,12 @@ class WorkoutWaveImplRepository extends BaseRepository
         () => _workoutWaveService
             .editWorkoutWaveWithWorkouts(workoutWaveWithWorkoutMeasures),
       );
+
+  @override
+  Future<DataState<void>> deleteWorkoutWave(int workoutWaveId) {
+    // TODO: implement deleteWorkoutWave
+    throw UnimplementedError();
+  }
 }
 
 @riverpod

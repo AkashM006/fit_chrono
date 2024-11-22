@@ -11,4 +11,5 @@ abstract class WorkoutWaveRepostiory {
   Future<DataState<void>> editWorkoutWave(
     WorkoutWaveWithWorkoutsMeasureEntity workoutWave,
   );
+  Future<DataState<void>> deleteWorkoutWave(int workoutWaveId);
 }
