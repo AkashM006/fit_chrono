@@ -42,6 +42,12 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
   @override
   Stream<List<WorkoutEntity>> watchWorkoutsSearch(String workoutName) =>
       _workoutService.watchWorkoutsSearch(workoutName);
+
+  @override
+  Future<DataState<List<WorkoutEntity>>> getWorkoutsSearch(String workoutName) {
+    // TODO: implement getWorkoutsSearch
+    throw UnimplementedError();
+  }
 }
 
 @riverpod

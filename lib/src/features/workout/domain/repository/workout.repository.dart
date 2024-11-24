@@ -8,4 +8,5 @@ abstract class WorkoutRepository {
   Future<DataState<void>> updateWorkout(WorkoutEntity workout);
   Future<DataState<void>> deleteWorkout(int id);
   Stream<List<WorkoutEntity>> watchWorkoutsSearch(String workoutName);
+  Future<DataState<List<WorkoutEntity>>> getWorkoutsSearch(String workoutName);
 }
