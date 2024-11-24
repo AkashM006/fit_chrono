@@ -46,6 +46,12 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
       () => _workoutService.deleteWorkout(id),
     );
   }
+
+  @override
+  Stream<List<WorkoutEntity>> watchWorkoutsSearch(String workoutName) {
+    // TODO: implement watchWorkoutsSearch
+    throw UnimplementedError();
+  }
 }
 
 @riverpod
