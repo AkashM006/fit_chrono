@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:fit_chrono/src/core/constants/app_offsets.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
@@ -19,7 +17,6 @@ class SearchableWorkoutListWidget extends ConsumerStatefulWidget {
 
 class _SearchableWorkoutListWidgetState
     extends ConsumerState<SearchableWorkoutListWidget> {
-  final Debouncer _debouncer = Debouncer(milliseconds: 500);
   String name = "";
 
   void onWorkoutSelect(WorkoutDto workout) {
@@ -28,10 +25,8 @@ class _SearchableWorkoutListWidgetState
 
   void onSearch(String? newValue) {
     if (newValue == null) return;
-    _debouncer.run(() {
-      setState(() {
-        name = newValue;
-      });
+    setState(() {
+      name = newValue;
     });
   }
 
@@ -39,8 +34,9 @@ class _SearchableWorkoutListWidgetState
   Widget build(BuildContext context) {
     final workouts = ref.watch(searchWorkoutsProvider(name));
 
-    void onAddWorkout() {
-      context.push(PAGES.workoutForm.path);
+    void onAddWorkout() async {
+      await context.push(PAGES.workoutForm.path);
+      ref.invalidate(searchWorkoutsProvider);
     }
 
     return Scaffold(
@@ -92,19 +88,5 @@ class _SearchableWorkoutListWidgetState
         ),
       ),
     );
-  }
-}
-
-class Debouncer {
-  final int milliseconds;
-  VoidCallback? action;
-  Timer? _timer;
-
-  Debouncer({required this.milliseconds});
-
-  void run(VoidCallback action) {
-    _timer?.cancel(); // Cancel the previous timer if it's still active
-    _timer =
-        Timer(Duration(milliseconds: milliseconds), action); // Set a new timer
   }
 }

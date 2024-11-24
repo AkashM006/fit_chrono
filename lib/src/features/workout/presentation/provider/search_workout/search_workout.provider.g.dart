@@ -6,7 +6,7 @@ part of 'search_workout.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchWorkoutsHash() => r'b2e690042ec0f4fd70db408a3f10fe18c2c96b1b';
+String _$searchWorkoutsHash() => r'2debfc6f6bd8a911ecf1d871a407649721260a21';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -73,7 +73,7 @@ class SearchWorkoutsFamily extends Family<AsyncValue<List<WorkoutDto>>> {
 
 /// See also [searchWorkouts].
 class SearchWorkoutsProvider
-    extends AutoDisposeStreamProvider<List<WorkoutDto>> {
+    extends AutoDisposeFutureProvider<List<WorkoutDto>> {
   /// See also [searchWorkouts].
   SearchWorkoutsProvider(
     String workoutName,
@@ -108,7 +108,7 @@ class SearchWorkoutsProvider
 
   @override
   Override overrideWith(
-    Stream<List<WorkoutDto>> Function(SearchWorkoutsRef provider) create,
+    FutureOr<List<WorkoutDto>> Function(SearchWorkoutsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -125,7 +125,7 @@ class SearchWorkoutsProvider
   }
 
   @override
-  AutoDisposeStreamProviderElement<List<WorkoutDto>> createElement() {
+  AutoDisposeFutureProviderElement<List<WorkoutDto>> createElement() {
     return _SearchWorkoutsProviderElement(this);
   }
 
@@ -143,13 +143,13 @@ class SearchWorkoutsProvider
   }
 }
 
-mixin SearchWorkoutsRef on AutoDisposeStreamProviderRef<List<WorkoutDto>> {
+mixin SearchWorkoutsRef on AutoDisposeFutureProviderRef<List<WorkoutDto>> {
   /// The parameter `workoutName` of this provider.
   String get workoutName;
 }
 
 class _SearchWorkoutsProviderElement
-    extends AutoDisposeStreamProviderElement<List<WorkoutDto>>
+    extends AutoDisposeFutureProviderElement<List<WorkoutDto>>
     with SearchWorkoutsRef {
   _SearchWorkoutsProviderElement(super.provider);
 
