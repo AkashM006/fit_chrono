@@ -39,6 +39,15 @@ class WorkoutService {
   Future<void> deleteWorkout(int id) {
     return _appDatabase.workoutDao.deleteWorkout(id);
   }
+
+  Stream<List<WorkoutEntity>> watchWorkoutsSearch(String name) =>
+      _appDatabase.workoutDao.watchWorkoutsSearch(name).map(
+            (workouts) => workouts
+                .map(
+                  (workout) => workout.toEntity(),
+                )
+                .toList(),
+          );
 }
 
 @riverpod

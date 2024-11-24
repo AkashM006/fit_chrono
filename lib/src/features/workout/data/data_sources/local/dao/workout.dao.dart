@@ -203,4 +203,45 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
       "deleting your workout",
     );
   }
+
+  Stream<List<WorkoutModel>> watchWorkoutsSearch(String name) {
+    final query =
+        (select(workouts)..where((tbl) => tbl.name.like('%$name%'))).join([
+      leftOuterJoin(muscleMapsForWorkouts,
+          muscleMapsForWorkouts.workoutId.equalsExp(workouts.id)),
+      leftOuterJoin(muscleMaps,
+          muscleMapsForWorkouts.muscleMapId.equalsExp(muscleMaps.id)),
+    ]);
+
+    return query
+        .watch()
+        .map(
+          getMappedWorkoutModel,
+        )
+        .handleError((error) {
+      final errorMsg = somethingWentWrongMsg("searching for your workout");
+      throw AppError(message: errorMsg);
+    });
+  }
+
+  List<WorkoutModel> getMappedWorkoutModel(List<TypedResult> rows) {
+    final groupedWorkouts = <int, WorkoutModel>{};
+
+    for (final row in rows) {
+      final workout = row.readTable(workouts);
+      final muscleMap = row.readTableOrNull(muscleMaps);
+
+      if (!groupedWorkouts.containsKey(workout.id)) {
+        groupedWorkouts[workout.id] = WorkoutModel.fromDbModel(workout);
+      }
+
+      if (muscleMap == null) continue;
+
+      groupedWorkouts[workout.id]!
+          .muscles
+          .add(MuscleMapModel.fromDbModel(muscleMap));
+    }
+
+    return groupedWorkouts.values.toList();
+  }
 }

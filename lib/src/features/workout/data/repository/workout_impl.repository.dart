@@ -13,45 +13,35 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
   WorkoutImpl(this._workoutService);
 
   @override
-  Stream<List<WorkoutEntity>> watchWorkouts() {
-    return _workoutService.watchWorkouts();
-  }
+  Stream<List<WorkoutEntity>> watchWorkouts() =>
+      _workoutService.watchWorkouts();
 
   @override
-  Future<DataState<void>> addWorkout(WorkoutEntity workout) {
-    return safeExecute(
-      () => _workoutService.addWorkout(workout),
-    );
-  }
+  Future<DataState<void>> addWorkout(WorkoutEntity workout) => safeExecute(
+        () => _workoutService.addWorkout(workout),
+      );
 
   @override
-  Future<DataState<WorkoutEntity>> getWorkout(int id) {
-    return safeExecute(
-      () => _workoutService.getWorkout(id),
-    );
-  }
+  Future<DataState<WorkoutEntity>> getWorkout(int id) => safeExecute(
+        () => _workoutService.getWorkout(id),
+      );
 
   @override
   Future<DataState<void>> updateWorkout(
     WorkoutEntity workout,
-  ) {
-    return safeExecute(
-      () => _workoutService.updateWorkout(workout),
-    );
-  }
+  ) =>
+      safeExecute(
+        () => _workoutService.updateWorkout(workout),
+      );
 
   @override
-  Future<DataState<void>> deleteWorkout(int id) {
-    return safeExecute(
-      () => _workoutService.deleteWorkout(id),
-    );
-  }
+  Future<DataState<void>> deleteWorkout(int id) => safeExecute(
+        () => _workoutService.deleteWorkout(id),
+      );
 
   @override
-  Stream<List<WorkoutEntity>> watchWorkoutsSearch(String workoutName) {
-    // TODO: implement watchWorkoutsSearch
-    throw UnimplementedError();
-  }
+  Stream<List<WorkoutEntity>> watchWorkoutsSearch(String workoutName) =>
+      _workoutService.watchWorkoutsSearch(workoutName);
 }
 
 @riverpod
