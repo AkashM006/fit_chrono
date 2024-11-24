@@ -224,6 +224,21 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
     });
   }
 
+  Future<List<WorkoutModel>> getWorkoutsSearch(String workoutName) async {
+    final query = (select(workouts)
+          ..where((tbl) => tbl.name.like('%$workoutName%')))
+        .join([
+      leftOuterJoin(muscleMapsForWorkouts,
+          muscleMapsForWorkouts.workoutId.equalsExp(workouts.id)),
+      leftOuterJoin(muscleMaps,
+          muscleMapsForWorkouts.muscleMapId.equalsExp(muscleMaps.id)),
+    ]);
+
+    final result = await query.get();
+
+    return getMappedWorkoutModel(result);
+  }
+
   List<WorkoutModel> getMappedWorkoutModel(List<TypedResult> rows) {
     final groupedWorkouts = <int, WorkoutModel>{};
 

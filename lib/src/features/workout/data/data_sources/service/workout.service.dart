@@ -10,15 +10,8 @@ class WorkoutService {
 
   WorkoutService(this._appDatabase);
 
-  Stream<List<WorkoutEntity>> watchWorkouts() {
-    return _appDatabase.workoutDao.watchWorkouts().map(
-          (workouts) => workouts
-              .map(
-                (workout) => workout.toEntity(),
-              )
-              .toList(),
-        );
-  }
+  Stream<List<WorkoutEntity>> watchWorkouts() =>
+      _appDatabase.workoutDao.watchWorkouts().map(modelListToEntityList);
 
   Future<void> addWorkout(WorkoutEntity workout) async {
     await _appDatabase.workoutDao.addWorkout(WorkoutModel.fromEntity(workout));
@@ -31,24 +24,25 @@ class WorkoutService {
 
   Future<void> updateWorkout(
     WorkoutEntity workout,
-  ) async {
-    await _appDatabase.workoutDao
-        .updateWorkout(WorkoutModel.fromEntity(workout));
-  }
+  ) async =>
+      _appDatabase.workoutDao.updateWorkout(WorkoutModel.fromEntity(workout));
 
-  Future<void> deleteWorkout(int id) {
-    return _appDatabase.workoutDao.deleteWorkout(id);
-  }
+  Future<void> deleteWorkout(int id) =>
+      _appDatabase.workoutDao.deleteWorkout(id);
 
   Stream<List<WorkoutEntity>> watchWorkoutsSearch(String name) =>
-      _appDatabase.workoutDao.watchWorkoutsSearch(name).map(
-            (workouts) => workouts
-                .map(
-                  (workout) => workout.toEntity(),
-                )
-                .toList(),
-          );
+      _appDatabase.workoutDao
+          .watchWorkoutsSearch(name)
+          .map(modelListToEntityList);
+
+  Future<List<WorkoutEntity>> getWorkoutsSearch(String workoutName) =>
+      _appDatabase.workoutDao
+          .getWorkoutsSearch(workoutName)
+          .then(modelListToEntityList);
 }
+
+List<WorkoutEntity> modelListToEntityList(List<WorkoutModel> list) =>
+    list.map((item) => item.toEntity()).toList();
 
 @riverpod
 WorkoutService workoutService(WorkoutServiceRef ref) {
