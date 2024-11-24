@@ -63,6 +63,8 @@ class _WorkoutFormDialogWidgetState
     final selectedWorkout = await showModalBottomSheet<WorkoutDto>(
       context: context,
       builder: (context) => const SearchableWorkoutListWidget(),
+      useSafeArea: true,
+      isScrollControlled: true,
     );
 
     if (selectedWorkout == null) return;
