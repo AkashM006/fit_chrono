@@ -13,8 +13,6 @@ class DeleteWorkoutWave extends _$DeleteWorkoutWave {
   void go(int workoutWaveId) async {
     state = DataLoading();
 
-    await Future.delayed(const Duration(seconds: 14));
-
     final workoutWaveRepository = ref.read(workoutWaveImplProvider);
 
     final result = await DeleteWorkoutWaveUsecase(workoutWaveRepository)(

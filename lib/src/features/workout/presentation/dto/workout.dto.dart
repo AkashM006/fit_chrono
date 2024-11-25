@@ -187,8 +187,8 @@ enum WorkoutMeasureDto {
 }
 
 Map<String, WorkoutMeasureDto> stringMappedtoMeasure = {
-  "time": WorkoutMeasureDto.time,
-  "reps": WorkoutMeasureDto.reps,
+  "WorkoutMeasureDto.time": WorkoutMeasureDto.time,
+  "WorkoutMeasureDto.reps": WorkoutMeasureDto.reps,
 };
 
 class WorkoutMeasureDtoMapper {

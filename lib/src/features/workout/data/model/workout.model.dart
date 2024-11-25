@@ -141,6 +141,10 @@ class WorkoutWithMeasureModel {
     );
   }
 
+  String toMapKey() {
+    return "${workout.id}-$count-${measure.toString()}";
+  }
+
   WorkoutsWithMeasuresCompanion toCompanion() {
     return WorkoutsWithMeasuresCompanion(
       workoutId: Value(workout.id),
@@ -171,6 +175,11 @@ class WorkoutWithMeasureModel {
       position: position ?? this.position,
     );
   }
+
+  @override
+  String toString() {
+    return "WorkoutWithMeasureModel(id: $id, workoutName: ${workout.name}, measure: $measure, count: $count, position: $position)";
+  }
 }
 
 enum WorkoutMeasureModel {
@@ -179,8 +188,8 @@ enum WorkoutMeasureModel {
 }
 
 Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
-  "time": WorkoutMeasureModel.time,
-  "reps": WorkoutMeasureModel.reps,
+  "WorkoutMeasureModel.time": WorkoutMeasureModel.time,
+  "WorkoutMeasureModel.reps": WorkoutMeasureModel.reps,
 };
 
 class WorkoutMeasureModelMapper {

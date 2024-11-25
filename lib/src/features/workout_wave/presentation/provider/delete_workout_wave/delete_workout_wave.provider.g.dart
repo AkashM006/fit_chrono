@@ -6,7 +6,7 @@ part of 'delete_workout_wave.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deleteWorkoutWaveHash() => r'e7d817e515fbe2c2701eb71962b1f425890d53c1';
+String _$deleteWorkoutWaveHash() => r'd720b09b495077cbee2608d2deaa6d0c3e3e29d2';
 
 /// See also [DeleteWorkoutWave].
 @ProviderFor(DeleteWorkoutWave)
