@@ -5,6 +5,7 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_
 import 'package:fit_chrono/src/features/muscle_maps/presentation/widgets/muscle_map_form/muscle_map_form.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/form_container/form_container.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/stack_with_loader/stack_with_loader.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,17 +31,24 @@ class MuscleMapFormScreen extends ConsumerWidget {
       },
     );
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: FormContainerWidget(
-        children: [
-          const MuscleMapDescriptionWidget(),
-          SizedBox(
-            height: SizeConfig.safeBlockVertical * 4,
+    final isAddLoading = ref.watch(addMuscleMapProvider)?.isLoading ?? false;
+
+    return StackWithLoaderWidget(
+      isLoading: isAddLoading,
+      children: [
+        Scaffold(
+          appBar: AppBar(),
+          body: FormContainerWidget(
+            children: [
+              const MuscleMapDescriptionWidget(),
+              SizedBox(
+                height: SizeConfig.safeBlockVertical * 4,
+              ),
+              const MuscleMapFormWidget()
+            ],
           ),
-          const MuscleMapFormWidget()
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

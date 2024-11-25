@@ -1,11 +1,7 @@
-import 'package:fit_chrono/src/core/constants/size.dart';
-import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
-import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/delete_muscle_map/delete_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/edit_muscle_map/edit_muscle_map.provider.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_spinner/custom_spinner.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,14 +24,6 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
   MuscleMapDto _muscleMap = MuscleMapDto.init();
-
-  Widget loaderWidget = SizedBox(
-    height: SizeConfig.safeBlockVertical * 5,
-    child: const AspectRatio(
-      aspectRatio: 1,
-      child: CustomSpinnerWidget(),
-    ),
-  );
 
   bool get isEditMode => widget.muscleMap != null;
   bool get hasEdited {
@@ -88,17 +76,6 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final addMuscleMapStatus = ref.watch(addMuscleMapProvider);
-    final editMuscleMapStatus = ref.watch(editMuscleMapProvider);
-    final deleteMuscleMapStatus = ref.watch(deleteMuscleMapProvider);
-
-    final isAddLoading = addMuscleMapStatus is DataLoading;
-    final isEditLoading = editMuscleMapStatus is DataLoading;
-    final isDeleteLoading = deleteMuscleMapStatus?.isLoading ?? false;
-
-    final isLoading =
-        isEditMode ? (isEditLoading || isDeleteLoading) : isAddLoading;
-
     void setName(String value) {
       setState(() {
         _muscleMap = _muscleMap.copyWith(
@@ -140,17 +117,10 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
               validator: (value) =>
                   cannotBeginWithDigitValidator("Name", value),
               maxLength: 32,
-              enabled: !isLoading,
             ),
             FilledButton(
-              onPressed: isLoading
-                  ? null
-                  : isSubmitEnabled
-                      ? handleSubmit
-                      : null,
-              child: isLoading
-                  ? const CustomSpinnerWidget()
-                  : Text(isEditMode ? "Edit" : "Go"),
+              onPressed: isSubmitEnabled ? handleSubmit : null,
+              child: Text(isEditMode ? "Edit" : "Go"),
             ),
           ],
         ),

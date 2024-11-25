@@ -4,6 +4,7 @@ import 'package:fit_chrono/src/features/shared/presentation/entity_not_found.scr
 import 'package:fit_chrono/src/features/shared/presentation/widgets/async_value_builder/async_value_builder.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async_appbar/custom_async_appbar.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
+import 'package:fit_chrono/src/features/shared/presentation/widgets/stack_with_loader/stack_with_loader.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/get_workout/get_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/edit_workout/edit_workout.provider.dart';
@@ -76,22 +77,33 @@ class WorkoutDetailScreen extends ConsumerWidget {
       },
     );
 
-    return Scaffold(
-      appBar: CustomAsyncAppBar(
-        asyncData: workout,
-        builder: (context, data) => WorkoutDetailAppbarWidget(
-          workout: data,
-        ),
-      ),
-      body: AsyncValueBuilderWidget(
-        asyncValue: workout,
-        builder: (context, data) => SingleChildScrollView(
-          padding: AppOffsets.screenPadding,
-          child: WorkoutFormWidget(
-            workout: data,
+    final isEditLoading = ref.watch(editWorkoutProvider)?.isLoading ?? false;
+    final isDeleteLoading =
+        ref.watch(deleteWorkoutProvider)?.isLoading ?? false;
+
+    final isLoading = isEditLoading || isDeleteLoading;
+
+    return StackWithLoaderWidget(
+      isLoading: isLoading,
+      children: [
+        Scaffold(
+          appBar: CustomAsyncAppBar(
+            asyncData: workout,
+            builder: (context, data) => WorkoutDetailAppbarWidget(
+              workout: data,
+            ),
+          ),
+          body: AsyncValueBuilderWidget(
+            asyncValue: workout,
+            builder: (context, data) => SingleChildScrollView(
+              padding: AppOffsets.screenPadding,
+              child: WorkoutFormWidget(
+                workout: data,
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

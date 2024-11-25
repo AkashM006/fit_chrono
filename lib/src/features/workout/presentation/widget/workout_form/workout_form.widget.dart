@@ -2,11 +2,9 @@ import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/button_loader/button_loader.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/add_workout/add_workout.provider.dart';
-import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/edit_workout/edit_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
 import 'package:flutter/material.dart';
@@ -89,18 +87,6 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final addWorkoutStatus = ref.watch(addWorkoutProvider);
-    final editWorkoutStatus = ref.watch(editWorkoutProvider);
-    final deleteWorkoutStatus = ref.watch(deleteWorkoutProvider);
-
-    final isAddLoading = addWorkoutStatus is DataLoading;
-    final isEditLoading = editWorkoutStatus is DataLoading;
-    final isDeleteLoading = deleteWorkoutStatus?.isLoading ?? false;
-
-    final areTextFieldsEnabled =
-        !isAddLoading && !isEditLoading && !isDeleteLoading;
-    final isSubmitButtonEnabled = isSubmitEnabled && areTextFieldsEnabled;
-
     ref.listen(
       addWorkoutProvider,
       (previous, next) {
@@ -136,7 +122,6 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
         child: Column(
           children: [
             TextFormField(
-              // initialValue: _workout.name,
               controller: _nameController,
               decoration: const InputDecoration(
                 label: Text("Enter Name"),
@@ -145,7 +130,6 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               validator: (value) =>
                   cannotBeginWithDigitValidator("Name", value),
               onSaved: setName,
-              enabled: areTextFieldsEnabled,
               onChanged: isEditMode
                   ? (value) {
                       setState(() {
@@ -176,18 +160,12 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               child: MuscleMapSelectionField(
                 muscles: _workout.muscles,
                 setMuscles: setMuscles,
-                isEnabled: areTextFieldsEnabled,
               ),
             ),
             const SizedBox(
               height: 25,
             ),
-            FilledButton(
-              onPressed: isSubmitButtonEnabled ? handleSubmit : null,
-              child: !isAddLoading && !isEditLoading
-                  ? const Text("Save")
-                  : const ButtonLoaderWidget(),
-            ),
+            FilledButton(onPressed: handleSubmit, child: const Text("Save")),
           ],
         ),
       ),
