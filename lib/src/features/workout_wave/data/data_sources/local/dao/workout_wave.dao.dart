@@ -138,7 +138,7 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
       handleError(
         () async {
           await transaction(() async {
-            // 1. Update info about workoutWave
+            // 1. Edit info about workoutWave
             await (update(workoutWaves)
                   ..where((tbl) => tbl.id
                       .equals(workoutWaveWithWorkoutMeasures.workoutWave.id)))

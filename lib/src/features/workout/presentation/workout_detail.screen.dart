@@ -6,7 +6,7 @@ import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_async
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/get_workout/get_workout.provider.dart';
-import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/edit_workout/edit_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_detail/workout_detail_appbar.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/workout_form.widget.dart';
 import 'package:fit_chrono/src/routing/router.dart';
@@ -46,7 +46,7 @@ class WorkoutDetailScreen extends ConsumerWidget {
     final workout = ref.watch(getWorkoutProvider(id!));
 
     ref.listen(
-      updateWorkoutProvider,
+      editWorkoutProvider,
       (previous, next) {
         next?.on(
           success: (data) {

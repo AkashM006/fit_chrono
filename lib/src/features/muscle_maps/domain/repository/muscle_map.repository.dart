@@ -5,6 +5,6 @@ abstract class MuscleMapRepository {
   Stream<List<MuscleMapEntity>> watchMuscleMaps();
   Future<DataState<void>> addMuscleMap(MuscleMapEntity muscleMap);
   Future<DataState<MuscleMapEntity>> getMuscleMap(int id);
-  Future<DataState<void>> updateMuscleMap(MuscleMapEntity newMuscleMap);
+  Future<DataState<void>> editMuscleMap(MuscleMapEntity newMuscleMap);
   Future<DataState<void>> deleteMuscleMap(int id);
 }

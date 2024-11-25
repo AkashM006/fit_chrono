@@ -23,7 +23,7 @@ class EditWorkoutWave extends _$EditWorkoutWave {
 
     state = result.fold(
       onSuccess: (data) => DataSuccess(
-        "🌊 Workout Wave updated! Keep pushing forward and make every rep count! 💪",
+        "🌊 Workout Wave Edited! Keep pushing forward and make every rep count! 💪",
       ),
       onFailure: (error) => DataFailure(error),
     );

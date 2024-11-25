@@ -124,7 +124,7 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
     );
   }
 
-  Future<void> updateWorkout(
+  Future<void> editWorkout(
     WorkoutModel workout,
   ) async {
     return handleError(
@@ -137,7 +137,7 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
         final result = await query.getSingleOrNull();
 
         if (result == null) {
-          final errorMsg = doesNotExistMsg("workout you're trying update");
+          final errorMsg = doesNotExistMsg("workout you're trying edit");
           throw AppError(
             message: errorMsg,
           );

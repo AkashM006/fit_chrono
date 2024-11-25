@@ -1,13 +1,13 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/repository/muscle_map_impl.repository.dart';
-import 'package:fit_chrono/src/features/muscle_maps/domain/usecase/update_muscle_map.usecase.dart';
+import 'package:fit_chrono/src/features/muscle_maps/domain/usecase/edit_muscle_map.usecase.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'update_muscle_map.provider.g.dart';
+part 'edit_muscle_map.provider.g.dart';
 
 @riverpod
-class UpdateMuscleMap extends _$UpdateMuscleMap {
+class EditMuscleMap extends _$EditMuscleMap {
   @override
   DataState<String>? build() {
     return null;
@@ -18,7 +18,7 @@ class UpdateMuscleMap extends _$UpdateMuscleMap {
 
     final muscleMapRepository = ref.read(muscleMapImplProvider);
 
-    final result = await UpdateMuscleMapUsecase(muscleMapRepository)(
+    final result = await EditMuscleMapUsecase(muscleMapRepository)(
       params: newMuscleMap.toEntity(),
     );
 

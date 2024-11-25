@@ -22,10 +22,10 @@ class WorkoutService {
     return result.toEntity();
   }
 
-  Future<void> updateWorkout(
+  Future<void> editWorkout(
     WorkoutEntity workout,
   ) async =>
-      _appDatabase.workoutDao.updateWorkout(WorkoutModel.fromEntity(workout));
+      _appDatabase.workoutDao.editWorkout(WorkoutModel.fromEntity(workout));
 
   Future<void> deleteWorkout(int id) =>
       _appDatabase.workoutDao.deleteWorkout(id);

@@ -5,7 +5,7 @@ abstract class WorkoutRepository {
   Stream<List<WorkoutEntity>> watchWorkouts();
   Future<DataState<void>> addWorkout(WorkoutEntity workout);
   Future<DataState<WorkoutEntity>> getWorkout(int id);
-  Future<DataState<void>> updateWorkout(WorkoutEntity workout);
+  Future<DataState<void>> editWorkout(WorkoutEntity workout);
   Future<DataState<void>> deleteWorkout(int id);
   Stream<List<WorkoutEntity>> watchWorkoutsSearch(String workoutName);
   Future<DataState<List<WorkoutEntity>>> getWorkoutsSearch(String workoutName);

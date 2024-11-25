@@ -1,7 +1,7 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/delete_muscle_map/delete_muscle_map.provider.dart';
-import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/edit_muscle_map/edit_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/confirm_dialog/confirm_dialog.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,10 +38,10 @@ class MuscleMapDetailAppbarWidget extends ConsumerWidget
       ref.read(deleteMuscleMapProvider.notifier).go(id);
     }
 
-    final updateMuscleMapStatus = ref.watch(updateMuscleMapProvider);
+    final editMuscleMapStatus = ref.watch(editMuscleMapProvider);
     final deleteMuscleMapStatus = ref.watch(deleteMuscleMapProvider);
 
-    final isLoading = updateMuscleMapStatus is DataLoading ||
+    final isLoading = editMuscleMapStatus is DataLoading ||
         deleteMuscleMapStatus is DataLoading;
 
     return AppBar(

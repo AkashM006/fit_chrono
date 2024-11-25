@@ -23,7 +23,7 @@ class UnsavedFormDialogWidget extends StatelessWidget {
     return AlertDialog(
       title: const Text("Unsaved Changes"),
       content: Text(
-        "It looks like you've made some changes to your $item. Are you sure you want to exit without saving? Your updates will be lost if you leave now.",
+        "It looks like you've made some changes to your $item. Are you sure you want to exit without saving? Your edits will be lost if you leave now.",
       ),
       actions: [
         TextButton(

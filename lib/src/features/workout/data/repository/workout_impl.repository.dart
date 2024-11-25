@@ -27,11 +27,11 @@ class WorkoutImpl extends BaseRepository implements WorkoutRepository {
       );
 
   @override
-  Future<DataState<void>> updateWorkout(
+  Future<DataState<void>> editWorkout(
     WorkoutEntity workout,
   ) =>
       safeExecute(
-        () => _workoutService.updateWorkout(workout),
+        () => _workoutService.editWorkout(workout),
       );
 
   @override

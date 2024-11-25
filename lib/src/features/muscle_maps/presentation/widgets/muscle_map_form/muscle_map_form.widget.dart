@@ -4,7 +4,7 @@ import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/dto/muscle_map.dto.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/add_muscle_map/add_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/delete_muscle_map/delete_muscle_map.provider.dart';
-import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/update_muscle_map/update_muscle_map.provider.dart';
+import 'package:fit_chrono/src/features/muscle_maps/presentation/provider/edit_muscle_map/edit_muscle_map.provider.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_spinner/custom_spinner.widget.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
     if (isEditMode) {
       final newMuscleMap = widget.muscleMap!.copyWith(name: _muscleMap.name);
-      ref.read(updateMuscleMapProvider.notifier).go(newMuscleMap);
+      ref.read(editMuscleMapProvider.notifier).go(newMuscleMap);
       return;
     }
 
@@ -89,15 +89,15 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   @override
   Widget build(BuildContext context) {
     final addMuscleMapStatus = ref.watch(addMuscleMapProvider);
-    final updateMuscleMapStatus = ref.watch(updateMuscleMapProvider);
+    final editMuscleMapStatus = ref.watch(editMuscleMapProvider);
     final deleteMuscleMapStatus = ref.watch(deleteMuscleMapProvider);
 
     final isAddLoading = addMuscleMapStatus is DataLoading;
-    final isUpdateLoading = updateMuscleMapStatus is DataLoading;
+    final isEditLoading = editMuscleMapStatus is DataLoading;
     final isDeleteLoading = deleteMuscleMapStatus?.isLoading ?? false;
 
     final isLoading =
-        isEditMode ? (isUpdateLoading || isDeleteLoading) : isAddLoading;
+        isEditMode ? (isEditLoading || isDeleteLoading) : isAddLoading;
 
     void setName(String value) {
       setState(() {

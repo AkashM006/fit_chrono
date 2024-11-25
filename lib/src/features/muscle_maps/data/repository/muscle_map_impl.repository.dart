@@ -30,9 +30,9 @@ class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
   }
 
   @override
-  Future<DataState<void>> updateMuscleMap(MuscleMapEntity newMuscleMap) {
+  Future<DataState<void>> editMuscleMap(MuscleMapEntity newMuscleMap) {
     return safeExecute(
-      () => _muscleMapService.updateMuscleMap(
+      () => _muscleMapService.editMuscleMap(
         newMuscleMap,
       ),
     );

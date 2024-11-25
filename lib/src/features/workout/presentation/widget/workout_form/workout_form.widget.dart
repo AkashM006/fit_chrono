@@ -7,7 +7,7 @@ import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/add_workout/add_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
-import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/edit_workout/edit_workout.provider.dart';
 import 'package:fit_chrono/src/features/workout/presentation/widget/workout_form/muscle_map_selection_field.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,7 +66,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
     _formKey.currentState!.save();
 
     if (isEditMode) {
-      ref.read(updateWorkoutProvider.notifier).go(_workout, widget.workout!);
+      ref.read(editWorkoutProvider.notifier).go(_workout, widget.workout!);
       return;
     }
 
@@ -90,15 +90,15 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
   @override
   Widget build(BuildContext context) {
     final addWorkoutStatus = ref.watch(addWorkoutProvider);
-    final updateWorkoutStatus = ref.watch(updateWorkoutProvider);
+    final editWorkoutStatus = ref.watch(editWorkoutProvider);
     final deleteWorkoutStatus = ref.watch(deleteWorkoutProvider);
 
     final isAddLoading = addWorkoutStatus is DataLoading;
-    final isUpdateLoading = updateWorkoutStatus is DataLoading;
+    final isEditLoading = editWorkoutStatus is DataLoading;
     final isDeleteLoading = deleteWorkoutStatus?.isLoading ?? false;
 
     final areTextFieldsEnabled =
-        !isAddLoading && !isUpdateLoading && !isDeleteLoading;
+        !isAddLoading && !isEditLoading && !isDeleteLoading;
     final isSubmitButtonEnabled = isSubmitEnabled && areTextFieldsEnabled;
 
     ref.listen(
@@ -184,7 +184,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
             ),
             FilledButton(
               onPressed: isSubmitButtonEnabled ? handleSubmit : null,
-              child: !isAddLoading && !isUpdateLoading
+              child: !isAddLoading && !isEditLoading
                   ? const Text("Save")
                   : const ButtonLoaderWidget(),
             ),

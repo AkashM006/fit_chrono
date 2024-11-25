@@ -31,8 +31,8 @@ class MuscleMapService {
     return result.toEntity();
   }
 
-  Future<void> updateMuscleMap(MuscleMapEntity muscleMap) async {
-    await _appDatabase.muscleMapDao.updateMuscleMap(
+  Future<void> editMuscleMap(MuscleMapEntity muscleMap) async {
+    await _appDatabase.muscleMapDao.editMuscleMap(
       muscleMap.id,
       MuscleMapModel.fromEntity(muscleMap),
     );

@@ -1,7 +1,7 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/provider/delete_workout/delete_workout.provider.dart';
-import 'package:fit_chrono/src/features/workout/presentation/provider/update_workout/update_workout.provider.dart';
+import 'package:fit_chrono/src/features/workout/presentation/provider/edit_workout/edit_workout.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,10 +20,10 @@ class WorkoutDetailAppbarWidget extends ConsumerWidget
       ref.read(deleteWorkoutProvider.notifier).go(workout.id);
     }
 
-    final updateWorkoutStatus = ref.watch(updateWorkoutProvider);
+    final editWorkoutStatus = ref.watch(editWorkoutProvider);
     final deleteWorkoutStatus = ref.watch(deleteWorkoutProvider);
 
-    final isLoading = (updateWorkoutStatus?.isLoading ?? false) ||
+    final isLoading = (editWorkoutStatus?.isLoading ?? false) ||
         (deleteWorkoutStatus?.isLoading ?? false);
 
     return AppBar(

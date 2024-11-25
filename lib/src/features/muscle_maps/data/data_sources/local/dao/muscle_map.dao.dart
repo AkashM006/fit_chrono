@@ -61,7 +61,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
     );
   }
 
-  Future<void> updateMuscleMap(int id, MuscleMapModel muscleMap) async {
+  Future<void> editMuscleMap(int id, MuscleMapModel muscleMap) async {
     return handleError(
       () async {
         final query = (select(muscleMaps)
@@ -72,7 +72,7 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
         final result = await query.getSingleOrNull();
 
         if (result == null) {
-          final errorMsg = doesNotExistMsg("muscle map you're trying update");
+          final errorMsg = doesNotExistMsg("muscle map you're trying edit");
           throw AppError(
             message: errorMsg,
           );
