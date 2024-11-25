@@ -3,6 +3,7 @@ import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/service/mu
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/repository/muscle_map.repository.dart';
 import 'package:fit_chrono/src/features/shared/data/repository/base.repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'muscle_map_impl.repository.g.dart';
@@ -47,7 +48,7 @@ class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
 }
 
 @riverpod
-MuscleMapImpl muscleMapImpl(MuscleMapImplRef ref) {
+MuscleMapImpl muscleMapImpl(Ref ref) {
   final muscleMapService = ref.watch(muscleMapServiceProvider);
 
   return MuscleMapImpl(muscleMapService);

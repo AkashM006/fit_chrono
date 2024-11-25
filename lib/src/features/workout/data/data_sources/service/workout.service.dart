@@ -1,6 +1,7 @@
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/workout/data/model/workout.model.dart';
 import 'package:fit_chrono/src/features/workout/domain/entity/workout.entity.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'workout.service.g.dart';
@@ -45,7 +46,7 @@ List<WorkoutEntity> modelListToEntityList(List<WorkoutModel> list) =>
     list.map((item) => item.toEntity()).toList();
 
 @riverpod
-WorkoutService workoutService(WorkoutServiceRef ref) {
+WorkoutService workoutService(Ref ref) {
   final db = ref.watch(dbProvider);
 
   return WorkoutService(db);

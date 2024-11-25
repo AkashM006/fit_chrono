@@ -6,7 +6,7 @@ part of 'get_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$muscleMapHash() => r'c51924f0d00b8ac202d154dbebbe2724db7dd63d';
+String _$muscleMapHash() => r'16f8d9c366df5543597b10cc0bc68cdd716067eb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -141,6 +141,8 @@ class MuscleMapProvider extends AutoDisposeFutureProvider<MuscleMapDto> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin MuscleMapRef on AutoDisposeFutureProviderRef<MuscleMapDto> {
   /// The parameter `id` of this provider.
   int get id;
@@ -154,4 +156,4 @@ class _MuscleMapProviderElement
   int get id => (origin as MuscleMapProvider).id;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

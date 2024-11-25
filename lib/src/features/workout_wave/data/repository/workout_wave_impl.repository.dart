@@ -3,6 +3,7 @@ import 'package:fit_chrono/src/features/shared/data/repository/base.repository.d
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/service/workout_wave.service.dart';
 import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.entity.dart';
 import 'package:fit_chrono/src/features/workout_wave/domain/repository/workout_wave.repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'workout_wave_impl.repository.g.dart';
@@ -50,7 +51,7 @@ class WorkoutWaveImplRepository extends BaseRepository
 
 @riverpod
 WorkoutWaveImplRepository workoutWaveImpl(
-  WorkoutWaveImplRef ref,
+  Ref ref,
 ) {
   final workoutWaveService = ref.watch(workoutWaveServiceProvider);
 

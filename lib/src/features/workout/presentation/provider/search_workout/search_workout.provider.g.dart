@@ -6,7 +6,7 @@ part of 'search_workout.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchWorkoutsHash() => r'2debfc6f6bd8a911ecf1d871a407649721260a21';
+String _$searchWorkoutsHash() => r'560f58a08fece6f7aa37df6c11b23ce9fc258e46';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -143,6 +143,8 @@ class SearchWorkoutsProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin SearchWorkoutsRef on AutoDisposeFutureProviderRef<List<WorkoutDto>> {
   /// The parameter `workoutName` of this provider.
   String get workoutName;
@@ -157,4 +159,4 @@ class _SearchWorkoutsProviderElement
   String get workoutName => (origin as SearchWorkoutsProvider).workoutName;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

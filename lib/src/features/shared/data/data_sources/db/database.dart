@@ -10,6 +10,7 @@ import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/w
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/dao/workout_wave.dao.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workouts_in_wave.schema.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -72,6 +73,6 @@ LazyDatabase _openConnection() {
 }
 
 @Riverpod(keepAlive: true)
-AppDatabase db(DbRef ref) {
+AppDatabase db(Ref ref) {
   return AppDatabase();
 }

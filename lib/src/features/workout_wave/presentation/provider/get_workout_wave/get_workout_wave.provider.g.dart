@@ -6,7 +6,7 @@ part of 'get_workout_wave.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getWorkoutWaveHash() => r'6a10e792e6c093ac4fcea7bfe378214511010560';
+String _$getWorkoutWaveHash() => r'9ee600e7e5479e80971afc9a97d5779094e6a2fa';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -147,6 +147,8 @@ class GetWorkoutWaveProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin GetWorkoutWaveRef
     on AutoDisposeFutureProviderRef<WorkoutWaveWithWorkoutsMeasureDto> {
   /// The parameter `id` of this provider.
@@ -162,4 +164,4 @@ class _GetWorkoutWaveProviderElement
   int get id => (origin as GetWorkoutWaveProvider).id;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

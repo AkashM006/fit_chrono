@@ -3098,7 +3098,7 @@ class $AppDatabaseManager {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dbHash() => r'22d1c827009ba0dfeb81c971dec957c5e4b52158';
+String _$dbHash() => r'd04f5eb0f764f19a66c7c3ee67c7671a7534d800';
 
 /// See also [db].
 @ProviderFor(db)
@@ -3111,6 +3111,8 @@ final dbProvider = Provider<AppDatabase>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef DbRef = ProviderRef<AppDatabase>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

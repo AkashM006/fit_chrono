@@ -1,6 +1,7 @@
 import 'package:fit_chrono/src/features/muscle_maps/data/model/muscle_map.model.dart';
 import 'package:fit_chrono/src/features/muscle_maps/domain/entity/muscle_map.entity.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'muscle_map.service.g.dart';
@@ -44,7 +45,7 @@ class MuscleMapService {
 }
 
 @riverpod
-MuscleMapService muscleMapService(MuscleMapServiceRef ref) {
+MuscleMapService muscleMapService(Ref ref) {
   final appDb = ref.watch(dbProvider);
 
   return MuscleMapService(appDb);
