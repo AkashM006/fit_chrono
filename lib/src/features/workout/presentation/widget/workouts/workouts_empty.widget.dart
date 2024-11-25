@@ -3,15 +3,21 @@ import 'package:fit_chrono/src/routing/router.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutsEmptyWidget extends StatelessWidget {
-  const WorkoutsEmptyWidget({super.key});
+  const WorkoutsEmptyWidget({
+    super.key,
+    this.hideButton = false,
+  });
+
+  final bool hideButton;
 
   @override
   Widget build(BuildContext context) {
-    return const EmptyListWidget(
+    return EmptyListWidget(
       text:
           "Your fitness journey is waiting to be written! 💥 Add some workouts and make them count!",
       buttonText: "Add Workout",
       targetPage: PAGES.workoutForm,
+      hideButton: hideButton,
     );
   }
 }

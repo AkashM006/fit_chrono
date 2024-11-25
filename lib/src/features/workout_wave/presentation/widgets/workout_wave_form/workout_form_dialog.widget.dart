@@ -202,6 +202,7 @@ class _WorkoutFormDialogWidgetState
             inputFormatters: inputFormatters,
             validator: validateMinutes,
             onSaved: onSaveTime,
+            keyboardType: const TextInputType.numberWithOptions(),
           ),
         ),
         const SizedBox(
@@ -215,6 +216,7 @@ class _WorkoutFormDialogWidgetState
             ),
             inputFormatters: inputFormatters,
             validator: validateSeconds,
+            keyboardType: const TextInputType.numberWithOptions(),
           ),
         ),
         const SizedBox(

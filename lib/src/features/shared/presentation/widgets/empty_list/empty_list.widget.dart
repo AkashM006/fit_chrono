@@ -9,11 +9,13 @@ class EmptyListWidget extends StatelessWidget {
     required this.text,
     required this.buttonText,
     required this.targetPage,
+    this.hideButton = false,
   });
 
   final String text;
   final String buttonText;
   final PAGES targetPage;
+  final bool hideButton;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +37,11 @@ class EmptyListWidget extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            TextButton(
-              onPressed: onAdd,
-              child: Text(buttonText),
-            ),
+            if (!hideButton)
+              TextButton(
+                onPressed: onAdd,
+                child: Text(buttonText),
+              ),
           ],
         ),
       ),

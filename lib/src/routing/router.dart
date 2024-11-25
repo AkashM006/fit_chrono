@@ -8,6 +8,7 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.scr
 import 'package:fit_chrono/src/features/shared/presentation/drift_debug.screen.dart';
 import 'package:fit_chrono/src/features/shared/presentation/not_found.screen.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/debugger_wrapper/debugger_wrapper.widget.dart';
+import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_form.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workouts.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_detail.screen.dart';
@@ -114,7 +115,12 @@ extension AppRoutesExtension on PAGES {
       case PAGES.workouts:
         return (context, routerState) => const WorkoutsScreen();
       case PAGES.workoutForm:
-        return (context, routerState) => const WorkoutFormScreen();
+        return (context, routerState) {
+          WorkoutDto? workout = routerState.extra as WorkoutDto?;
+          return WorkoutFormScreen(
+            workout: workout,
+          );
+        };
       case PAGES.workoutDetail:
         return (context, routerState) {
           final id = routerState.uri.queryParameters['id'];

@@ -107,6 +107,8 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
           children: [
             TextFormField(
               initialValue: _muscleMap.name,
+              textCapitalization: TextCapitalization.words,
+              keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 label: Text("Enter Name"),
               ),

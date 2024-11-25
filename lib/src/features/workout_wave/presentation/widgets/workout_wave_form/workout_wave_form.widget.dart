@@ -179,7 +179,8 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
                 decoration: const InputDecoration(
                   label: Text("Workout Wave Name"),
                 ),
-                textCapitalization: TextCapitalization.sentences,
+                textCapitalization: TextCapitalization.words,
+                keyboardType: TextInputType.text,
                 validator: (value) =>
                     cannotBeginWithDigitValidator("Workout wave name", value),
                 onSaved: setWaveName,

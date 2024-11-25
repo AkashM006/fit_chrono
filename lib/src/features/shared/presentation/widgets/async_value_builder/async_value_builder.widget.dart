@@ -24,18 +24,14 @@ class AsyncValueBuilderWidget<T> extends StatelessWidget {
               child: CustomErrorWidget(text: error.toString()),
             )
           : SliverToBoxAdapter(
-              child: Center(
-                child: CustomErrorWidget(text: error.toString()),
-              ),
+              child: CustomErrorWidget(text: error.toString()),
             ),
       loading: () => !isSliver
           ? const Center(
               child: LoaderWidget(),
             )
           : const SliverToBoxAdapter(
-              child: Center(
-                child: LoaderWidget(),
-              ),
+              child: LoaderWidget(),
             ),
     );
   }

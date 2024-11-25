@@ -29,7 +29,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
 
   WorkoutDto _workout = WorkoutDto.init();
 
-  bool get isEditMode => widget.workout != null;
+  bool get isEditMode => widget.workout != null && widget.workout!.id != -1;
 
   bool get isSubmitEnabled => isEditMode ? (widget.workout != _workout) : true;
 
@@ -44,7 +44,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
   @override
   void initState() {
     super.initState();
-    if (isEditMode) {
+    if (widget.workout != null) {
       _workout = widget.workout!;
       _nameController.text = widget.workout!.name;
     }
@@ -126,7 +126,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
               decoration: const InputDecoration(
                 label: Text("Enter Name"),
               ),
-              textCapitalization: TextCapitalization.sentences,
+              textCapitalization: TextCapitalization.words,
               validator: (value) =>
                   cannotBeginWithDigitValidator("Name", value),
               onSaved: setName,
@@ -138,6 +138,7 @@ class _WorkoutFormWidgetState extends ConsumerState<WorkoutFormWidget> {
                     }
                   : null,
               maxLength: 32,
+              keyboardType: TextInputType.text,
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
