@@ -224,6 +224,7 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
               final inserted = await into(workoutsWithMeasures)
                   .insertReturning(workoutWithMeasure.toCompanion());
               result.add(workoutWithMeasure.copyWith(id: inserted.id));
+              existingWorkoutsMap[workoutWithMeasure.toMapKey()] = inserted.id;
             } else {
               // other wise return the workoutWithMeasure with Id
               result.add(workoutWithMeasure.copyWith(
