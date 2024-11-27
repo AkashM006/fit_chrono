@@ -11,7 +11,7 @@ part 'workout_impl.repository.g.dart';
 class WorkoutImpl extends BaseRepository implements WorkoutRepository {
   final WorkoutService _workoutService;
 
-  WorkoutImpl(this._workoutService);
+  const WorkoutImpl(this._workoutService);
 
   @override
   Stream<List<WorkoutEntity>> watchWorkouts() =>

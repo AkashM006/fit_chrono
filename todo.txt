@@ -9,10 +9,12 @@
 22. Refactor all <Entity>_form and <Entity>_detail screens to use StackWithLoaderWidget and <Dto>.init() ( DONE )
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
 24. Implement debouncing when searching
-25. By default when installing the app, keep some muscle maps, workouts and one workout wave ( IN PROGRESS )
+25. By default when installing the app, keep some muscle maps, workouts and one workout wave ( DONE )
 26. When search is empty, show some text ( DONE )
 27. When adding workout with some search keyword send the name also to add workout ( DONE )
 28. Change muscle map to add search ( LATER )
 29. All form after submit must not push to another page but just get reset
 30. Make the muscle map select modalBottomSheet take the entire screen
 31. Error occurs when inserting there are duplicates
+32. Issue with muscle map and workouts edit
+33. Make all _impl classes have const constructor

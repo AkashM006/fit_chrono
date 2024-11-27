@@ -3,11 +3,16 @@ import 'dart:io';
 import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/dao/muscle_map.dao.dart';
+import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/init/muscle_map.data.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/dao/workout.dao.dart';
+import 'package:fit_chrono/src/features/workout/data/data_sources/local/init/muscle_maps_for_workouts.data.dart';
+import 'package:fit_chrono/src/features/workout/data/data_sources/local/init/workout.data.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/muscle_maps_for_workouts.schema.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/workout.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/dao/workout_wave.dao.dart';
+import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/init/workout_wave.data.dart';
+import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/init/workouts_in_wave.data.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workouts_in_wave.schema.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,6 +51,32 @@ class AppDatabase extends _$AppDatabase {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
+
+        // enter initial data
+        await transaction(() async {
+          // muscle maps
+          await batch((batch) {
+            batch.insertAll(muscleMaps, initialMuscleMaps);
+
+            // workouts
+            batch.insertAll(workouts, initialWorkouts);
+
+            // muscle maps for workouts
+            batch.insertAll(
+              muscleMapsForWorkouts,
+              initialMuscleMapsForWorkouts,
+            );
+
+            // workouts with measure
+            batch.insertAll(workoutsWithMeasures, initialWorkoutsWithMeasures);
+
+            // workout wave
+            batch.insertAll(workoutWaves, initialWorkoutWaves);
+
+            // workouts in waves
+            batch.insertAll(workoutsInWaves, initialWorkoutsInWaves);
+          });
+        });
       },
       onUpgrade: (Migrator m, int from, int to) async {
         if (from < 2) {

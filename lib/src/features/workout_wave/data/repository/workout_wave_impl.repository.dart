@@ -12,7 +12,7 @@ class WorkoutWaveImplRepository extends BaseRepository
     implements WorkoutWaveRepostiory {
   final WorkoutWaveService _workoutWaveService;
 
-  WorkoutWaveImplRepository(this._workoutWaveService);
+  const WorkoutWaveImplRepository(this._workoutWaveService);
 
   @override
   Stream<List<WorkoutWaveEntity>> watchWorkoutWaves() =>

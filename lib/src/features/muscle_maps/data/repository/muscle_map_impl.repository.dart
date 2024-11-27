@@ -11,7 +11,7 @@ part 'muscle_map_impl.repository.g.dart';
 class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
   final MuscleMapService _muscleMapService;
 
-  MuscleMapImpl(this._muscleMapService);
+  const MuscleMapImpl(this._muscleMapService);
 
   @override
   Stream<List<MuscleMapEntity>> watchMuscleMaps() {
