@@ -15,6 +15,6 @@
 28. Change muscle map to add search ( LATER )
 29. All form after submit must not push to another page but just get reset
 30. Make the muscle map select modalBottomSheet take the entire screen
-31. Error occurs when inserting there are duplicates
-32. Issue with muscle map and workouts edit
-33. Make all _impl classes have const constructor
+31. Error occurs when inserting there are duplicates ( DONE )
+32. Issue with muscle map and workouts edit ( IN PROGRESS )
+33. Make all _impl classes have const constructor ( DONE )

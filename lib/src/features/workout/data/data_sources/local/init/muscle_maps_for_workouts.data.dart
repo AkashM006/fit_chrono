@@ -103,4 +103,5 @@ const initialMuscleMapsForWorkouts = [
   MuscleMapsForWorkoutsCompanion(workoutId: Value(41), muscleMapId: Value(12)),
   MuscleMapsForWorkoutsCompanion(workoutId: Value(42), muscleMapId: Value(10)),
   MuscleMapsForWorkoutsCompanion(workoutId: Value(42), muscleMapId: Value(13)),
+  MuscleMapsForWorkoutsCompanion(workoutId: Value(30), muscleMapId: Value(25)),
 ];
