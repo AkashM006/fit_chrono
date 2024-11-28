@@ -6,7 +6,7 @@ part of 'edit_workout.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$editWorkoutHash() => r'071d7468a030d7b798241e780ecc465a72cad0aa';
+String _$editWorkoutHash() => r'f99722977002123e67d76c8468e434dae7f5a01e';
 
 /// See also [EditWorkout].
 @ProviderFor(EditWorkout)

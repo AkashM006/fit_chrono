@@ -1,20 +1,28 @@
+20. Find out a neat way to chain validators
+24. Implement debouncing when searching
+29. All form after submit must not push to another page but just get reset
+30. Make the muscle map select modalBottomSheet take the entire screen
+
+LATER:
+23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
+28. Change muscle map to add search ( LATER )
+
+
+OVERTHINKING:
 1. Refactor all shared dialog widgeets (Use maybe only one base dialog widget and reuse them by providing parameters) (OVERTHINKING)
+11. Change count in WorkoutWithMeasure to double from int (OVERTHINKING)
+18. Add PopScope to StackWithLoaderWidget (Later: If required then for other screens)
+21. Maybe implmement a watch<Entity> method for each get<Entity> ( OVERTHINKING )
+
+
+DONE:
 8. Implement search for searchable workout list ( DONE )
 10. Run dart run custom_lint --fix to upgrade to the new riverpod and fix lint issues (View mail for more information) ( DONE )
-11. Change count in WorkoutWithMeasure to double from int (OVERTHINKING)
 13. Rename all update to edit and remove to delete ( DONE )
-18. Add PopScope to StackWithLoaderWidget (Later: If required then for other screens)
-20. Find out a neat way to chain validators
-21. Maybe implmement a watch<Entity> method for each get<Entity> ( OVERTHINKING )
 22. Refactor all <Entity>_form and <Entity>_detail screens to use StackWithLoaderWidget and <Dto>.init() ( DONE )
-23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
-24. Implement debouncing when searching
 25. By default when installing the app, keep some muscle maps, workouts and one workout wave ( DONE )
 26. When search is empty, show some text ( DONE )
 27. When adding workout with some search keyword send the name also to add workout ( DONE )
-28. Change muscle map to add search ( LATER )
-29. All form after submit must not push to another page but just get reset
-30. Make the muscle map select modalBottomSheet take the entire screen
 31. Error occurs when inserting there are duplicates ( DONE )
-32. Issue with muscle map and workouts edit ( IN PROGRESS )
+32. Issue with muscle map and workouts edit ( DONE )
 33. Make all _impl classes have const constructor ( DONE )

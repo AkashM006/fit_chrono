@@ -1,5 +1,4 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
-import 'package:fit_chrono/src/core/utils/list.util.dart';
 import 'package:fit_chrono/src/features/workout/data/repository/workout_impl.repository.dart';
 import 'package:fit_chrono/src/features/workout/domain/usecase/edit_workout.usecase.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
@@ -17,11 +16,6 @@ class EditWorkout extends _$EditWorkout {
   void go(WorkoutDto newWorkout, WorkoutDto oldWorkout) async {
     state = DataLoading();
 
-    if (areListsEqual(newWorkout.muscles, oldWorkout.muscles)) {
-      newWorkout = newWorkout.copyWith(
-        muscles: [],
-      );
-    }
     final workoutRepository = ref.read(workoutImplProvider);
 
     final result = await EditWorkoutUsecase(workoutRepository)(
