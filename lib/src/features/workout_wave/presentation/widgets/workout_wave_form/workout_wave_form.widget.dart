@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/core/utils/form_validator.util.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/unsaved_form_dialog/unsaved_form_dialog.widget.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
@@ -25,6 +26,8 @@ class WorkoutWaveFormWidget extends ConsumerStatefulWidget {
 
 class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+
   WorkoutWaveWithWorkoutsMeasureDto _workoutWaveWithWorkoutsMeasureDto =
       WorkoutWaveWithWorkoutsMeasureDto.init();
 
@@ -53,6 +56,8 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
     if (isEditMode) {
       _workoutWaveWithWorkoutsMeasureDto =
           widget.workoutWaveWithWorkoutsMeasure!.copyWith();
+      _nameController.text =
+          _workoutWaveWithWorkoutsMeasureDto.workoutWave.name;
     }
   }
 
@@ -153,6 +158,22 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(
+      addWorkoutWaveProvider,
+      (previous, next) {
+        next?.on(
+          success: (data) {
+            setState(() {
+              _workoutWaveWithWorkoutsMeasureDto =
+                  WorkoutWaveWithWorkoutsMeasureDto.init();
+            });
+            _nameController.text = "";
+          },
+          failed: (error) {},
+        );
+      },
+    );
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -174,8 +195,7 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
           child: Column(
             children: [
               TextFormField(
-                initialValue:
-                    _workoutWaveWithWorkoutsMeasureDto.workoutWave.name,
+                controller: _nameController,
                 decoration: const InputDecoration(
                   label: Text("Workout Wave Name"),
                 ),

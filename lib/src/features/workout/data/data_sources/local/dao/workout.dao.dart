@@ -129,12 +129,6 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
   ) async {
     return handleError(
       () async {
-        print("-----------------------");
-        print("Id: ${workout.id}");
-        print("Name: ${workout.name}");
-        for (var muscle in workout.muscles) print("Muscle: ${muscle.name}");
-        print("-----------------------");
-
         final query = (select(workouts)
           ..where(
             (tbl) => tbl.id.equals(workout.id),

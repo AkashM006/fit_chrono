@@ -7,7 +7,6 @@ import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workou
 import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_wave_form.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class WorkoutWaveFormScreen extends ConsumerWidget {
   const WorkoutWaveFormScreen({super.key});
@@ -25,7 +24,6 @@ class WorkoutWaveFormScreen extends ConsumerWidget {
         next?.on(
           success: (data) {
             showSnackBar(context, data);
-            context.pop();
           },
           failed: (error) {
             showSnackBar(context, error.toString());

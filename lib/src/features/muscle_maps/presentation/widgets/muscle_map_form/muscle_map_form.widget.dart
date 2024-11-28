@@ -22,6 +22,7 @@ class MuscleMapFormWidget extends ConsumerStatefulWidget {
 
 class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
 
   MuscleMapDto _muscleMap = MuscleMapDto.init();
 
@@ -61,12 +62,21 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     ref.read(addMuscleMapProvider.notifier).go(newMuscleMap);
   }
 
+  void setName(String value) {
+    setState(() {
+      _muscleMap = _muscleMap.copyWith(
+        name: value,
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _muscleMap = _muscleMap.copyWith(
       name: isEditMode ? widget.muscleMap!.name : "",
     );
+    _nameController.text = isEditMode ? widget.muscleMap!.name : "";
   }
 
   @override
@@ -76,13 +86,13 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    void setName(String value) {
-      setState(() {
-        _muscleMap = _muscleMap.copyWith(
-          name: value,
-        );
-      });
-    }
+    ref.listen(
+      addMuscleMapProvider,
+      (previous, next) {
+        _muscleMap = MuscleMapDto.init();
+        _nameController.text = _muscleMap.name;
+      },
+    );
 
     return PopScope(
       canPop: false,
@@ -106,7 +116,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
         child: Column(
           children: [
             TextFormField(
-              initialValue: _muscleMap.name,
+              controller: _nameController,
               textCapitalization: TextCapitalization.words,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(

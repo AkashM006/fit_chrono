@@ -1,6 +1,6 @@
 20. Find out a neat way to chain validators
 24. Implement debouncing when searching
-29. All form after submit must not push to another page but just get reset
+29. All form after submit must not push to another page but just get reset ( IN PROGRESS )
 30. Make the muscle map select modalBottomSheet take the entire screen
 
 LATER:
