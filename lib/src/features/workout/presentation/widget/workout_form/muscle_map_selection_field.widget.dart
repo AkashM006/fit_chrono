@@ -19,9 +19,11 @@ class MuscleMapSelectionField extends StatelessWidget {
   Widget build(BuildContext context) {
     void onAddMuscleMap() {
       showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (context) => Container(
           padding: const EdgeInsets.all(20),
+          height: SizeConfig.safeBlockVertical * 75,
           width: SizeConfig.safeBlockHorizontal * 100,
           child: WorkoutMuscleBottomSheetWidget(
             selectedMuscles: muscles,

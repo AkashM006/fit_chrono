@@ -1,7 +1,6 @@
 20. Find out a neat way to chain validators
 24. Implement debouncing when searching
-29. All form after submit must not push to another page but just get reset ( IN PROGRESS )
-30. Make the muscle map select modalBottomSheet take the entire screen
+31. Are you sure you wanna delete for workout and workout wave ( IN PROGRESS )
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
@@ -23,6 +22,8 @@ DONE:
 25. By default when installing the app, keep some muscle maps, workouts and one workout wave ( DONE )
 26. When search is empty, show some text ( DONE )
 27. When adding workout with some search keyword send the name also to add workout ( DONE )
+29. All form after submit must not push to another page but just get reset ( DONE )
+30. Make the muscle map select modalBottomSheet take the entire screen ( DONE )
 31. Error occurs when inserting there are duplicates ( DONE )
 32. Issue with muscle map and workouts edit ( DONE )
 33. Make all _impl classes have const constructor ( DONE )
