@@ -1,6 +1,6 @@
 20. Find out a neat way to chain validators
 24. Implement debouncing when searching
-31. Are you sure you wanna delete for workout and workout wave ( IN PROGRESS )
+31. Are you sure you wanna delete for workout and workout wave ( DONE )
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
