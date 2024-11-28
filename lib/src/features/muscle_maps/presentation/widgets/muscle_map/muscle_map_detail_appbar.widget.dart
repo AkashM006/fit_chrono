@@ -12,7 +12,7 @@ Future<bool?> showConfirmMuscleMapDeleteDialog(context) async {
     builder: (context) => const ConfirmDialogWidget(
       title: 'Delete Muscle Map?',
       content:
-          "Heads up! Removing this muscle will break its link to any workouts that target it. Your workouts will stay, but they’ll no longer be connected to this muscle. Ready to go ahead?",
+          "Heads up! Removing this muscle will break its link to any workouts that target it. Your workouts will stay, but they'll no longer be connected to this muscle. Ready to go ahead?",
     ),
   );
 
