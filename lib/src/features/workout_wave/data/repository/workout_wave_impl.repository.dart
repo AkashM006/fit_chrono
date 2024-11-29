@@ -47,6 +47,13 @@ class WorkoutWaveImplRepository extends BaseRepository
           workoutWaveId,
         ),
       );
+
+  @override
+  Stream<List<WorkoutWaveWithWorkoutsMeasureEntity>>
+      watchWorkoutWaveWithWorkoutsMeasure() {
+    // TODO: implement watchWorkoutWaveWithWorkoutsMeasure
+    throw UnimplementedError();
+  }
 }
 
 @riverpod
