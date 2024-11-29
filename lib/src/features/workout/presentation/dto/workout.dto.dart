@@ -19,6 +19,8 @@ class WorkoutDto {
   String get name => _name;
   List<MuscleMapDto> get muscles => _muscles;
 
+  bool get isRest => _name.toLowerCase() == 'rest';
+
   factory WorkoutDto.init() {
     return WorkoutDto(
       name: "",
