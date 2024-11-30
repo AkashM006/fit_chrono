@@ -40,7 +40,6 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
 
   Stream<List<WorkoutWaveWithWorkoutsMeasureModel>>
       watchWorkoutWaveWithWorkoutMeasures() {
-    // void watchWorkoutWaveWithWorkoutMeasures() {
     final workoutWavesStream = select(workoutWaves).watch();
 
     return workoutWavesStream.switchMap(

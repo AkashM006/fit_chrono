@@ -31,7 +31,8 @@ class WorkoutWavesScreen extends ConsumerWidget {
       ),
       body: AsyncValueBuilderWidget(
         asyncValue: workoutWaves,
-        builder: (context, data) => WorkoutWaveListWidget(workoutWaves: data),
+        builder: (context, data) =>
+            WorkoutWaveListWidget(workoutWavesWithWorkoutsMeasure: data),
       ),
     );
   }

@@ -9,14 +9,14 @@ import 'package:go_router/go_router.dart';
 class WorkoutWaveListWidget extends StatelessWidget {
   const WorkoutWaveListWidget({
     super.key,
-    required this.workoutWaves,
+    required this.workoutWavesWithWorkoutsMeasure,
   });
 
-  final List<WorkoutWaveDto> workoutWaves;
+  final List<WorkoutWaveWithWorkoutsMeasureDto> workoutWavesWithWorkoutsMeasure;
 
   @override
   Widget build(BuildContext context) {
-    if (workoutWaves.isEmpty) {
+    if (workoutWavesWithWorkoutsMeasure.isEmpty) {
       return const WorkoutWaveEmptywidget();
     }
 
@@ -31,9 +31,15 @@ class WorkoutWaveListWidget extends StatelessWidget {
     final cardBorderRadius = AppOffsets.cardBorderRadius;
 
     return ListView.builder(
-      itemCount: workoutWaves.length,
+      itemCount: workoutWavesWithWorkoutsMeasure.length,
       itemBuilder: (context, index) {
-        final workoutWave = workoutWaves[index];
+        final workoutWave = workoutWavesWithWorkoutsMeasure[index].workoutWave;
+        final count =
+            workoutWavesWithWorkoutsMeasure[index].workoutsWithMeasure.fold(
+                  0,
+                  (previousValue, workoutWaveWithWorkoutsMeasure) =>
+                      !workoutWaveWithWorkoutsMeasure.workout.isRest ? 1 : 0,
+                );
 
         return Card(
           shape: RoundedRectangleBorder(
@@ -58,7 +64,7 @@ class WorkoutWaveListWidget extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text("12 Workouts"),
+                      Text("$count Workouts"),
                       const SizedBox(
                         width: 5,
                       ),
