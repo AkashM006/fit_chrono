@@ -38,7 +38,8 @@ class WorkoutWaveListWidget extends StatelessWidget {
             workoutWavesWithWorkoutsMeasure[index].workoutsWithMeasure.fold(
                   0,
                   (previousValue, workoutWaveWithWorkoutsMeasure) =>
-                      !workoutWaveWithWorkoutsMeasure.workout.isRest ? 1 : 0,
+                      previousValue +
+                      (!workoutWaveWithWorkoutsMeasure.workout.isRest ? 1 : 0),
                 );
 
         return Card(

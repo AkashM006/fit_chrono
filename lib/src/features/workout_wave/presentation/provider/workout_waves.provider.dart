@@ -10,16 +10,6 @@ part 'workout_waves.provider.g.dart';
 Stream<List<WorkoutWaveWithWorkoutsMeasureDto>> workoutWaves(Ref ref) {
   final workoutWaveRepository = ref.watch(workoutWaveImplProvider);
 
-  // final result = WatchWorkoutWavesUsecase(workoutWaveRepository)();
-
-  // return result.map(
-  //   (workoutWaves) => workoutWaves
-  //       .map(
-  //         (workoutWave) => WorkoutWaveDto.fromEntity(workoutWave),
-  //       )
-  //       .toList(),
-  // );
-
   final result =
       WatchWorkoutWavesWithWorkoutMeasuresUsecase(workoutWaveRepository)(
           params: null);

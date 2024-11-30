@@ -71,11 +71,11 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
             final positionDetail = row.readTableOrNull(workoutsInWaves);
             final countDetail = row.readTableOrNull(workoutsWithMeasures);
             final workoutDetail = row.readTableOrNull(workouts);
-            final id = row.readTable(workoutWaves).id;
 
             if (positionDetail == null ||
                 countDetail == null ||
                 workoutDetail == null) continue;
+            final id = positionDetail.workoutWaveId;
 
             idToPosition.putIfAbsent(id, () => []).add(positionDetail);
             idToWorkoutsWithMeasure.putIfAbsent(id, () => []).add(countDetail);
@@ -83,7 +83,7 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
           }
 
           return ids.map((id) {
-            final workoutWaveDetail = workoutWavesList[id];
+            final workoutWaveDetail = workoutWavesList[id - 1];
             final positionDetails = idToPosition[id] ?? [];
             final workoutsWithMeasureDetails =
                 idToWorkoutsWithMeasure[id] ?? [];
@@ -96,6 +96,9 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
               workoutDetails: workoutDetails,
             );
           }).toList();
+        }).handleError((error) {
+          final errorMsg = somethingWentWrongMsg("getting your workout waves");
+          throw AppError(message: errorMsg);
         });
       },
     );
