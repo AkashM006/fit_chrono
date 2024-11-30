@@ -21,23 +21,31 @@ class WorkoutWaveService {
         );
   }
 
+  Stream<List<WorkoutWaveWithWorkoutsMeasureEntity>>
+      watchWorkoutWaveWithWorkoutMeasures() => _database.workoutWaveDao
+              .watchWorkoutWaveWithWorkoutMeasures()
+              .map((workoutWavesWithWorkoutsMeasure) {
+            return workoutWavesWithWorkoutsMeasure
+                .map((workoutWaveWithWorkoutsMeasure) =>
+                    workoutWaveWithWorkoutsMeasure.toEntity())
+                .toList();
+          });
+
   Future<void> addWorkoutWave(
     WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutMeasures,
-  ) {
-    return _database.workoutWaveDao.addWorkoutWave(
-      WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
-        workoutWaveWithWorkoutMeasures,
-      ),
-    );
-  }
+  ) =>
+      _database.workoutWaveDao.addWorkoutWave(
+        WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
+          workoutWaveWithWorkoutMeasures,
+        ),
+      );
 
   Future<WorkoutWaveWithWorkoutsMeasureEntity> getWorkoutWaveWithWorkouts(
     int id,
-  ) async {
-    final result =
-        await _database.workoutWaveDao.getWorkoutWaveWithWorkouts(id);
-    return result.toEntity();
-  }
+  ) =>
+      _database.workoutWaveDao
+          .getWorkoutWaveWithWorkouts(id)
+          .then((result) => result.toEntity());
 
   Future<void> editWorkoutWaveWithWorkouts(
     WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutMeasures,

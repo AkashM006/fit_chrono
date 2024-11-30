@@ -19,6 +19,11 @@ class WorkoutWaveImplRepository extends BaseRepository
       _workoutWaveService.watchWorkoutWaves();
 
   @override
+  Stream<List<WorkoutWaveWithWorkoutsMeasureEntity>>
+      watchWorkoutWaveWithWorkoutsMeasure() =>
+          _workoutWaveService.watchWorkoutWaveWithWorkoutMeasures();
+
+  @override
   Future<DataState<void>> addWorkoutWave(
     WorkoutWaveWithWorkoutsMeasureEntity workoutWave,
   ) =>
@@ -47,13 +52,6 @@ class WorkoutWaveImplRepository extends BaseRepository
           workoutWaveId,
         ),
       );
-
-  @override
-  Stream<List<WorkoutWaveWithWorkoutsMeasureEntity>>
-      watchWorkoutWaveWithWorkoutsMeasure() {
-    // TODO: implement watchWorkoutWaveWithWorkoutsMeasure
-    throw UnimplementedError();
-  }
 }
 
 @riverpod

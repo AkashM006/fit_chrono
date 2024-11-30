@@ -8,6 +8,7 @@ import 'package:fit_chrono/src/features/workout/data/model/workout.model.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workouts_in_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/modal/workout_wave.model.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'workout_wave.dao.g.dart';
 
@@ -35,6 +36,70 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
       final errorMsg = somethingWentWrongMsg("getting your workout waves");
       throw AppError(message: errorMsg);
     });
+  }
+
+  Stream<List<WorkoutWaveWithWorkoutsMeasureModel>>
+      watchWorkoutWaveWithWorkoutMeasures() {
+    // void watchWorkoutWaveWithWorkoutMeasures() {
+    final workoutWavesStream = select(workoutWaves).watch();
+
+    return workoutWavesStream.switchMap(
+      (workoutWavesList) {
+        final idToWorkoutWave = {
+          for (var workoutWave in workoutWavesList) workoutWave.id: workoutWave
+        };
+        final ids = idToWorkoutWave.keys;
+
+        final query = select(workoutsInWaves).join([
+          leftOuterJoin(
+            workoutsWithMeasures,
+            workoutsWithMeasures.id
+                .equalsExp(workoutsInWaves.workoutWithMeasureId),
+          ),
+          leftOuterJoin(
+            workouts,
+            workouts.id.equalsExp(workoutsWithMeasures.workoutId),
+          ),
+        ]);
+
+        return query.watch().map((rows) {
+          final Map<int, List<WorkoutsInWave>> idToPosition = {};
+          final Map<int, List<WorkoutsWithMeasure>> idToWorkoutsWithMeasure =
+              {};
+          final Map<int, List<Workout>> idToWorkout = {};
+
+          for (var row in rows) {
+            final positionDetail = row.readTableOrNull(workoutsInWaves);
+            final countDetail = row.readTableOrNull(workoutsWithMeasures);
+            final workoutDetail = row.readTableOrNull(workouts);
+            final id = row.readTable(workoutWaves).id;
+
+            if (positionDetail == null ||
+                countDetail == null ||
+                workoutDetail == null) continue;
+
+            idToPosition.putIfAbsent(id, () => []).add(positionDetail);
+            idToWorkoutsWithMeasure.putIfAbsent(id, () => []).add(countDetail);
+            idToWorkout.putIfAbsent(id, () => []).add(workoutDetail);
+          }
+
+          return ids.map((id) {
+            final workoutWaveDetail = workoutWavesList[id];
+            final positionDetails = idToPosition[id] ?? [];
+            final workoutsWithMeasureDetails =
+                idToWorkoutsWithMeasure[id] ?? [];
+            final workoutDetails = idToWorkout[id] ?? [];
+
+            return WorkoutWaveWithWorkoutsMeasureModel.fromDbModel(
+              workoutWaveDetail: workoutWaveDetail,
+              positionDetails: positionDetails,
+              workoutsWithMeasureDetails: workoutsWithMeasureDetails,
+              workoutDetails: workoutDetails,
+            );
+          }).toList();
+        });
+      },
+    );
   }
 
   Future<void> addWorkoutWave(
