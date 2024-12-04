@@ -8,10 +8,12 @@ import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.scr
 import 'package:fit_chrono/src/features/shared/presentation/drift_debug.screen.dart';
 import 'package:fit_chrono/src/features/shared/presentation/not_found.screen.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/debugger_wrapper/debugger_wrapper.widget.dart';
+import 'package:fit_chrono/src/features/wave_runner/presentation/wave_runner.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_form.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workouts.screen.dart';
 import 'package:fit_chrono/src/features/workout/presentation/workout_detail.screen.dart';
+import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/workout_wave_form.screen.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/workout_waves.screen.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +34,7 @@ enum PAGES {
   workoutWaveDetail,
   driftDebug,
   notFound,
+  waveRunner,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -57,6 +60,8 @@ extension AppRoutesExtension on PAGES {
         return '/workout-waves-form';
       case PAGES.workoutWaveDetail:
         return '/workout-wave-detail';
+      case PAGES.waveRunner:
+        return '/wave-runner';
       case PAGES.driftDebug:
         return '/drift-debug';
       case PAGES.notFound:
@@ -86,6 +91,8 @@ extension AppRoutesExtension on PAGES {
         return "Workout Waves Form";
       case PAGES.workoutWaveDetail:
         return "Workout Wave Detail";
+      case PAGES.waveRunner:
+        return "Wave Runner";
       case PAGES.driftDebug:
         return "Drift Debug";
       case PAGES.notFound:
@@ -144,6 +151,14 @@ extension AppRoutesExtension on PAGES {
         };
       case PAGES.workoutWavesForm:
         return (context, routerState) => const WorkoutWaveFormScreen();
+      case PAGES.waveRunner:
+        return (context, routerState) {
+          final workoutWave =
+              routerState.extra as WorkoutWaveWithWorkoutsMeasureDto;
+          return WaveRunnerScreen(
+            workoutWave: workoutWave,
+          );
+        };
       case PAGES.driftDebug:
         return (context, routerState) => const DriftDebugScreen();
       case PAGES.notFound:

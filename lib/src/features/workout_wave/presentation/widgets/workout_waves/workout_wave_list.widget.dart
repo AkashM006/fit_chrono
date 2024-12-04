@@ -26,7 +26,11 @@ class WorkoutWaveListWidget extends StatelessWidget {
       });
     }
 
-    void onWorkoutWaveStart(int id) {}
+    void onWorkoutWaveStart(int index) {
+      final selectedWorkoutWave = workoutWavesWithWorkoutsMeasure[index];
+
+      context.pushNamed(PAGES.waveRunner.name, extra: selectedWorkoutWave);
+    }
 
     final cardBorderRadius = AppOffsets.cardBorderRadius;
 
@@ -84,7 +88,7 @@ class WorkoutWaveListWidget extends StatelessWidget {
               ),
               actions: [
                 TextButton.icon(
-                  onPressed: () => onWorkoutWaveStart(workoutWave.id),
+                  onPressed: () => onWorkoutWaveStart(index),
                   label: const Text("Let's Go"),
                   icon: const Icon(
                     Icons.play_arrow_rounded,
