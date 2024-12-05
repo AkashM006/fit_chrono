@@ -26,6 +26,8 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
     super.initState();
     final startWidget = StartWaveWidget(
       onTimerComplete: onStartComplete,
+      workoutWave: widget.workoutWave.workoutWave,
+      nextWorkout: widget.workoutWave.workoutsWithMeasure[0],
     );
 
     final workouts = widget.workoutWave.workoutsWithMeasure
