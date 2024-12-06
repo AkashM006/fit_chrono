@@ -153,10 +153,10 @@ extension AppRoutesExtension on PAGES {
         return (context, routerState) => const WorkoutWaveFormScreen();
       case PAGES.waveRunner:
         return (context, routerState) {
-          final workoutWave =
+          final workoutWaveWithWorkouts =
               routerState.extra as WorkoutWaveWithWorkoutsMeasureDto;
           return WaveRunnerScreen(
-            workoutWave: workoutWave,
+            workoutWaveWithWorkouts: workoutWaveWithWorkouts,
           );
         };
       case PAGES.driftDebug:

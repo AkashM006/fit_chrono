@@ -85,6 +85,7 @@ class WorkoutDto {
 
 class WorkoutWithMeasureDto {
   final int _id;
+  // In order to make sure that this WorkoutWithMeasureDto is unique when putting it in ReOrderableListView.builder
   final String _uniqueId;
   final WorkoutDto _workout;
   final WorkoutMeasureDto _workoutMeasure;

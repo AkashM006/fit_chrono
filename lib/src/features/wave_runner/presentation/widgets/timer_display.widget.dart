@@ -26,13 +26,14 @@ class TimerDisplayWidget extends StatelessWidget {
     final iconSize = SizeConfig.safeBlockVertical * 5 > maxIconSize
         ? SizeConfig.safeBlockVertical * 5
         : maxIconSize;
+    final iconColor = Theme.of(context).colorScheme.primary;
 
-    final statusButton = isPaused
+    final statusButton = !isPaused
         ? IconButton(
             onPressed: onPause,
             icon: Icon(
               Icons.pause,
-              color: Theme.of(context).colorScheme.primary,
+              color: iconColor,
               size: iconSize,
             ),
           )
@@ -40,13 +41,19 @@ class TimerDisplayWidget extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: onResume,
-                icon: const Icon(Icons.play_arrow),
+                icon: Icon(
+                  Icons.play_arrow,
+                  color: iconColor,
+                  size: iconSize,
+                ),
               ),
               const SizedBox(
                 height: 10,
               ),
               TextButton(
                 onPressed: onExit,
+                style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.bodyLarge),
                 child: const Text("Exit"),
               ),
             ],

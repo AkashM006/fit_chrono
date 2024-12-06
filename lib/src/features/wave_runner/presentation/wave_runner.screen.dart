@@ -1,59 +1,81 @@
-import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/start_wave.widget.dart';
-import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave.widget.dart';
+import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_with_count.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
 import 'package:flutter/material.dart';
 
 class WaveRunnerScreen extends StatefulWidget {
   const WaveRunnerScreen({
     super.key,
-    required this.workoutWave,
+    required this.workoutWaveWithWorkouts,
   });
 
-  final WorkoutWaveWithWorkoutsMeasureDto workoutWave;
+  final WorkoutWaveWithWorkoutsMeasureDto workoutWaveWithWorkouts;
 
   @override
   State<WaveRunnerScreen> createState() => _WaveRunnerScreenState();
 }
 
 class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
-  late List<Widget> _pages = [];
   final PageController _pageController = PageController();
 
-  void onStartComplete() {}
+  void onWaveComplete() {
+    onNext();
+  }
 
-  @override
-  void initState() {
-    super.initState();
-    final startWidget = StartWaveWidget(
-      onTimerComplete: onStartComplete,
-      workoutWave: widget.workoutWave.workoutWave,
-      nextWorkout: widget.workoutWave.workoutsWithMeasure[0],
-    );
+  void onExit() {}
 
-    final workouts = widget.workoutWave.workoutsWithMeasure
-        .map(
-          (workoutWithMeasure) => WaveWidget(
-            workoutWithMeasureDto: workoutWithMeasure,
-          ),
-        )
-        .toList();
+  void onSkip() {
+    onNext();
+  }
 
-    _pages = [startWidget, ...workouts];
+  void onNext() {
+    // if (_currentIndex < _pages.length - 1) {
+    //   setState(() {
+    //     _currentIndex += 1;
+    //   });
+    //   _pageController.nextPage(
+    //     duration: const Duration(milliseconds: 150),
+    //     curve: Curves.decelerate,
+    //   );
+    // } else {
+    //   // todo: workout wave complete
+    // }
+
+    // implement this logic
   }
 
   @override
   void dispose() {
     super.dispose();
+    _pageController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final workoutsWithMeasure =
+        widget.workoutWaveWithWorkouts.workoutsWithMeasure;
+
     return Scaffold(
       body: PageView.builder(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => _pages[index],
-        itemCount: _pages.length,
+        itemCount: workoutsWithMeasure.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return WaveWithCountWidget.start(
+              workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
+              onSkip: onSkip,
+              onComplete: onWaveComplete,
+            );
+          }
+
+          return WaveWithCountWidget(
+            key: ValueKey(workoutsWithMeasure[index - 1].uniqueId),
+            workoutWithMeasureDto: workoutsWithMeasure[index - 1],
+            workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
+            onSkip: onSkip,
+            onComplete: onWaveComplete,
+          );
+        },
       ),
     );
   }
