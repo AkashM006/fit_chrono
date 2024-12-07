@@ -59,9 +59,6 @@ class WaveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // todos:
-    // Show pause and exit for normal workouts
-
     final textTheme = Theme.of(context).textTheme;
 
     final counterWidget = duration != null
@@ -78,6 +75,8 @@ class WaveWidget extends StatelessWidget {
         : const Text("Reps");
 
     final List<Widget> upcomingWorkoutWidgetList = [];
+    final textStyleInButton =
+        OutlinedButton.styleFrom(textStyle: textTheme.bodyLarge);
 
     if (nextWorkoutName != null) {
       upcomingWorkoutWidgetList.add(const SizedBox(
@@ -100,7 +99,7 @@ class WaveWidget extends StatelessWidget {
       upcomingWorkoutWidgetList.add(Text(
         nextWorkoutCount!,
         style: textTheme.bodyLarge!.copyWith(
-          color: Theme.of(context).colorScheme.tertiary,
+          fontWeight: FontWeight.w300,
         ),
       ));
     }
@@ -154,6 +153,30 @@ class WaveWidget extends StatelessWidget {
               ),
             ),
           ),
+          if (!showExitInTimer || !showSkipInTimer)
+            Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                if (!showSkipInTimer)
+                  OutlinedButton(
+                    onPressed: onSkip,
+                    style: textStyleInButton,
+                    child: const Text("Skip"),
+                  ),
+                if (!showSkipInTimer)
+                  const SizedBox(
+                    height: 10,
+                  ),
+                if (!showExitInTimer)
+                  TextButton(
+                    onPressed: onExit,
+                    style: TextButton.styleFrom(textStyle: textTheme.bodyLarge),
+                    child: const Text("Exit"),
+                  )
+              ],
+            ),
           const SizedBox(
             height: 40,
           )
