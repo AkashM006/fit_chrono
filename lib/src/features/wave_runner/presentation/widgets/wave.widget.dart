@@ -132,13 +132,14 @@ class WaveWidget extends StatelessWidget {
       ));
     }
 
+    // todo: Add Showing the wave name and the time elapsed in the top
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Expanded(
-            flex: 4,
-            child: SizedBox.shrink(),
+          Expanded(
+            flex: nextWorkoutName != null ? 4 : 2,
+            child: const SizedBox.shrink(),
           ),
           Column(
             children: [
