@@ -17,7 +17,9 @@ class WaveWidget extends StatelessWidget {
         onTimerResume = null,
         isPaused = null,
         showExitInTimer = false,
-        showSkipInTimer = false;
+        showSkipInTimer = false,
+        onAddTime = null,
+        showTimeAddition = false;
 
   const WaveWidget.time({
     super.key,
@@ -32,6 +34,8 @@ class WaveWidget extends StatelessWidget {
     required this.onExit,
     this.nextWorkoutName,
     this.nextWorkoutCount,
+    this.onAddTime,
+    this.showTimeAddition = false,
     this.showExitInTimer = false,
     this.showSkipInTimer = false,
   }) : reps = null;
@@ -53,6 +57,8 @@ class WaveWidget extends StatelessWidget {
   final bool? isPaused;
   final void Function()? onTimerPause;
   final void Function()? onTimerResume;
+  final void Function()? onAddTime;
+  final bool showTimeAddition;
 
   final String? nextWorkoutName;
   final String? nextWorkoutCount;
@@ -109,7 +115,7 @@ class WaveWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Expanded(
-            flex: 2,
+            flex: 3,
             child: SizedBox.shrink(),
           ),
           Column(
@@ -136,6 +142,20 @@ class WaveWidget extends StatelessWidget {
                 height: 30,
               ),
               counterWidget,
+              if (showTimeAddition)
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      onPressed: onAddTime,
+                      style: TextButton.styleFrom(
+                          textStyle: textTheme.headlineSmall),
+                      child: const Text("+10s"),
+                    ),
+                  ],
+                )
             ],
           ),
           const Expanded(

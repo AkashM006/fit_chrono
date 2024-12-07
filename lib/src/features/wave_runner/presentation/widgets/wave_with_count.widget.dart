@@ -111,6 +111,12 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
     context.pop();
   }
 
+  void onAddTenSeconds() {
+    setState(() {
+      _remainingTime = _remainingTime! + const Duration(seconds: 10);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     void onPopInvokedWithResult(didPop, result) {
@@ -177,6 +183,8 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           onExit: onExit,
           nextWorkoutName: nextWorkoutName,
           nextWorkoutCount: nextWorkoutCount,
+          showTimeAddition: isRest,
+          onAddTime: onAddTenSeconds,
         ),
       );
     }
