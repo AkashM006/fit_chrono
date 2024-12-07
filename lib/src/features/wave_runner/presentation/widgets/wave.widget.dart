@@ -13,7 +13,9 @@ class WaveWidget extends StatelessWidget {
   })  : duration = null,
         onTimerPause = null,
         onTimerResume = null,
-        isPaused = null;
+        isPaused = null,
+        showExitInTimer = false,
+        showSkipInTimer = false;
 
   const WaveWidget.time({
     super.key,
@@ -26,6 +28,8 @@ class WaveWidget extends StatelessWidget {
     required this.onTimerResume,
     required this.onSkip,
     required this.onExit,
+    this.showExitInTimer = false,
+    this.showSkipInTimer = false,
   }) : reps = null;
 
   final String actionTitle;
@@ -39,6 +43,9 @@ class WaveWidget extends StatelessWidget {
   final bool? isPaused;
   final void Function()? onTimerPause;
   final void Function()? onTimerResume;
+
+  final bool showSkipInTimer;
+  final bool showExitInTimer;
 
   final void Function() onSkip;
   final void Function() onExit;
@@ -55,6 +62,8 @@ class WaveWidget extends StatelessWidget {
             isPaused: isPaused!,
             onSkip: onSkip,
             onExit: onExit,
+            showExit: showExitInTimer,
+            showSkip: showSkipInTimer,
           )
         : const Text("Reps");
 

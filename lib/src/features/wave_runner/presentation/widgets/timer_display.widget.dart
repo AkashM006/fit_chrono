@@ -11,6 +11,8 @@ class TimerDisplayWidget extends StatelessWidget {
     required this.onExit,
     required this.onSkip,
     required this.isPaused,
+    this.showExit = false,
+    this.showSkip = false,
   });
 
   final Duration time;
@@ -19,6 +21,9 @@ class TimerDisplayWidget extends StatelessWidget {
   final void Function() onExit;
   final void Function() onSkip;
   final bool isPaused;
+
+  final bool showExit;
+  final bool showSkip;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +52,17 @@ class TimerDisplayWidget extends StatelessWidget {
                   size: iconSize,
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextButton(
-                onPressed: onExit,
-                style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.bodyLarge),
-                child: const Text("Exit"),
-              ),
+              if (showExit)
+                const SizedBox(
+                  height: 10,
+                ),
+              if (showExit)
+                TextButton(
+                  onPressed: onExit,
+                  style: TextButton.styleFrom(
+                      textStyle: Theme.of(context).textTheme.bodyLarge),
+                  child: const Text("Exit"),
+                ),
             ],
           );
 
@@ -69,18 +76,20 @@ class TimerDisplayWidget extends StatelessWidget {
           height: 20,
         ),
         statusButton,
-        const SizedBox(
-          height: 20,
-        ),
-        OutlinedButton(
-          onPressed: onSkip,
-          style: OutlinedButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.bodyLarge,
+        if (showSkip)
+          const SizedBox(
+            height: 20,
           ),
-          child: const Text(
-            "Skip",
+        if (showSkip)
+          OutlinedButton(
+            onPressed: onSkip,
+            style: OutlinedButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.bodyLarge,
+            ),
+            child: const Text(
+              "Skip",
+            ),
           ),
-        ),
       ],
     );
   }

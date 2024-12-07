@@ -130,6 +130,8 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           onTimerResume: resumeTimer,
           onExit: onExit,
           onSkip: widget.onSkip,
+          showExitInTimer: true,
+          showSkipInTimer: true,
         ),
       );
     }
@@ -142,8 +144,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
     const beTitle = "for";
 
     if (isTimeBased) {
-      // todo: change the skip and and exit position for workouts which are not the start
-      // for rest also add options to increase the time
+      // todo: for rest also add options to increase the time
       return PopScope(
         canPop: false,
         onPopInvokedWithResult: onPopInvokedWithResult,
