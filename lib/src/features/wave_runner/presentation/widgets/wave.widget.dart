@@ -52,6 +52,10 @@ class WaveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // todos:
+    // Show next workout
+    // Show pause and exit for normal workouts
+
     final textTheme = Theme.of(context).textTheme;
 
     final conterWidget = duration != null

@@ -42,19 +42,20 @@ class WaveWithCountWidget extends StatefulWidget {
 class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
   late Duration? _remainingTime;
   late Timer? _timer;
-  bool _isPaused = true;
+  late bool _isPaused;
   late bool isTimeBased;
 
   @override
   void initState() {
     super.initState();
+    _isPaused = false;
     final currentWorkout = widget.workoutWithMeasureDto;
     if (widget.isStart || widget.workoutWithMeasureDto!.workoutMeasure.isTime) {
       _remainingTime = widget.isStart
           ? const Duration(seconds: 15)
           : Duration(seconds: currentWorkout!.count);
-      resumeTimer();
       isTimeBased = true;
+      resumeTimer();
       return;
     }
     _remainingTime = Duration.zero;

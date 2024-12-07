@@ -42,28 +42,13 @@ class TimerDisplayWidget extends StatelessWidget {
               size: iconSize,
             ),
           )
-        : Column(
-            children: [
-              IconButton(
-                onPressed: onResume,
-                icon: Icon(
-                  Icons.play_arrow,
-                  color: iconColor,
-                  size: iconSize,
-                ),
-              ),
-              if (showExit)
-                const SizedBox(
-                  height: 10,
-                ),
-              if (showExit)
-                TextButton(
-                  onPressed: onExit,
-                  style: TextButton.styleFrom(
-                      textStyle: Theme.of(context).textTheme.bodyLarge),
-                  child: const Text("Exit"),
-                ),
-            ],
+        : IconButton(
+            onPressed: onResume,
+            icon: Icon(
+              Icons.play_arrow,
+              color: iconColor,
+              size: iconSize,
+            ),
           );
 
     return Column(
@@ -76,6 +61,17 @@ class TimerDisplayWidget extends StatelessWidget {
           height: 20,
         ),
         statusButton,
+        if (showExit)
+          const SizedBox(
+            height: 10,
+          ),
+        if (showExit)
+          TextButton(
+            onPressed: onExit,
+            style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.bodyLarge),
+            child: const Text("Exit"),
+          ),
         if (showSkip)
           const SizedBox(
             height: 20,
