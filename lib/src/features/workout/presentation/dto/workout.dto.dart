@@ -187,6 +187,8 @@ enum WorkoutMeasureDto {
       WorkoutMeasureDto.reps => "Reps",
     };
   }
+
+  bool get isTime => this == WorkoutMeasureDto.time;
 }
 
 Map<String, WorkoutMeasureDto> stringMappedtoMeasure = {

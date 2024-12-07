@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave.widget.dart';
+import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/workout_wave_exit.dialog.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 const oneSecond = Duration(seconds: 1);
 
@@ -14,6 +16,7 @@ class WaveWithCountWidget extends StatefulWidget {
     required this.workoutWave,
     required this.onSkip,
     required this.onComplete,
+    this.nextWorkoutWithMeasureDto,
   }) : isStart = false;
 
   const WaveWithCountWidget.start({
@@ -21,12 +24,14 @@ class WaveWithCountWidget extends StatefulWidget {
     required this.workoutWave,
     required this.onSkip,
     required this.onComplete,
+    required this.nextWorkoutWithMeasureDto,
   })  : workoutWithMeasureDto = null,
         isStart = true;
   final WorkoutWithMeasureDto? workoutWithMeasureDto;
   final WorkoutWaveDto workoutWave;
   final void Function() onSkip;
   final void Function() onComplete;
+  final WorkoutWithMeasureDto? nextWorkoutWithMeasureDto;
 
   final bool isStart;
 
@@ -38,16 +43,19 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
   late Duration? _remainingTime;
   late Timer? _timer;
   bool _isPaused = true;
+  late bool isTimeBased;
 
   @override
   void initState() {
     super.initState();
-    if (widget.isStart) {
+    if (widget.isStart || widget.workoutWithMeasureDto!.workoutMeasure.isTime) {
       _remainingTime = const Duration(seconds: 15);
       resumeTimer();
-    } else {
-      _remainingTime = Duration.zero;
+      isTimeBased = true;
+      return;
     }
+    _remainingTime = Duration.zero;
+    isTimeBased = false;
   }
 
   @override
@@ -83,21 +91,43 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
     _timer!.cancel();
   }
 
-  void onExit() {}
+  void onExit() async {
+    if (isTimeBased) {
+      stopTimer();
+    }
+
+    final isQuitting = await showWorkoutWaveExitDialog(context);
+    if (!isQuitting) {
+      resumeTimer();
+      return;
+    }
+
+    if (!mounted) return;
+    context.pop();
+  }
 
   @override
   Widget build(BuildContext context) {
+    void onPopInvokedWithResult(didPop, result) {
+      if (didPop) return;
+      onExit();
+    }
+
     if (widget.isStart) {
-      return WaveWidget.time(
-        actionTitle: "Starting",
-        workoutTitle: widget.workoutWave.name,
-        beTitle: "in",
-        duration: _remainingTime,
-        isPaused: _isPaused,
-        onTimerPause: stopTimer,
-        onTimerResume: resumeTimer,
-        onExit: onExit,
-        onSkip: widget.onSkip,
+      return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: onPopInvokedWithResult,
+        child: WaveWidget.time(
+          actionTitle: "Starting",
+          workoutTitle: widget.workoutWave.name,
+          beTitle: "in",
+          duration: _remainingTime,
+          isPaused: _isPaused,
+          onTimerPause: stopTimer,
+          onTimerResume: resumeTimer,
+          onExit: onExit,
+          onSkip: widget.onSkip,
+        ),
       );
     }
 

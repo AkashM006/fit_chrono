@@ -35,8 +35,6 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
     onNext();
   }
 
-  void onExit() {}
-
   void onSkip() {
     onNext();
   }
@@ -70,8 +68,11 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
               workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
               onSkip: onSkip,
               onComplete: onWaveComplete,
+              nextWorkoutWithMeasureDto: workoutsWithMeasure[0],
             );
           }
+
+          final isLastWorkout = index == pagesLength - 1;
 
           return WaveWithCountWidget(
             key: ValueKey(workoutsWithMeasure[index - 1].uniqueId),
@@ -79,6 +80,8 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
             workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
             onSkip: onSkip,
             onComplete: onWaveComplete,
+            nextWorkoutWithMeasureDto:
+                !isLastWorkout ? workoutsWithMeasure[index] : null,
           );
         },
       ),
