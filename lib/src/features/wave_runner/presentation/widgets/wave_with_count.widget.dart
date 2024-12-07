@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fit_chrono/src/core/utils/formatter.util.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/workout_wave_exit.dialog.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
@@ -117,6 +118,19 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
       onExit();
     }
 
+    final String? nextWorkoutName =
+        widget.nextWorkoutWithMeasureDto?.workout.name;
+    String? nextWorkoutCount;
+
+    if (widget.nextWorkoutWithMeasureDto != null) {
+      if (isTimeBased) {
+        nextWorkoutCount = getFormattedTime(
+            Duration(seconds: widget.nextWorkoutWithMeasureDto!.count));
+      } else {
+        nextWorkoutCount = '${widget.nextWorkoutWithMeasureDto!.count}x';
+      }
+    }
+
     if (widget.isStart) {
       return PopScope(
         canPop: false,
@@ -133,6 +147,8 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           onSkip: widget.onSkip,
           showExitInTimer: true,
           showSkipInTimer: true,
+          nextWorkoutName: nextWorkoutName,
+          nextWorkoutCount: nextWorkoutCount,
         ),
       );
     }
@@ -159,6 +175,8 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           onTimerResume: resumeTimer,
           onSkip: widget.onSkip,
           onExit: onExit,
+          nextWorkoutName: nextWorkoutName,
+          nextWorkoutCount: nextWorkoutCount,
         ),
       );
     }
