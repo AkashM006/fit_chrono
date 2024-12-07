@@ -2,6 +2,7 @@
 24. Implement debouncing when searching
 35. On workout wave edit enable the button when workout order is changed
 36. When adding rest to a workout wave only time must be enabled
+37. Restrict reps to be within 2 digit range
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)

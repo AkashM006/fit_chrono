@@ -48,8 +48,11 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
   @override
   void initState() {
     super.initState();
+    final currentWorkout = widget.workoutWithMeasureDto;
     if (widget.isStart || widget.workoutWithMeasureDto!.workoutMeasure.isTime) {
-      _remainingTime = const Duration(seconds: 15);
+      _remainingTime = widget.isStart
+          ? const Duration(seconds: 15)
+          : Duration(seconds: currentWorkout!.count);
       resumeTimer();
       isTimeBased = true;
       return;
@@ -127,6 +130,33 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           onTimerResume: resumeTimer,
           onExit: onExit,
           onSkip: widget.onSkip,
+        ),
+      );
+    }
+
+    final isRest = widget.workoutWithMeasureDto!.workout.isRest;
+
+    final actionTitle = isRest ? "" : "Doing";
+    final workoutTitle =
+        isRest ? "Resting" : widget.workoutWithMeasureDto!.workout.name;
+    const beTitle = "for";
+
+    if (isTimeBased) {
+      // todo: change the skip and and exit position for workouts which are not the start
+      // for rest also add options to increase the time
+      return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: onPopInvokedWithResult,
+        child: WaveWidget.time(
+          actionTitle: actionTitle,
+          workoutTitle: workoutTitle,
+          beTitle: beTitle,
+          duration: _remainingTime,
+          isPaused: _isPaused,
+          onTimerPause: stopTimer,
+          onTimerResume: resumeTimer,
+          onSkip: widget.onSkip,
+          onExit: onExit,
         ),
       );
     }
