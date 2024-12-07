@@ -124,16 +124,18 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
       onExit();
     }
 
+    final nextWorkout = widget.nextWorkoutWithMeasureDto;
+
     final String? nextWorkoutName =
         widget.nextWorkoutWithMeasureDto?.workout.name;
     String? nextWorkoutCount;
 
-    if (widget.nextWorkoutWithMeasureDto != null) {
-      if (isTimeBased) {
-        nextWorkoutCount = getFormattedTime(
-            Duration(seconds: widget.nextWorkoutWithMeasureDto!.count));
+    if (nextWorkout != null) {
+      if (nextWorkout.workoutMeasure.isTime) {
+        nextWorkoutCount =
+            getFormattedTime(Duration(seconds: nextWorkout.count));
       } else {
-        nextWorkoutCount = '${widget.nextWorkoutWithMeasureDto!.count}x';
+        nextWorkoutCount = '${nextWorkout.count}x';
       }
     }
 
@@ -167,7 +169,6 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
     const beTitle = "for";
 
     if (isTimeBased) {
-      // todo: for rest also add options to increase the time
       return PopScope(
         canPop: false,
         onPopInvokedWithResult: onPopInvokedWithResult,
@@ -189,9 +190,21 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
       );
     }
 
-    return Center(
-      child: Text(
-        widget.workoutWithMeasureDto!.workout.name,
+    final reps = widget.workoutWithMeasureDto!.count;
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: onPopInvokedWithResult,
+      child: WaveWidget.reps(
+        actionTitle: actionTitle,
+        workoutTitle: workoutTitle,
+        beTitle: beTitle,
+        reps: reps,
+        onSkip: widget.onSkip,
+        onExit: onExit,
+        nextWorkoutName: nextWorkoutName,
+        nextWorkoutCount: nextWorkoutCount,
+        onDone: widget.onComplete,
       ),
     );
   }

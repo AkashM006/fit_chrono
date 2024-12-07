@@ -10,6 +10,7 @@ class WaveWidget extends StatelessWidget {
     required this.reps,
     required this.onSkip,
     required this.onExit,
+    required this.onDone,
     this.nextWorkoutName,
     this.nextWorkoutCount,
   })  : duration = null,
@@ -38,7 +39,8 @@ class WaveWidget extends StatelessWidget {
     this.showTimeAddition = false,
     this.showExitInTimer = false,
     this.showSkipInTimer = false,
-  }) : reps = null;
+  })  : reps = null,
+        onDone = null;
 
   final String actionTitle;
   final String workoutTitle;
@@ -60,6 +62,9 @@ class WaveWidget extends StatelessWidget {
   final void Function()? onAddTime;
   final bool showTimeAddition;
 
+  // properties related to reps
+  final void Function()? onDone;
+
   final String? nextWorkoutName;
   final String? nextWorkoutCount;
 
@@ -78,13 +83,30 @@ class WaveWidget extends StatelessWidget {
             showExit: showExitInTimer,
             showSkip: showSkipInTimer,
           )
-        : const Text("Reps");
+        : Column(
+            children: [
+              Text(reps!.toString(), style: textTheme.displayMedium),
+              Text(
+                "Reps",
+                style: textTheme.displayMedium,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              FilledButton(
+                onPressed: onDone,
+                style: FilledButton.styleFrom(textStyle: textTheme.bodyLarge),
+                child: const Text("Crushed it!"),
+              )
+            ],
+          );
 
     final List<Widget> upcomingWorkoutWidgetList = [];
     final textStyleInButton =
         OutlinedButton.styleFrom(textStyle: textTheme.bodyLarge);
 
     if (nextWorkoutName != null) {
+      // If another workout exists, showing that
       upcomingWorkoutWidgetList.add(const SizedBox(
         height: 50,
       ));
@@ -115,7 +137,7 @@ class WaveWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Expanded(
-            flex: 3,
+            flex: 4,
             child: SizedBox.shrink(),
           ),
           Column(
