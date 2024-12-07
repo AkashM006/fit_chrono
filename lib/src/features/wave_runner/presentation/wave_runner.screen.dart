@@ -16,6 +16,20 @@ class WaveRunnerScreen extends StatefulWidget {
 
 class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
   final PageController _pageController = PageController();
+  int _currentPage = 0;
+  late final int pagesLength;
+
+  @override
+  void initState() {
+    super.initState();
+    pagesLength = widget.workoutWaveWithWorkouts.workoutsWithMeasure.length + 1;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
 
   void onWaveComplete() {
     onNext();
@@ -28,25 +42,16 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
   }
 
   void onNext() {
-    // if (_currentIndex < _pages.length - 1) {
-    //   setState(() {
-    //     _currentIndex += 1;
-    //   });
-    //   _pageController.nextPage(
-    //     duration: const Duration(milliseconds: 150),
-    //     curve: Curves.decelerate,
-    //   );
-    // } else {
-    //   // todo: workout wave complete
-    // }
+    if (_currentPage >= pagesLength - 1) {
+      // todo: complete workout wave
+      return;
+    }
 
-    // implement this logic
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
+    _currentPage += 1;
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -58,7 +63,7 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
       body: PageView.builder(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: workoutsWithMeasure.length + 1,
+        itemCount: pagesLength,
         itemBuilder: (context, index) {
           if (index == 0) {
             return WaveWithCountWidget.start(
