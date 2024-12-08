@@ -5,6 +5,9 @@
 37. Restrict reps to be within 2 digit range
 38. After workout wave complete and after quitting the wave show some message in the snack bar
 39. When app goes to background during workout, handle those cases
+40. Account for skipping workout instead of completing it during logs
+41. In the workout wave complete track properly the amount of worokuts completed
+42. Show at which workout the user is currently at
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)

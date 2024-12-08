@@ -165,7 +165,6 @@ class WaveWidget extends StatelessWidget {
 
     const leftPadding = EdgeInsets.only(left: 30);
 
-    // todo: Add showing the time elapsed in the top
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

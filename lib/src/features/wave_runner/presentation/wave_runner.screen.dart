@@ -17,15 +17,20 @@ class WaveRunnerScreen extends StatefulWidget {
 
 class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
   final PageController _pageController = PageController();
-  int _currentPage = 0;
   late final int _pagesLength;
   Duration _totalTimeElapsed = Duration.zero;
+  late final int _totalWorkouts;
 
   @override
   void initState() {
     super.initState();
     _pagesLength =
         widget.workoutWaveWithWorkouts.workoutsWithMeasure.length + 2;
+    _totalWorkouts = widget.workoutWaveWithWorkouts.workoutsWithMeasure.fold(
+      0,
+      (value, workoutWithMeasure) =>
+          value + (workoutWithMeasure.workout.isRest ? 0 : 1),
+    );
   }
 
   @override
@@ -43,12 +48,6 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
   }
 
   void _onNext(Duration timeElapsed) {
-    if (_currentPage >= _pagesLength - 1) {
-      // todo: complete workout wave
-      return;
-    }
-
-    _currentPage += 1;
     _pageController.nextPage(
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeInOut,
@@ -84,7 +83,10 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
             final isLastScreen = index == _pagesLength - 1;
 
             if (isLastScreen) {
-              return WaveCompleteWidget();
+              return WaveCompleteWidget(
+                timeTaken: _totalTimeElapsed,
+                workoutsCompleted: _totalWorkouts,
+              );
             }
 
             return WaveWithCountWidget(
