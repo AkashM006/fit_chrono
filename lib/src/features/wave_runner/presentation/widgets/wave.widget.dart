@@ -11,6 +11,7 @@ class WaveWidget extends StatelessWidget {
     required this.onSkip,
     required this.onExit,
     required this.onDone,
+    required this.workoutWaveName,
     this.nextWorkoutName,
     this.nextWorkoutCount,
   })  : duration = null,
@@ -33,6 +34,7 @@ class WaveWidget extends StatelessWidget {
     required this.onTimerResume,
     required this.onSkip,
     required this.onExit,
+    this.workoutWaveName,
     this.nextWorkoutName,
     this.nextWorkoutCount,
     this.onAddTime,
@@ -42,6 +44,7 @@ class WaveWidget extends StatelessWidget {
   })  : reps = null,
         onDone = null;
 
+  final String? workoutWaveName;
   final String actionTitle;
   final String workoutTitle;
   final String beTitle;
@@ -101,42 +104,71 @@ class WaveWidget extends StatelessWidget {
             ],
           );
 
-    final List<Widget> upcomingWorkoutWidgetList = [];
+    List<Widget> upcomingWorkoutWidgetList = [];
     final textStyleInButton =
         OutlinedButton.styleFrom(textStyle: textTheme.bodyLarge);
 
+    // If another workout exists, showing that
     if (nextWorkoutName != null) {
-      // If another workout exists, showing that
-      upcomingWorkoutWidgetList.add(const SizedBox(
-        height: 50,
-      ));
-      upcomingWorkoutWidgetList.add(Text(
-        "Coming Up",
-        style: textTheme.headlineLarge!.copyWith(fontWeight: FontWeight.bold),
-      ));
-      upcomingWorkoutWidgetList.add(const SizedBox(
-        height: 10,
-      ));
-      upcomingWorkoutWidgetList.add(Text(
-        nextWorkoutName!,
-        style: textTheme.headlineSmall,
-      ));
-      upcomingWorkoutWidgetList.add(const SizedBox(
-        height: 5,
-      ));
-      upcomingWorkoutWidgetList.add(Text(
-        nextWorkoutCount!,
-        style: textTheme.bodyLarge!.copyWith(
-          fontWeight: FontWeight.w300,
+      upcomingWorkoutWidgetList = [
+        const SizedBox(
+          height: 50,
         ),
-      ));
+        Text(
+          "Coming Up",
+          style: textTheme.headlineLarge!.copyWith(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          nextWorkoutName!,
+          style: textTheme.headlineSmall,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          nextWorkoutCount!,
+          style: textTheme.bodyLarge!.copyWith(
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+      ];
     }
 
-    // todo: Add Showing the wave name and the time elapsed in the top
+    List<Widget> workoutWaveNameList = [];
+
+    if (workoutWaveName != null) {
+      workoutWaveNameList = [
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          workoutWaveName!,
+          style: textTheme.headlineSmall,
+        ),
+      ];
+    }
+
+    const leftPadding = EdgeInsets.only(left: 30);
+
+    // todo: Add showing the time elapsed in the top
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (workoutWaveNameList.isNotEmpty)
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: leftPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: workoutWaveNameList,
+                ),
+              ),
+            ),
           Expanded(
             flex: nextWorkoutName != null ? 4 : 2,
             child: const SizedBox.shrink(),
@@ -178,7 +210,7 @@ class WaveWidget extends StatelessWidget {
                       child: const Text("+10s"),
                     ),
                   ],
-                )
+                ),
             ],
           ),
           const Expanded(
@@ -186,11 +218,10 @@ class WaveWidget extends StatelessWidget {
             child: SizedBox.shrink(),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 30),
+            padding: leftPadding,
             child: Align(
               alignment: Alignment.topLeft,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: upcomingWorkoutWidgetList,
               ),

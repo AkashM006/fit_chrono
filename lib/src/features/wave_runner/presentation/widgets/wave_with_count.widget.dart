@@ -125,6 +125,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
     }
 
     final nextWorkout = widget.nextWorkoutWithMeasureDto;
+    final workoutWaveName = widget.workoutWave.name;
 
     final String? nextWorkoutName =
         widget.nextWorkoutWithMeasureDto?.workout.name;
@@ -173,6 +174,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
         canPop: false,
         onPopInvokedWithResult: onPopInvokedWithResult,
         child: WaveWidget.time(
+          workoutWaveName: workoutWaveName,
           actionTitle: actionTitle,
           workoutTitle: workoutTitle,
           beTitle: beTitle,
@@ -196,6 +198,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
       canPop: false,
       onPopInvokedWithResult: onPopInvokedWithResult,
       child: WaveWidget.reps(
+        workoutWaveName: workoutWaveName,
         actionTitle: actionTitle,
         workoutTitle: workoutTitle,
         beTitle: beTitle,

@@ -57,33 +57,35 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
     final workoutsWithMeasure =
         widget.workoutWaveWithWorkouts.workoutsWithMeasure;
 
-    return Scaffold(
-      body: PageView.builder(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: pagesLength,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return WaveWithCountWidget.start(
+    return SafeArea(
+      child: Scaffold(
+        body: PageView.builder(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: pagesLength,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return WaveWithCountWidget.start(
+                workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
+                onSkip: onSkip,
+                onComplete: onWaveComplete,
+                nextWorkoutWithMeasureDto: workoutsWithMeasure[0],
+              );
+            }
+
+            final isLastWorkout = index == pagesLength - 1;
+
+            return WaveWithCountWidget(
+              key: ValueKey(workoutsWithMeasure[index - 1].uniqueId),
+              workoutWithMeasureDto: workoutsWithMeasure[index - 1],
               workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
               onSkip: onSkip,
               onComplete: onWaveComplete,
-              nextWorkoutWithMeasureDto: workoutsWithMeasure[0],
+              nextWorkoutWithMeasureDto:
+                  !isLastWorkout ? workoutsWithMeasure[index] : null,
             );
-          }
-
-          final isLastWorkout = index == pagesLength - 1;
-
-          return WaveWithCountWidget(
-            key: ValueKey(workoutsWithMeasure[index - 1].uniqueId),
-            workoutWithMeasureDto: workoutsWithMeasure[index - 1],
-            workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
-            onSkip: onSkip,
-            onComplete: onWaveComplete,
-            nextWorkoutWithMeasureDto:
-                !isLastWorkout ? workoutsWithMeasure[index] : null,
-          );
-        },
+          },
+        ),
       ),
     );
   }
