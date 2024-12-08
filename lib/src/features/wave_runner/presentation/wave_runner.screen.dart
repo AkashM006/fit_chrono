@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_complete.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_with_count.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,14 @@ class WaveRunnerScreen extends StatefulWidget {
 class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  late final int pagesLength;
+  late final int _pagesLength;
+  Duration _totalTimeElapsed = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    pagesLength = widget.workoutWaveWithWorkouts.workoutsWithMeasure.length + 1;
+    _pagesLength =
+        widget.workoutWaveWithWorkouts.workoutsWithMeasure.length + 2;
   }
 
   @override
@@ -31,16 +34,16 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
     _pageController.dispose();
   }
 
-  void onWaveComplete() {
-    onNext();
+  void onWaveComplete(Duration timeElapsed) {
+    _onNext(timeElapsed);
   }
 
-  void onSkip() {
-    onNext();
+  void onSkip(Duration timeElapsed) {
+    _onNext(timeElapsed);
   }
 
-  void onNext() {
-    if (_currentPage >= pagesLength - 1) {
+  void _onNext(Duration timeElapsed) {
+    if (_currentPage >= _pagesLength - 1) {
       // todo: complete workout wave
       return;
     }
@@ -50,6 +53,7 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeInOut,
     );
+    _totalTimeElapsed += timeElapsed;
   }
 
   @override
@@ -62,7 +66,7 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
         body: PageView.builder(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: pagesLength,
+          itemCount: _pagesLength,
           itemBuilder: (context, index) {
             if (index == 0) {
               return WaveWithCountWidget.start(
@@ -70,19 +74,30 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
                 onSkip: onSkip,
                 onComplete: onWaveComplete,
                 nextWorkoutWithMeasureDto: workoutsWithMeasure[0],
+                timeElapsed: _totalTimeElapsed,
               );
             }
 
-            final isLastWorkout = index == pagesLength - 1;
+            final isLastWorkout = index ==
+                _pagesLength -
+                    2; // in order to account for the last item which is actually complete screen
+            final isLastScreen = index == _pagesLength - 1;
+
+            if (isLastScreen) {
+              return WaveCompleteWidget();
+            }
 
             return WaveWithCountWidget(
-              key: ValueKey(workoutsWithMeasure[index - 1].uniqueId),
+              key: ValueKey(
+                workoutsWithMeasure[index - 1].uniqueId,
+              ), // index - 1 is to account for the start screen added in the first
               workoutWithMeasureDto: workoutsWithMeasure[index - 1],
               workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
               onSkip: onSkip,
               onComplete: onWaveComplete,
               nextWorkoutWithMeasureDto:
                   !isLastWorkout ? workoutsWithMeasure[index] : null,
+              timeElapsed: _totalTimeElapsed,
             );
           },
         ),

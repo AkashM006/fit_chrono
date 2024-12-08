@@ -1,3 +1,4 @@
+import 'package:fit_chrono/src/core/utils/formatter.util.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/timer_display.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class WaveWidget extends StatelessWidget {
     required this.onExit,
     required this.onDone,
     required this.workoutWaveName,
+    this.elapsedTime,
     this.nextWorkoutName,
     this.nextWorkoutCount,
   })  : duration = null,
@@ -38,6 +40,7 @@ class WaveWidget extends StatelessWidget {
     this.nextWorkoutName,
     this.nextWorkoutCount,
     this.onAddTime,
+    this.elapsedTime,
     this.showTimeAddition = false,
     this.showExitInTimer = false,
     this.showSkipInTimer = false,
@@ -70,6 +73,8 @@ class WaveWidget extends StatelessWidget {
 
   final String? nextWorkoutName;
   final String? nextWorkoutCount;
+
+  final Duration? elapsedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +113,7 @@ class WaveWidget extends StatelessWidget {
     final textStyleInButton =
         OutlinedButton.styleFrom(textStyle: textTheme.bodyLarge);
 
-    // If another workout exists, showing that
+    // If another workout exists after this, showing that
     if (nextWorkoutName != null) {
       upcomingWorkoutWidgetList = [
         const SizedBox(
@@ -148,6 +153,13 @@ class WaveWidget extends StatelessWidget {
           workoutWaveName!,
           style: textTheme.headlineSmall,
         ),
+        const SizedBox(
+          height: 5,
+        ),
+        if (elapsedTime != null)
+          Text(
+            getFormattedTime(elapsedTime!),
+          ),
       ];
     }
 

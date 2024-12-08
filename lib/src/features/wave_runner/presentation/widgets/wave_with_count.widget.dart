@@ -17,6 +17,7 @@ class WaveWithCountWidget extends StatefulWidget {
     required this.workoutWave,
     required this.onSkip,
     required this.onComplete,
+    required this.timeElapsed,
     this.nextWorkoutWithMeasureDto,
   }) : isStart = false;
 
@@ -26,12 +27,15 @@ class WaveWithCountWidget extends StatefulWidget {
     required this.onSkip,
     required this.onComplete,
     required this.nextWorkoutWithMeasureDto,
+    required this.timeElapsed,
   })  : workoutWithMeasureDto = null,
         isStart = true;
+
+  final Duration timeElapsed;
   final WorkoutWithMeasureDto? workoutWithMeasureDto;
   final WorkoutWaveDto workoutWave;
-  final void Function() onSkip;
-  final void Function() onComplete;
+  final void Function(Duration timeElapsed) onSkip;
+  final void Function(Duration timeElapsed) onComplete;
   final WorkoutWithMeasureDto? nextWorkoutWithMeasureDto;
 
   final bool isStart;
@@ -41,35 +45,47 @@ class WaveWithCountWidget extends StatefulWidget {
 }
 
 class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
+  // Timer properties to keep track of countdown if workout is timer based
   late Duration? _remainingTime;
   late Timer? _timer;
   late bool _isPaused;
-  late bool isTimeBased;
+  late bool _isTimeBased;
+
+  // Timer properties to keep track of workout wave elapsed time
+  Duration _elapsedTime = Duration.zero;
+  late Timer? _elapsedTimeTimer;
 
   @override
   void initState() {
     super.initState();
     _isPaused = false;
     final currentWorkout = widget.workoutWithMeasureDto;
-    if (widget.isStart || widget.workoutWithMeasureDto!.workoutMeasure.isTime) {
+
+    resumeElapsedTimer();
+
+    _isTimeBased =
+        widget.isStart || widget.workoutWithMeasureDto!.workoutMeasure.isTime;
+
+    if (_isTimeBased) {
       _remainingTime = widget.isStart
           ? const Duration(seconds: 15)
           : Duration(seconds: currentWorkout!.count);
-      isTimeBased = true;
-      resumeTimer();
+      resumeCountDownTimer();
       return;
     }
     _remainingTime = Duration.zero;
-    isTimeBased = false;
+    _timer = null;
   }
 
   @override
   void dispose() {
     super.dispose();
-    if (_timer != null) _timer!.cancel();
+    _timer?.cancel();
+    _elapsedTimeTimer?.cancel();
   }
 
-  void resumeTimer() {
+  void resumeCountDownTimer() {
+    if (!_isTimeBased) return;
     setState(() {
       _isPaused = false;
     });
@@ -79,31 +95,59 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
         if (_remainingTime!.inSeconds > 0) {
           setState(() {
             _remainingTime = _remainingTime! - oneSecond;
-            _isPaused = false;
           });
         } else {
-          stopTimer();
-          widget.onComplete();
+          stopCountDownTimer();
+          stopElapsedTimer();
+          widget.onComplete(_elapsedTime);
         }
       },
     );
   }
 
-  void stopTimer() {
+  void stopCountDownTimer() {
     setState(() {
       _isPaused = true;
     });
-    _timer!.cancel();
+    _timer?.cancel();
+  }
+
+  void resumeElapsedTimer() {
+    if (widget.isStart) {
+      _elapsedTimeTimer = null;
+      return;
+    }
+    _elapsedTimeTimer = Timer.periodic(
+      oneSecond,
+      (timer) {
+        if (!mounted) return;
+        if (_isTimeBased &&
+            _remainingTime != null &&
+            _remainingTime!.inSeconds == 0) {
+          stopElapsedTimer();
+          return;
+        }
+        setState(() {
+          _elapsedTime += oneSecond;
+        });
+      },
+    );
+  }
+
+  void stopElapsedTimer() {
+    _elapsedTimeTimer?.cancel();
   }
 
   void onExit() async {
-    if (isTimeBased) {
-      stopTimer();
+    stopElapsedTimer();
+    if (_isTimeBased) {
+      stopCountDownTimer();
     }
 
     final isQuitting = await showWorkoutWaveExitDialog(context);
     if (!isQuitting) {
-      resumeTimer();
+      if (_isTimeBased) resumeCountDownTimer();
+      resumeElapsedTimer();
       return;
     }
 
@@ -115,6 +159,16 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
     setState(() {
       _remainingTime = _remainingTime! + const Duration(seconds: 10);
     });
+  }
+
+  void onWaveResume() {
+    if (_isTimeBased) resumeCountDownTimer();
+    resumeElapsedTimer();
+  }
+
+  void onWavePause() {
+    if (_isTimeBased) stopCountDownTimer();
+    stopElapsedTimer();
   }
 
   @override
@@ -150,10 +204,10 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           beTitle: "in",
           duration: _remainingTime,
           isPaused: _isPaused,
-          onTimerPause: stopTimer,
-          onTimerResume: resumeTimer,
+          onTimerPause: onWavePause,
+          onTimerResume: onWaveResume,
           onExit: onExit,
-          onSkip: widget.onSkip,
+          onSkip: () => widget.onSkip(_elapsedTime),
           showExitInTimer: true,
           showSkipInTimer: true,
           nextWorkoutName: nextWorkoutName,
@@ -169,7 +223,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
         isRest ? "Resting" : widget.workoutWithMeasureDto!.workout.name;
     const beTitle = "for";
 
-    if (isTimeBased) {
+    if (_isTimeBased) {
       return PopScope(
         canPop: false,
         onPopInvokedWithResult: onPopInvokedWithResult,
@@ -180,14 +234,15 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           beTitle: beTitle,
           duration: _remainingTime,
           isPaused: _isPaused,
-          onTimerPause: stopTimer,
-          onTimerResume: resumeTimer,
-          onSkip: widget.onSkip,
+          onTimerPause: onWavePause,
+          onTimerResume: onWaveResume,
+          onSkip: () => widget.onSkip(_elapsedTime),
           onExit: onExit,
           nextWorkoutName: nextWorkoutName,
           nextWorkoutCount: nextWorkoutCount,
           showTimeAddition: isRest,
           onAddTime: onAddTenSeconds,
+          elapsedTime: _elapsedTime + widget.timeElapsed,
         ),
       );
     }
@@ -203,11 +258,12 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
         workoutTitle: workoutTitle,
         beTitle: beTitle,
         reps: reps,
-        onSkip: widget.onSkip,
+        onSkip: () => widget.onSkip(_elapsedTime),
         onExit: onExit,
         nextWorkoutName: nextWorkoutName,
         nextWorkoutCount: nextWorkoutCount,
-        onDone: widget.onComplete,
+        onDone: () => widget.onComplete(_elapsedTime),
+        elapsedTime: _elapsedTime + widget.timeElapsed,
       ),
     );
   }
