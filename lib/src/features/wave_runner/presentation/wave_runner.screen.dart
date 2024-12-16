@@ -20,6 +20,8 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
   late final int _pagesLength;
   Duration _totalTimeElapsed = Duration.zero;
   late final int _totalWorkouts;
+  int _currentWorkout = 1;
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -53,6 +55,9 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
       curve: Curves.easeInOut,
     );
     _totalTimeElapsed += timeElapsed;
+    _currentIndex += 1;
+    if (!widget.workoutWaveWithWorkouts.workoutsWithMeasure[_currentIndex]
+        .workout.isRest) _currentWorkout += 1;
   }
 
   @override
@@ -74,6 +79,7 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
                 onComplete: onWaveComplete,
                 nextWorkoutWithMeasureDto: workoutsWithMeasure[0],
                 timeElapsed: _totalTimeElapsed,
+                totalWorkouts: _totalWorkouts,
               );
             }
 
@@ -100,6 +106,8 @@ class _WaveRunnerScreenState extends State<WaveRunnerScreen> {
               nextWorkoutWithMeasureDto:
                   !isLastWorkout ? workoutsWithMeasure[index] : null,
               timeElapsed: _totalTimeElapsed,
+              currentWorkout: _currentWorkout,
+              totalWorkouts: _totalWorkouts,
             );
           },
         ),

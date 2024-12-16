@@ -79,7 +79,8 @@ class WorkoutWaveWithWorkoutsMeasureDto {
   ) {
     return WorkoutWaveWithWorkoutsMeasureDto(
       workoutWave: WorkoutWaveDto.fromEntity(
-          workoutWaveWithWorkoutMeasureEntity.workoutWave),
+        workoutWaveWithWorkoutMeasureEntity.workoutWave,
+      ),
       workoutsWithMeasure:
           workoutWaveWithWorkoutMeasureEntity.workoutsWithMeasure
               .map(

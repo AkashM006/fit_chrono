@@ -19,6 +19,8 @@ class WaveWithCountWidget extends StatefulWidget {
     required this.onComplete,
     required this.timeElapsed,
     this.nextWorkoutWithMeasureDto,
+    required this.currentWorkout,
+    required this.totalWorkouts,
   }) : isStart = false;
 
   const WaveWithCountWidget.start({
@@ -28,8 +30,10 @@ class WaveWithCountWidget extends StatefulWidget {
     required this.onComplete,
     required this.nextWorkoutWithMeasureDto,
     required this.timeElapsed,
+    required this.totalWorkouts,
   })  : workoutWithMeasureDto = null,
-        isStart = true;
+        isStart = true,
+        currentWorkout = 0;
 
   final Duration timeElapsed;
   final WorkoutWithMeasureDto? workoutWithMeasureDto;
@@ -37,6 +41,8 @@ class WaveWithCountWidget extends StatefulWidget {
   final void Function(Duration timeElapsed) onSkip;
   final void Function(Duration timeElapsed) onComplete;
   final WorkoutWithMeasureDto? nextWorkoutWithMeasureDto;
+  final int currentWorkout;
+  final int totalWorkouts;
 
   final bool isStart;
 
@@ -181,6 +187,17 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
     final nextWorkout = widget.nextWorkoutWithMeasureDto;
     final workoutWaveName = widget.workoutWave.name;
 
+    final progressPercentage =
+        (widget.currentWorkout / widget.totalWorkouts) * 100;
+
+    final progressText = switch (progressPercentage) {
+      <= 34 => "Getting Started!",
+      <= 67 => "Keep Going!",
+      _ => "Almost there!"
+    };
+
+    final progress =
+        "🏋️‍♂️ ${widget.currentWorkout} / ${widget.totalWorkouts} | $progressText";
     final String? nextWorkoutName =
         widget.nextWorkoutWithMeasureDto?.workout.name;
     String? nextWorkoutCount;
@@ -243,6 +260,8 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           showTimeAddition: isRest,
           onAddTime: onAddTenSeconds,
           elapsedTime: _elapsedTime + widget.timeElapsed,
+          progress:
+              widget.workoutWithMeasureDto!.workout.isRest ? null : progress,
         ),
       );
     }
@@ -264,6 +283,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
         nextWorkoutCount: nextWorkoutCount,
         onDone: () => widget.onComplete(_elapsedTime),
         elapsedTime: _elapsedTime + widget.timeElapsed,
+        progress: progress,
       ),
     );
   }
