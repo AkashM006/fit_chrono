@@ -11,13 +11,13 @@ class CustomRadioButtonWidget<T> extends StatelessWidget {
 
   final T value;
   final T groupValue;
-  final void Function(T? value) onChanged;
+  final void Function(T? value)? onChanged;
   final Widget label;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onChanged(value),
+      onTap: () => onChanged?.call(value),
       child: Row(
         children: [
           Radio(

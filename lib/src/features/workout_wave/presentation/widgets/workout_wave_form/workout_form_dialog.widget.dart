@@ -36,6 +36,7 @@ class _WorkoutFormDialogWidgetState
 
   String get minutes => _minuteController.text;
   String get seconds => _secondsController.text;
+  bool get isRest => _workoutWithMeasure.workout.isRest;
 
   @override
   void initState() {
@@ -286,7 +287,7 @@ class _WorkoutFormDialogWidgetState
                 CustomRadioButtonWidget<WorkoutMeasureDto>(
                   value: WorkoutMeasureDto.reps,
                   groupValue: _workoutWithMeasure.workoutMeasure,
-                  onChanged: setWorkoutMeasure,
+                  onChanged: isRest? null: setWorkoutMeasure,
                   label: const Text("Reps"),
                 ),
               ],
