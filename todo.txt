@@ -8,6 +8,7 @@
 41. In the workout wave complete track properly the amount of worokuts completed
 43. Get from the user after workout the intensity level
 44. Implement toJson and fromJson method for all models to enable storing them in db as string
+45. Maybe show progress even when showing rest workout but different like 3 done 3 more to go
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
