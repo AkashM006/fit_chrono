@@ -1,6 +1,5 @@
 20. Find out a neat way to chain validators
 24. Implement debouncing when searching
-35. On workout wave edit enable the button when workout order is changed ( IN PROGRESS )
 37. Restrict reps to be within 2 digit range
 38. After workout wave complete and after quitting the wave show some message in the snack bar
 39. When app goes to background during workout, handle those cases
@@ -38,3 +37,4 @@ DONE:
 34. Are you sure you wanna delete for workout and workout wave ( DONE )
 36. When adding rest to a workout wave only time must be enabled ( DONE )
 42. Show at which workout the user is currently at ( DONE )
+35. On workout wave edit enable the button when workout order is changed ( DONE )

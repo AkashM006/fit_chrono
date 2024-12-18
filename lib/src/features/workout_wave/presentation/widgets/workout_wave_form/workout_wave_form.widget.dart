@@ -149,10 +149,16 @@ class _WorkoutWaveFormWidgetState extends ConsumerState<WorkoutWaveFormWidget> {
   void onReorder(int oldIndex, int newIndex) {
     setState(() {
       if (oldIndex < newIndex) newIndex -= 1;
-      final item = _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
-          .removeAt(oldIndex);
-      _workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
-          .insert(newIndex, item);
+
+      final workoutsWithMeasure = [
+        ..._workoutWaveWithWorkoutsMeasureDto.workoutsWithMeasure
+      ];
+
+      final item = workoutsWithMeasure.removeAt(oldIndex);
+
+      workoutsWithMeasure.insert(newIndex, item);
+      _workoutWaveWithWorkoutsMeasureDto = _workoutWaveWithWorkoutsMeasureDto
+          .copyWith(workoutsWithMeasure: workoutsWithMeasure);
     });
   }
 
