@@ -30,6 +30,13 @@ class MuscleMapModel {
     );
   }
 
+  factory MuscleMapModel.fromJson(Map<String, dynamic> json) {
+    return MuscleMapModel(
+      id: json['id'] as int,
+      name: json['name'] as String,
+    );
+  }
+
   MuscleMapEntity toEntity() {
     return MuscleMapEntity(
       id: id,
@@ -50,4 +57,11 @@ class MuscleMapModel {
 
   @override
   int get hashCode => name.hashCode;
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+    };
+  }
 }

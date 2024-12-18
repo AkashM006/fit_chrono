@@ -50,6 +50,22 @@ class WorkoutWaveModel {
       times: Value(times),
     );
   }
+
+  factory WorkoutWaveModel.fromJson(Map<String, dynamic> json) {
+    return WorkoutWaveModel(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      times: json['times'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'times': times,
+    };
+  }
 }
 
 class WorkoutWaveWithWorkoutsMeasureModel {
@@ -115,5 +131,26 @@ class WorkoutWaveWithWorkoutsMeasureModel {
     );
   }
 
+  factory WorkoutWaveWithWorkoutsMeasureModel.fromJson(
+      Map<String, dynamic> json) {
+    return WorkoutWaveWithWorkoutsMeasureModel(
+      workoutWave: WorkoutWaveModel.fromJson(
+          json['workoutWave'] as Map<String, dynamic>),
+      workoutsWithMeasure: (json['workoutsWithMeasure'] as List)
+          .map(
+            (workout) => WorkoutWithMeasureModel.fromJson(
+                workout as Map<String, dynamic>),
+          )
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'workoutWave': workoutWave.toJson(),
+      'workoutsWithMeasure':
+          workoutsWithMeasure.map((workout) => workout.toJson()).toList(),
+    };
+  }
   // implement other methods if required
 }

@@ -1,5 +1,5 @@
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
-import 'package:fit_chrono/src/features/workout_wave/data/modal/workout_wave.model.dart';
+import 'package:fit_chrono/src/features/workout_wave/data/model/workout_wave.model.dart';
 import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

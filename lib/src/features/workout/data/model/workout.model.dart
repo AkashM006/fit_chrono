@@ -74,6 +74,25 @@ class WorkoutModel {
 
     return hashCode;
   }
+
+  factory WorkoutModel.fromJson(Map<String, dynamic> json) {
+    return WorkoutModel(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      muscles: (json['muscles'] as List)
+          .map((muscle) =>
+              MuscleMapModel.fromJson(muscle as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'muscles': muscles.map((muscle) => muscle.toJson()).toList(),
+    };
+  }
 }
 
 class WorkoutWithMeasureModel {
@@ -180,11 +199,42 @@ class WorkoutWithMeasureModel {
   String toString() {
     return "WorkoutWithMeasureModel(id: $id, workoutName: ${workout.name}, measure: $measure, count: $count, position: $position)";
   }
+
+  factory WorkoutWithMeasureModel.fromJson(Map<String, dynamic> json) {
+    return WorkoutWithMeasureModel(
+      id: json['id'] as int,
+      workout: WorkoutModel.fromJson(json['workout'] as Map<String, dynamic>),
+      measure: WorkoutMeasureModelJson.fromJson(json['measure'] as String),
+      count: json['count'] as int,
+      position: json['position'] as int,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'workout': workout.toJson(),
+      'measure': measure.toJson(),
+      'count': count,
+      'position': position,
+    };
+  }
 }
 
 enum WorkoutMeasureModel {
   time,
   reps,
+}
+
+extension WorkoutMeasureModelJson on WorkoutMeasureModel {
+  String toJson() {
+    return name;
+  }
+
+  static WorkoutMeasureModel fromJson(String json) {
+    return WorkoutMeasureModel.values
+        .firstWhere((measure) => measure.name == json);
+  }
 }
 
 Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {

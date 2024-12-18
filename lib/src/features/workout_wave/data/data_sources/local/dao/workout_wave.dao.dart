@@ -7,7 +7,7 @@ import 'package:fit_chrono/src/features/workout/data/data_sources/local/schema/w
 import 'package:fit_chrono/src/features/workout/data/model/workout.model.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workouts_in_wave.schema.dart';
-import 'package:fit_chrono/src/features/workout_wave/data/modal/workout_wave.model.dart';
+import 'package:fit_chrono/src/features/workout_wave/data/model/workout_wave.model.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'workout_wave.dao.g.dart';
