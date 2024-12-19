@@ -1308,6 +1308,183 @@ class WorkoutsWithMeasuresCompanion
   }
 }
 
+class $WaveRunnerLogsTable extends WaveRunnerLogs
+    with TableInfo<$WaveRunnerLogsTable, WaveRunnerLog> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WaveRunnerLogsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _logMeta = const VerificationMeta('log');
+  @override
+  late final GeneratedColumn<String> log = GeneratedColumn<String>(
+      'log', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, log];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'wave_runner_logs';
+  @override
+  VerificationContext validateIntegrity(Insertable<WaveRunnerLog> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('log')) {
+      context.handle(
+          _logMeta, log.isAcceptableOrUnknown(data['log']!, _logMeta));
+    } else if (isInserting) {
+      context.missing(_logMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  WaveRunnerLog map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WaveRunnerLog(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      log: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}log'])!,
+    );
+  }
+
+  @override
+  $WaveRunnerLogsTable createAlias(String alias) {
+    return $WaveRunnerLogsTable(attachedDatabase, alias);
+  }
+}
+
+class WaveRunnerLog extends DataClass implements Insertable<WaveRunnerLog> {
+  final int id;
+  final String log;
+  const WaveRunnerLog({required this.id, required this.log});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['log'] = Variable<String>(log);
+    return map;
+  }
+
+  WaveRunnerLogsCompanion toCompanion(bool nullToAbsent) {
+    return WaveRunnerLogsCompanion(
+      id: Value(id),
+      log: Value(log),
+    );
+  }
+
+  factory WaveRunnerLog.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WaveRunnerLog(
+      id: serializer.fromJson<int>(json['id']),
+      log: serializer.fromJson<String>(json['log']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'log': serializer.toJson<String>(log),
+    };
+  }
+
+  WaveRunnerLog copyWith({int? id, String? log}) => WaveRunnerLog(
+        id: id ?? this.id,
+        log: log ?? this.log,
+      );
+  WaveRunnerLog copyWithCompanion(WaveRunnerLogsCompanion data) {
+    return WaveRunnerLog(
+      id: data.id.present ? data.id.value : this.id,
+      log: data.log.present ? data.log.value : this.log,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WaveRunnerLog(')
+          ..write('id: $id, ')
+          ..write('log: $log')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, log);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WaveRunnerLog && other.id == this.id && other.log == this.log);
+}
+
+class WaveRunnerLogsCompanion extends UpdateCompanion<WaveRunnerLog> {
+  final Value<int> id;
+  final Value<String> log;
+  const WaveRunnerLogsCompanion({
+    this.id = const Value.absent(),
+    this.log = const Value.absent(),
+  });
+  WaveRunnerLogsCompanion.insert({
+    this.id = const Value.absent(),
+    required String log,
+  }) : log = Value(log);
+  static Insertable<WaveRunnerLog> custom({
+    Expression<int>? id,
+    Expression<String>? log,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (log != null) 'log': log,
+    });
+  }
+
+  WaveRunnerLogsCompanion copyWith({Value<int>? id, Value<String>? log}) {
+    return WaveRunnerLogsCompanion(
+      id: id ?? this.id,
+      log: log ?? this.log,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (log.present) {
+      map['log'] = Variable<String>(log.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WaveRunnerLogsCompanion(')
+          ..write('id: $id, ')
+          ..write('log: $log')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1320,10 +1497,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $WorkoutsInWavesTable(this);
   late final $WorkoutsWithMeasuresTable workoutsWithMeasures =
       $WorkoutsWithMeasuresTable(this);
+  late final $WaveRunnerLogsTable waveRunnerLogs = $WaveRunnerLogsTable(this);
   late final MuscleMapDao muscleMapDao = MuscleMapDao(this as AppDatabase);
   late final WorkoutDao workoutDao = WorkoutDao(this as AppDatabase);
   late final WorkoutWaveDao workoutWaveDao =
       WorkoutWaveDao(this as AppDatabase);
+  late final WaveRunnerLogDao waveRunnerLogDao =
+      WaveRunnerLogDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1334,7 +1514,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         muscleMapsForWorkouts,
         workoutWaves,
         workoutsInWaves,
-        workoutsWithMeasures
+        workoutsWithMeasures,
+        waveRunnerLogs
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -3076,6 +3257,129 @@ typedef $$WorkoutsWithMeasuresTableProcessedTableManager
         (WorkoutsWithMeasure, $$WorkoutsWithMeasuresTableReferences),
         WorkoutsWithMeasure,
         PrefetchHooks Function({bool workoutId})>;
+typedef $$WaveRunnerLogsTableCreateCompanionBuilder = WaveRunnerLogsCompanion
+    Function({
+  Value<int> id,
+  required String log,
+});
+typedef $$WaveRunnerLogsTableUpdateCompanionBuilder = WaveRunnerLogsCompanion
+    Function({
+  Value<int> id,
+  Value<String> log,
+});
+
+class $$WaveRunnerLogsTableFilterComposer
+    extends Composer<_$AppDatabase, $WaveRunnerLogsTable> {
+  $$WaveRunnerLogsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get log => $composableBuilder(
+      column: $table.log, builder: (column) => ColumnFilters(column));
+}
+
+class $$WaveRunnerLogsTableOrderingComposer
+    extends Composer<_$AppDatabase, $WaveRunnerLogsTable> {
+  $$WaveRunnerLogsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get log => $composableBuilder(
+      column: $table.log, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WaveRunnerLogsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $WaveRunnerLogsTable> {
+  $$WaveRunnerLogsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get log =>
+      $composableBuilder(column: $table.log, builder: (column) => column);
+}
+
+class $$WaveRunnerLogsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $WaveRunnerLogsTable,
+    WaveRunnerLog,
+    $$WaveRunnerLogsTableFilterComposer,
+    $$WaveRunnerLogsTableOrderingComposer,
+    $$WaveRunnerLogsTableAnnotationComposer,
+    $$WaveRunnerLogsTableCreateCompanionBuilder,
+    $$WaveRunnerLogsTableUpdateCompanionBuilder,
+    (
+      WaveRunnerLog,
+      BaseReferences<_$AppDatabase, $WaveRunnerLogsTable, WaveRunnerLog>
+    ),
+    WaveRunnerLog,
+    PrefetchHooks Function()> {
+  $$WaveRunnerLogsTableTableManager(
+      _$AppDatabase db, $WaveRunnerLogsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WaveRunnerLogsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WaveRunnerLogsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WaveRunnerLogsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> log = const Value.absent(),
+          }) =>
+              WaveRunnerLogsCompanion(
+            id: id,
+            log: log,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String log,
+          }) =>
+              WaveRunnerLogsCompanion.insert(
+            id: id,
+            log: log,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$WaveRunnerLogsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $WaveRunnerLogsTable,
+    WaveRunnerLog,
+    $$WaveRunnerLogsTableFilterComposer,
+    $$WaveRunnerLogsTableOrderingComposer,
+    $$WaveRunnerLogsTableAnnotationComposer,
+    $$WaveRunnerLogsTableCreateCompanionBuilder,
+    $$WaveRunnerLogsTableUpdateCompanionBuilder,
+    (
+      WaveRunnerLog,
+      BaseReferences<_$AppDatabase, $WaveRunnerLogsTable, WaveRunnerLog>
+    ),
+    WaveRunnerLog,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3092,6 +3396,8 @@ class $AppDatabaseManager {
       $$WorkoutsInWavesTableTableManager(_db, _db.workoutsInWaves);
   $$WorkoutsWithMeasuresTableTableManager get workoutsWithMeasures =>
       $$WorkoutsWithMeasuresTableTableManager(_db, _db.workoutsWithMeasures);
+  $$WaveRunnerLogsTableTableManager get waveRunnerLogs =>
+      $$WaveRunnerLogsTableTableManager(_db, _db.waveRunnerLogs);
 }
 
 // **************************************************************************

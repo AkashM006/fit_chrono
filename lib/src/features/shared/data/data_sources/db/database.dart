@@ -5,6 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/dao/muscle_map.dao.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/init/muscle_map.data.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/schema/muscle_map.schema.dart';
+import 'package:fit_chrono/src/features/wave_runner/data/data_sources/local/dao/wave_runner_log.dao.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/dao/workout.dao.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/init/muscle_maps_for_workouts.data.dart';
 import 'package:fit_chrono/src/features/workout/data/data_sources/local/init/workout.data.dart';
@@ -15,6 +16,7 @@ import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/ini
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/init/workouts_in_wave.data.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workouts_in_wave.schema.dart';
+import 'package:fit_chrono/src/features/wave_runner/data/data_sources/local/schema/wave_runner_log.schema.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -33,11 +35,13 @@ part 'database.g.dart';
     WorkoutWaves,
     WorkoutsInWaves,
     WorkoutsWithMeasures,
+    WaveRunnerLogs
   ],
   daos: [
     MuscleMapDao,
     WorkoutDao,
     WorkoutWaveDao,
+    WaveRunnerLogDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
