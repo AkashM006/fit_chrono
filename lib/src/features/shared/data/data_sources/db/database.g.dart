@@ -1308,12 +1308,12 @@ class WorkoutsWithMeasuresCompanion
   }
 }
 
-class $WaveRunnerLogsTable extends WaveRunnerLogs
-    with TableInfo<$WaveRunnerLogsTable, WaveRunnerLog> {
+class $WaveRunnersTable extends WaveRunners
+    with TableInfo<$WaveRunnersTable, WaveRunner> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $WaveRunnerLogsTable(this.attachedDatabase, [this._alias]);
+  $WaveRunnersTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1334,9 +1334,9 @@ class $WaveRunnerLogsTable extends WaveRunnerLogs
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'wave_runner_logs';
+  static const String $name = 'wave_runners';
   @override
-  VerificationContext validateIntegrity(Insertable<WaveRunnerLog> instance,
+  VerificationContext validateIntegrity(Insertable<WaveRunner> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1355,9 +1355,9 @@ class $WaveRunnerLogsTable extends WaveRunnerLogs
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  WaveRunnerLog map(Map<String, dynamic> data, {String? tablePrefix}) {
+  WaveRunner map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return WaveRunnerLog(
+    return WaveRunner(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       log: attachedDatabase.typeMapping
@@ -1366,15 +1366,15 @@ class $WaveRunnerLogsTable extends WaveRunnerLogs
   }
 
   @override
-  $WaveRunnerLogsTable createAlias(String alias) {
-    return $WaveRunnerLogsTable(attachedDatabase, alias);
+  $WaveRunnersTable createAlias(String alias) {
+    return $WaveRunnersTable(attachedDatabase, alias);
   }
 }
 
-class WaveRunnerLog extends DataClass implements Insertable<WaveRunnerLog> {
+class WaveRunner extends DataClass implements Insertable<WaveRunner> {
   final int id;
   final String log;
-  const WaveRunnerLog({required this.id, required this.log});
+  const WaveRunner({required this.id, required this.log});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1383,17 +1383,17 @@ class WaveRunnerLog extends DataClass implements Insertable<WaveRunnerLog> {
     return map;
   }
 
-  WaveRunnerLogsCompanion toCompanion(bool nullToAbsent) {
-    return WaveRunnerLogsCompanion(
+  WaveRunnersCompanion toCompanion(bool nullToAbsent) {
+    return WaveRunnersCompanion(
       id: Value(id),
       log: Value(log),
     );
   }
 
-  factory WaveRunnerLog.fromJson(Map<String, dynamic> json,
+  factory WaveRunner.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return WaveRunnerLog(
+    return WaveRunner(
       id: serializer.fromJson<int>(json['id']),
       log: serializer.fromJson<String>(json['log']),
     );
@@ -1407,12 +1407,12 @@ class WaveRunnerLog extends DataClass implements Insertable<WaveRunnerLog> {
     };
   }
 
-  WaveRunnerLog copyWith({int? id, String? log}) => WaveRunnerLog(
+  WaveRunner copyWith({int? id, String? log}) => WaveRunner(
         id: id ?? this.id,
         log: log ?? this.log,
       );
-  WaveRunnerLog copyWithCompanion(WaveRunnerLogsCompanion data) {
-    return WaveRunnerLog(
+  WaveRunner copyWithCompanion(WaveRunnersCompanion data) {
+    return WaveRunner(
       id: data.id.present ? data.id.value : this.id,
       log: data.log.present ? data.log.value : this.log,
     );
@@ -1420,7 +1420,7 @@ class WaveRunnerLog extends DataClass implements Insertable<WaveRunnerLog> {
 
   @override
   String toString() {
-    return (StringBuffer('WaveRunnerLog(')
+    return (StringBuffer('WaveRunner(')
           ..write('id: $id, ')
           ..write('log: $log')
           ..write(')'))
@@ -1432,21 +1432,21 @@ class WaveRunnerLog extends DataClass implements Insertable<WaveRunnerLog> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is WaveRunnerLog && other.id == this.id && other.log == this.log);
+      (other is WaveRunner && other.id == this.id && other.log == this.log);
 }
 
-class WaveRunnerLogsCompanion extends UpdateCompanion<WaveRunnerLog> {
+class WaveRunnersCompanion extends UpdateCompanion<WaveRunner> {
   final Value<int> id;
   final Value<String> log;
-  const WaveRunnerLogsCompanion({
+  const WaveRunnersCompanion({
     this.id = const Value.absent(),
     this.log = const Value.absent(),
   });
-  WaveRunnerLogsCompanion.insert({
+  WaveRunnersCompanion.insert({
     this.id = const Value.absent(),
     required String log,
   }) : log = Value(log);
-  static Insertable<WaveRunnerLog> custom({
+  static Insertable<WaveRunner> custom({
     Expression<int>? id,
     Expression<String>? log,
   }) {
@@ -1456,8 +1456,8 @@ class WaveRunnerLogsCompanion extends UpdateCompanion<WaveRunnerLog> {
     });
   }
 
-  WaveRunnerLogsCompanion copyWith({Value<int>? id, Value<String>? log}) {
-    return WaveRunnerLogsCompanion(
+  WaveRunnersCompanion copyWith({Value<int>? id, Value<String>? log}) {
+    return WaveRunnersCompanion(
       id: id ?? this.id,
       log: log ?? this.log,
     );
@@ -1477,7 +1477,7 @@ class WaveRunnerLogsCompanion extends UpdateCompanion<WaveRunnerLog> {
 
   @override
   String toString() {
-    return (StringBuffer('WaveRunnerLogsCompanion(')
+    return (StringBuffer('WaveRunnersCompanion(')
           ..write('id: $id, ')
           ..write('log: $log')
           ..write(')'))
@@ -1497,13 +1497,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $WorkoutsInWavesTable(this);
   late final $WorkoutsWithMeasuresTable workoutsWithMeasures =
       $WorkoutsWithMeasuresTable(this);
-  late final $WaveRunnerLogsTable waveRunnerLogs = $WaveRunnerLogsTable(this);
+  late final $WaveRunnersTable waveRunners = $WaveRunnersTable(this);
   late final MuscleMapDao muscleMapDao = MuscleMapDao(this as AppDatabase);
   late final WorkoutDao workoutDao = WorkoutDao(this as AppDatabase);
   late final WorkoutWaveDao workoutWaveDao =
       WorkoutWaveDao(this as AppDatabase);
-  late final WaveRunnerLogDao waveRunnerLogDao =
-      WaveRunnerLogDao(this as AppDatabase);
+  late final WaveRunnerDao waveRunnerDao = WaveRunnerDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1515,7 +1514,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         workoutWaves,
         workoutsInWaves,
         workoutsWithMeasures,
-        waveRunnerLogs
+        waveRunners
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -3257,20 +3256,20 @@ typedef $$WorkoutsWithMeasuresTableProcessedTableManager
         (WorkoutsWithMeasure, $$WorkoutsWithMeasuresTableReferences),
         WorkoutsWithMeasure,
         PrefetchHooks Function({bool workoutId})>;
-typedef $$WaveRunnerLogsTableCreateCompanionBuilder = WaveRunnerLogsCompanion
+typedef $$WaveRunnersTableCreateCompanionBuilder = WaveRunnersCompanion
     Function({
   Value<int> id,
   required String log,
 });
-typedef $$WaveRunnerLogsTableUpdateCompanionBuilder = WaveRunnerLogsCompanion
+typedef $$WaveRunnersTableUpdateCompanionBuilder = WaveRunnersCompanion
     Function({
   Value<int> id,
   Value<String> log,
 });
 
-class $$WaveRunnerLogsTableFilterComposer
-    extends Composer<_$AppDatabase, $WaveRunnerLogsTable> {
-  $$WaveRunnerLogsTableFilterComposer({
+class $$WaveRunnersTableFilterComposer
+    extends Composer<_$AppDatabase, $WaveRunnersTable> {
+  $$WaveRunnersTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -3284,9 +3283,9 @@ class $$WaveRunnerLogsTableFilterComposer
       column: $table.log, builder: (column) => ColumnFilters(column));
 }
 
-class $$WaveRunnerLogsTableOrderingComposer
-    extends Composer<_$AppDatabase, $WaveRunnerLogsTable> {
-  $$WaveRunnerLogsTableOrderingComposer({
+class $$WaveRunnersTableOrderingComposer
+    extends Composer<_$AppDatabase, $WaveRunnersTable> {
+  $$WaveRunnersTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -3300,9 +3299,9 @@ class $$WaveRunnerLogsTableOrderingComposer
       column: $table.log, builder: (column) => ColumnOrderings(column));
 }
 
-class $$WaveRunnerLogsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $WaveRunnerLogsTable> {
-  $$WaveRunnerLogsTableAnnotationComposer({
+class $$WaveRunnersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $WaveRunnersTable> {
+  $$WaveRunnersTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -3316,37 +3315,33 @@ class $$WaveRunnerLogsTableAnnotationComposer
       $composableBuilder(column: $table.log, builder: (column) => column);
 }
 
-class $$WaveRunnerLogsTableTableManager extends RootTableManager<
+class $$WaveRunnersTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $WaveRunnerLogsTable,
-    WaveRunnerLog,
-    $$WaveRunnerLogsTableFilterComposer,
-    $$WaveRunnerLogsTableOrderingComposer,
-    $$WaveRunnerLogsTableAnnotationComposer,
-    $$WaveRunnerLogsTableCreateCompanionBuilder,
-    $$WaveRunnerLogsTableUpdateCompanionBuilder,
-    (
-      WaveRunnerLog,
-      BaseReferences<_$AppDatabase, $WaveRunnerLogsTable, WaveRunnerLog>
-    ),
-    WaveRunnerLog,
+    $WaveRunnersTable,
+    WaveRunner,
+    $$WaveRunnersTableFilterComposer,
+    $$WaveRunnersTableOrderingComposer,
+    $$WaveRunnersTableAnnotationComposer,
+    $$WaveRunnersTableCreateCompanionBuilder,
+    $$WaveRunnersTableUpdateCompanionBuilder,
+    (WaveRunner, BaseReferences<_$AppDatabase, $WaveRunnersTable, WaveRunner>),
+    WaveRunner,
     PrefetchHooks Function()> {
-  $$WaveRunnerLogsTableTableManager(
-      _$AppDatabase db, $WaveRunnerLogsTable table)
+  $$WaveRunnersTableTableManager(_$AppDatabase db, $WaveRunnersTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$WaveRunnerLogsTableFilterComposer($db: db, $table: table),
+              $$WaveRunnersTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$WaveRunnerLogsTableOrderingComposer($db: db, $table: table),
+              $$WaveRunnersTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$WaveRunnerLogsTableAnnotationComposer($db: db, $table: table),
+              $$WaveRunnersTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> log = const Value.absent(),
           }) =>
-              WaveRunnerLogsCompanion(
+              WaveRunnersCompanion(
             id: id,
             log: log,
           ),
@@ -3354,7 +3349,7 @@ class $$WaveRunnerLogsTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             required String log,
           }) =>
-              WaveRunnerLogsCompanion.insert(
+              WaveRunnersCompanion.insert(
             id: id,
             log: log,
           ),
@@ -3365,20 +3360,17 @@ class $$WaveRunnerLogsTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$WaveRunnerLogsTableProcessedTableManager = ProcessedTableManager<
+typedef $$WaveRunnersTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $WaveRunnerLogsTable,
-    WaveRunnerLog,
-    $$WaveRunnerLogsTableFilterComposer,
-    $$WaveRunnerLogsTableOrderingComposer,
-    $$WaveRunnerLogsTableAnnotationComposer,
-    $$WaveRunnerLogsTableCreateCompanionBuilder,
-    $$WaveRunnerLogsTableUpdateCompanionBuilder,
-    (
-      WaveRunnerLog,
-      BaseReferences<_$AppDatabase, $WaveRunnerLogsTable, WaveRunnerLog>
-    ),
-    WaveRunnerLog,
+    $WaveRunnersTable,
+    WaveRunner,
+    $$WaveRunnersTableFilterComposer,
+    $$WaveRunnersTableOrderingComposer,
+    $$WaveRunnersTableAnnotationComposer,
+    $$WaveRunnersTableCreateCompanionBuilder,
+    $$WaveRunnersTableUpdateCompanionBuilder,
+    (WaveRunner, BaseReferences<_$AppDatabase, $WaveRunnersTable, WaveRunner>),
+    WaveRunner,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
@@ -3396,8 +3388,8 @@ class $AppDatabaseManager {
       $$WorkoutsInWavesTableTableManager(_db, _db.workoutsInWaves);
   $$WorkoutsWithMeasuresTableTableManager get workoutsWithMeasures =>
       $$WorkoutsWithMeasuresTableTableManager(_db, _db.workoutsWithMeasures);
-  $$WaveRunnerLogsTableTableManager get waveRunnerLogs =>
-      $$WaveRunnerLogsTableTableManager(_db, _db.waveRunnerLogs);
+  $$WaveRunnersTableTableManager get waveRunners =>
+      $$WaveRunnersTableTableManager(_db, _db.waveRunners);
 }
 
 // **************************************************************************

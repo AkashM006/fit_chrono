@@ -29,7 +29,7 @@ class WaveRunnerLogModel {
     );
   }
 
-  factory WaveRunnerLogModel.fromDbModel(WaveRunnerLog waveRunnerLog) {
+  factory WaveRunnerLogModel.fromDbModel(WaveRunner waveRunnerLog) {
     return WaveRunnerLogModel(
       id: waveRunnerLog.id,
       workoutWaveWithWorkoutsMeasure:
@@ -46,8 +46,8 @@ class WaveRunnerLogModel {
     );
   }
 
-  WaveRunnerLogsCompanion toCompanion() {
-    return WaveRunnerLogsCompanion(
+  WaveRunnersCompanion toCompanion() {
+    return WaveRunnersCompanion(
       log: Value(jsonEncode(workoutWaveWithWorkoutsMeasure.toJson())),
     );
   }
