@@ -1,6 +1,5 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
-import 'package:fit_chrono/src/features/shared/presentation/widgets/stack_with_loader/stack_with_loader.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/dto/wave_runner_log.dto.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/provider/wave_runner_log/wave_runner_log.provider.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_complete.widget.dart';
@@ -28,6 +27,7 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
   late final int _totalWorkouts;
   int _currentWorkout = 1;
   int _currentIndex = 0;
+  WaveRunnerLogDto _log = WaveRunnerLogDto.init();
 
   @override
   void initState() {
@@ -60,17 +60,18 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
   void _onNext(Duration timeElapsed) {
     _totalTimeElapsed += timeElapsed;
     _currentIndex += 1;
-    if (isCompletePage) {
-      final log = WaveRunnerLogDto.init().copyWith(
-        workoutWaveWithWorkoutsMeasure: widget.workoutWaveWithWorkouts,
-      );
-      ref.read(waveRunnerLogProvider.notifier).go(log);
-      return;
-    }
     _pageController.nextPage(
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeInOut,
     );
+    if (isCompletePage) {
+      final log = WaveRunnerLogDto.init().copyWith(
+        workoutWaveWithWorkoutsMeasure: widget.workoutWaveWithWorkouts,
+      );
+      _log = log;
+      ref.read(waveRunnerLogProvider.notifier).go(log);
+      return;
+    }
     final workoutsWithMeasure =
         widget.workoutWaveWithWorkouts.workoutsWithMeasure;
 
@@ -85,18 +86,12 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
     final workoutsWithMeasure =
         widget.workoutWaveWithWorkouts.workoutsWithMeasure;
 
-    final isLoading = ref.watch(waveRunnerLogProvider)?.isLoading ?? false;
-
     ref.listen(
       waveRunnerLogProvider,
       (previous, next) {
         next?.on(
           success: (data) {
             showSnackBar(context, data);
-            _pageController.nextPage(
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.easeInOut,
-            );
           },
           failed: (error) {
             showSnackBar(context, error.toString());
@@ -105,58 +100,54 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
       },
     );
 
-    return StackWithLoaderWidget(
-      isLoading: isLoading,
-      children: [
-        SafeArea(
-          child: Scaffold(
-            body: PageView.builder(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _pagesLength,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return WaveWithCountWidget.start(
-                    workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
-                    onSkip: onSkip,
-                    onComplete: onWaveComplete,
-                    nextWorkoutWithMeasureDto: workoutsWithMeasure[0],
-                    timeElapsed: _totalTimeElapsed,
-                    totalWorkouts: _totalWorkouts,
-                  );
-                }
+    return SafeArea(
+      child: Scaffold(
+        body: PageView.builder(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: _pagesLength,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return WaveWithCountWidget.start(
+                workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
+                onSkip: onSkip,
+                onComplete: onWaveComplete,
+                nextWorkoutWithMeasureDto: workoutsWithMeasure[0],
+                timeElapsed: _totalTimeElapsed,
+                totalWorkouts: _totalWorkouts,
+              );
+            }
 
-                final isLastWorkout = index ==
-                    _pagesLength -
-                        2; // in order to account for the last item which is actually complete screen
-                final isLastScreen = index == _pagesLength - 1;
+            final isLastWorkout = index ==
+                _pagesLength -
+                    2; // in order to account for the last item which is actually complete screen
+            final isLastScreen = index == _pagesLength - 1;
 
-                if (isLastScreen) {
-                  return WaveCompleteWidget(
-                    timeTaken: _totalTimeElapsed,
-                    workoutsCompleted: _totalWorkouts,
-                  );
-                }
+            if (isLastScreen) {
+              return WaveCompleteWidget(
+                timeTaken: _totalTimeElapsed,
+                workoutsCompleted: _totalWorkouts,
+                log: _log,
+              );
+            }
 
-                return WaveWithCountWidget(
-                  key: ValueKey(
-                    workoutsWithMeasure[index - 1].uniqueId,
-                  ), // index - 1 is to account for the start screen added in the first
-                  workoutWithMeasureDto: workoutsWithMeasure[index - 1],
-                  workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
-                  onSkip: onSkip,
-                  onComplete: onWaveComplete,
-                  nextWorkoutWithMeasureDto:
-                      !isLastWorkout ? workoutsWithMeasure[index] : null,
-                  timeElapsed: _totalTimeElapsed,
-                  currentWorkout: _currentWorkout,
-                  totalWorkouts: _totalWorkouts,
-                );
-              },
-            ),
-          ),
+            return WaveWithCountWidget(
+              key: ValueKey(
+                workoutsWithMeasure[index - 1].uniqueId,
+              ), // index - 1 is to account for the start screen added in the first
+              workoutWithMeasureDto: workoutsWithMeasure[index - 1],
+              workoutWave: widget.workoutWaveWithWorkouts.workoutWave,
+              onSkip: onSkip,
+              onComplete: onWaveComplete,
+              nextWorkoutWithMeasureDto:
+                  !isLastWorkout ? workoutsWithMeasure[index] : null,
+              timeElapsed: _totalTimeElapsed,
+              currentWorkout: _currentWorkout,
+              totalWorkouts: _totalWorkouts,
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 }

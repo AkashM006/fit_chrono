@@ -6,7 +6,7 @@ part of 'wave_runner_log.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$waveRunnerLogHash() => r'd6baf8a3caf513035b5d38c23fcc2c0951adb0e7';
+String _$waveRunnerLogHash() => r'e7484c42c0630db3375f234fca38037b379ba3e3';
 
 /// See also [WaveRunnerLog].
 @ProviderFor(WaveRunnerLog)

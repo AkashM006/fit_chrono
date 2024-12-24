@@ -1,5 +1,6 @@
 import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/core/utils/formatter.util.dart';
+import 'package:fit_chrono/src/features/wave_runner/presentation/dto/wave_runner_log.dto.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,10 +9,12 @@ class WaveCompleteWidget extends StatelessWidget {
     super.key,
     required this.timeTaken,
     required this.workoutsCompleted,
+    required this.log,
   });
 
   final Duration timeTaken;
   final int workoutsCompleted;
+  final WaveRunnerLogDto log;
 
   @override
   Widget build(BuildContext context) {
