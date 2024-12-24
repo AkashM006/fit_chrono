@@ -198,6 +198,11 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
 
     final progress =
         "🏋️‍♂️ ${widget.currentWorkout} / ${widget.totalWorkouts} | $progressText";
+
+    final List<String> progressList = [];
+    progressList.add("✅ ${widget.currentWorkout} Down");
+    progressList.add("⏳ ${widget.totalWorkouts - widget.currentWorkout} To Go");
+
     final String? nextWorkoutName =
         widget.nextWorkoutWithMeasureDto?.workout.name;
     String? nextWorkoutCount;
@@ -262,6 +267,8 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
           elapsedTime: _elapsedTime + widget.timeElapsed,
           progress:
               widget.workoutWithMeasureDto!.workout.isRest ? null : progress,
+          progressList:
+              widget.workoutWithMeasureDto!.workout.isRest ? progressList : [],
         ),
       );
     }
