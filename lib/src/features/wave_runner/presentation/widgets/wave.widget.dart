@@ -16,7 +16,6 @@ class WaveWidget extends StatelessWidget {
     this.elapsedTime,
     this.nextWorkoutName,
     this.nextWorkoutCount,
-    this.progress,
     this.progressList,
   })  : duration = null,
         onTimerPause = null,
@@ -43,7 +42,6 @@ class WaveWidget extends StatelessWidget {
     this.nextWorkoutCount,
     this.onAddTime,
     this.elapsedTime,
-    this.progress,
     this.progressList,
     this.showTimeAddition = false,
     this.showExitInTimer = false,
@@ -52,7 +50,6 @@ class WaveWidget extends StatelessWidget {
         onDone = null;
 
   final String? workoutWaveName;
-  final String? progress;
   final List<String>? progressList;
   final String actionTitle;
   final String workoutTitle;
@@ -167,14 +164,11 @@ class WaveWidget extends StatelessWidget {
             getFormattedTime(elapsedTime!),
           ),
         ],
-        if (progress != null) ...[
-          const SizedBox(
-            height: 5,
-          ),
-          Text(progress!)
-        ] else if (progressList != null && progressList!.isNotEmpty)
+        if (progressList != null && progressList!.isNotEmpty)
           Column(
+            spacing: 5,
             children: [
+              const SizedBox(),
               for (final progressItem in progressList!) Text(progressItem)
             ],
           )

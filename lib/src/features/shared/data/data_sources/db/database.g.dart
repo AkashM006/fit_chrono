@@ -2158,8 +2158,7 @@ final class $$MuscleMapsForWorkoutsTableReferences extends BaseReferences<
       db.workouts.createAlias($_aliasNameGenerator(
           db.muscleMapsForWorkouts.workoutId, db.workouts.id));
 
-  $$WorkoutsTableProcessedTableManager? get workoutId {
-    if ($_item.workoutId == null) return null;
+  $$WorkoutsTableProcessedTableManager get workoutId {
     final manager = $$WorkoutsTableTableManager($_db, $_db.workouts)
         .filter((f) => f.id($_item.workoutId!));
     final item = $_typedResult.readTableOrNull(_workoutIdTable($_db));
@@ -2172,8 +2171,7 @@ final class $$MuscleMapsForWorkoutsTableReferences extends BaseReferences<
       db.muscleMaps.createAlias($_aliasNameGenerator(
           db.muscleMapsForWorkouts.muscleMapId, db.muscleMaps.id));
 
-  $$MuscleMapsTableProcessedTableManager? get muscleMapId {
-    if ($_item.muscleMapId == null) return null;
+  $$MuscleMapsTableProcessedTableManager get muscleMapId {
     final manager = $$MuscleMapsTableTableManager($_db, $_db.muscleMaps)
         .filter((f) => f.id($_item.muscleMapId!));
     final item = $_typedResult.readTableOrNull(_muscleMapIdTable($_db));
@@ -2694,8 +2692,7 @@ final class $$WorkoutsInWavesTableReferences extends BaseReferences<
       db.workouts.createAlias($_aliasNameGenerator(
           db.workoutsInWaves.workoutWithMeasureId, db.workouts.id));
 
-  $$WorkoutsTableProcessedTableManager? get workoutWithMeasureId {
-    if ($_item.workoutWithMeasureId == null) return null;
+  $$WorkoutsTableProcessedTableManager get workoutWithMeasureId {
     final manager = $$WorkoutsTableTableManager($_db, $_db.workouts)
         .filter((f) => f.id($_item.workoutWithMeasureId!));
     final item =
@@ -2709,8 +2706,7 @@ final class $$WorkoutsInWavesTableReferences extends BaseReferences<
       db.workoutWaves.createAlias($_aliasNameGenerator(
           db.workoutsInWaves.workoutWaveId, db.workoutWaves.id));
 
-  $$WorkoutWavesTableProcessedTableManager? get workoutWaveId {
-    if ($_item.workoutWaveId == null) return null;
+  $$WorkoutWavesTableProcessedTableManager get workoutWaveId {
     final manager = $$WorkoutWavesTableTableManager($_db, $_db.workoutWaves)
         .filter((f) => f.id($_item.workoutWaveId!));
     final item = $_typedResult.readTableOrNull(_workoutWaveIdTable($_db));
@@ -3019,8 +3015,7 @@ final class $$WorkoutsWithMeasuresTableReferences extends BaseReferences<
       db.workouts.createAlias($_aliasNameGenerator(
           db.workoutsWithMeasures.workoutId, db.workouts.id));
 
-  $$WorkoutsTableProcessedTableManager? get workoutId {
-    if ($_item.workoutId == null) return null;
+  $$WorkoutsTableProcessedTableManager get workoutId {
     final manager = $$WorkoutsTableTableManager($_db, $_db.workouts)
         .filter((f) => f.id($_item.workoutId!));
     final item = $_typedResult.readTableOrNull(_workoutIdTable($_db));
