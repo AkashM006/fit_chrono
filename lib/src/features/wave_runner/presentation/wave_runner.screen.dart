@@ -22,12 +22,29 @@ class WaveRunnerScreen extends ConsumerStatefulWidget {
 
 class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
   final PageController _pageController = PageController();
+
+  /// Used to show the pages in PageView
+  /// 0 - Start Page
+  /// last - Complete Page
+  /// rest - Workouts
   late final int _pagesLength;
+
+  /// Total time elapsed in the wave
+  /// Used to display in the end
+  /// and in workout screens
   Duration _totalTimeElapsed = Duration.zero;
+
+  /// Total number of workouts in the wave exclusing rest, start and end
+  /// Used to show the progress in the wave
   late final int _totalWorkouts;
+
+  /// The current workout index in the wave
+  /// Used with -1 to get the details of the workout
   int _currentWorkout = 1;
   int _currentIndex = 0;
-  WaveRunnerLogDto _log = WaveRunnerLogDto.init();
+
+  /// List of logs to be shown and storted
+  List<WorkoutWithWorkoutMeasureLogDto> _logs = [];
 
   @override
   void initState() {
@@ -49,16 +66,31 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
     _pageController.dispose();
   }
 
-  void onWaveComplete(Duration timeElapsed) {
-    _onNext(timeElapsed);
+  void onWaveComplete(Duration elapsedTime) {
+    _onNext(elapsedTime, false);
   }
 
-  void onSkip(Duration timeElapsed) {
-    _onNext(timeElapsed);
+  void onSkip(Duration elapsedTime) {
+    _onNext(elapsedTime, true);
   }
 
-  void _onNext(Duration timeElapsed) {
-    _totalTimeElapsed += timeElapsed;
+  void _onNext(Duration elapsedTime, bool wasSkipped) {
+    if (_currentIndex > 0) {
+      // logging all workouts when the currentIndex is not 0
+      // 0 Indicates the start and not a workout
+      // To account for this -1 is used
+      _logs = [
+        ..._logs,
+        WorkoutWithWorkoutMeasureLogDto.init().copyWith(
+          workoutWithMeasure: widget
+              .workoutWaveWithWorkouts.workoutsWithMeasure[_currentWorkout - 1],
+          elapsedTime: elapsedTime.inSeconds,
+          wasSkipped: wasSkipped,
+        )
+      ];
+    }
+
+    _totalTimeElapsed += elapsedTime;
     _currentIndex += 1;
     _pageController.nextPage(
       duration: const Duration(milliseconds: 250),
@@ -68,7 +100,6 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
       final log = WaveRunnerLogDto.init().copyWith(
         workoutWaveWithWorkoutsMeasure: widget.workoutWaveWithWorkouts,
       );
-      _log = log;
       ref.read(waveRunnerLogProvider.notifier).go(log);
       return;
     }
@@ -127,7 +158,7 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
               return WaveCompleteWidget(
                 timeTaken: _totalTimeElapsed,
                 workoutsCompleted: _totalWorkouts,
-                log: _log,
+                logs: _logs,
               );
             }
 

@@ -9,16 +9,18 @@ class WaveCompleteWidget extends StatelessWidget {
     super.key,
     required this.timeTaken,
     required this.workoutsCompleted,
-    required this.log,
+    required this.logs,
   });
 
   final Duration timeTaken;
   final int workoutsCompleted;
-  final WaveRunnerLogDto log;
+  final List<WorkoutWithWorkoutMeasureLogDto> logs;
 
   @override
   Widget build(BuildContext context) {
     final statsFont = context.textTheme.headlineSmall;
+
+    print("Logs: ${logs.length}");
 
     void onComplete() {
       context.pop();
