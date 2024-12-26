@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/wave_runner/data/model/wave_runner_log.model.dart';
 import 'package:fit_chrono/src/features/wave_runner/domain/entity/wave_runner_log.entity.dart';
@@ -14,11 +12,9 @@ class WaveRunnerService {
   const WaveRunnerService(this._db);
 
   Future<void> log(WaveRunnerLogEntity log) async {
-    final logJson = WaveRunnerLogModel.fromEntity(log).toJson();
+    final logModel = WaveRunnerLogModel.fromEntity(log);
 
-    final parsedLog = jsonEncode(logJson);
-
-    return _db.waveRunnerDao.log(parsedLog);
+    return _db.waveRunnerDao.log(logModel);
   }
 }
 

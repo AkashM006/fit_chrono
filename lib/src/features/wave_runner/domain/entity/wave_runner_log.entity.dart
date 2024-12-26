@@ -4,10 +4,14 @@ import 'package:fit_chrono/src/features/workout_wave/domain/entity/workout_wave.
 class WaveRunnerLogEntity {
   final int id;
   final WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutsMeasure;
+  final List<WorkoutWithWorkoutMeasureLogEntity> workoutWithWorkoutMeasureLogs;
+  final int totalTimeElapsed;
 
   const WaveRunnerLogEntity({
     required this.id,
     required this.workoutWaveWithWorkoutsMeasure,
+    required this.workoutWithWorkoutMeasureLogs,
+    required this.totalTimeElapsed,
   });
 }
 

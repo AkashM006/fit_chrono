@@ -38,6 +38,19 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
     });
   }
 
+  Future<WorkoutWaveModel> getWorkoutWave(int id) => handleError(() async {
+        final workoutWave = await (select(workoutWaves)
+              ..where((tbl) => tbl.id.equals(id)))
+            .getSingleOrNull();
+
+        if (workoutWave == null) {
+          final errorMsg = doesNotExistMsg("workout wave you're searching for");
+          throw AppError(message: errorMsg);
+        }
+
+        return WorkoutWaveModel.fromDbModel(workoutWave);
+      }, "getting your workout wave");
+
   Stream<List<WorkoutWaveWithWorkoutsMeasureModel>>
       watchWorkoutWaveWithWorkoutMeasures() {
     final workoutWavesStream = select(workoutWaves).watch();

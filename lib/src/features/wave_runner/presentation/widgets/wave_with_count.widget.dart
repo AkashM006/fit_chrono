@@ -215,8 +215,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
 
     if (nextWorkout != null) {
       if (nextWorkout.workoutMeasure.isTime) {
-        nextWorkoutCount =
-            getFormattedTime(Duration(seconds: nextWorkout.count));
+        nextWorkoutCount = nextWorkout.count.formattedTime();
       } else {
         nextWorkoutCount = '${nextWorkout.count}x';
       }

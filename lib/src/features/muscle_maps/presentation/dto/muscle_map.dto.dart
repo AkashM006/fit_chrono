@@ -49,5 +49,5 @@ class MuscleMapDto {
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode;
+  int get hashCode => Object.hash(id, name);
 }

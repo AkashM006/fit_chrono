@@ -135,7 +135,8 @@ class WorkoutWaveWithWorkoutsMeasureModel {
       Map<String, dynamic> json) {
     return WorkoutWaveWithWorkoutsMeasureModel(
       workoutWave: WorkoutWaveModel.fromJson(
-          json['workoutWave'] as Map<String, dynamic>),
+        json['workoutWave'] as Map<String, dynamic>,
+      ),
       workoutsWithMeasure: (json['workoutsWithMeasure'] as List)
           .map(
             (workout) => WorkoutWithMeasureModel.fromJson(

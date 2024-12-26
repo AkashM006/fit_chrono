@@ -54,7 +54,7 @@ class TimerDisplayWidget extends StatelessWidget {
     return Column(
       children: [
         Text(
-          getFormattedTime(time),
+          time.formattedTime(),
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(

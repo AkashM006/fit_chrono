@@ -74,13 +74,7 @@ class WorkoutDto {
   }
 
   @override
-  int get hashCode {
-    var hashCode = id.hashCode ^ name.hashCode;
-    for (var muscle in muscles) {
-      hashCode = hashCode ^ muscle.hashCode;
-    }
-    return hashCode;
-  }
+  int get hashCode => Object.hash(id, name, Object.hashAll(muscles));
 }
 
 class WorkoutWithMeasureDto {
@@ -168,12 +162,13 @@ class WorkoutWithMeasureDto {
   }
 
   @override
-  int get hashCode =>
-      _workout.hashCode ^
-      _workoutMeasure.hashCode ^
-      _count.hashCode ^
-      _position.hashCode ^
-      uniqueId.hashCode;
+  int get hashCode => Object.hash(
+        _workout,
+        _workoutMeasure,
+        _count,
+        _position,
+        uniqueId,
+      );
 }
 
 enum WorkoutMeasureDto {

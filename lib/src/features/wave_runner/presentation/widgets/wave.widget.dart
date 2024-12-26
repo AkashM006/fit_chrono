@@ -161,7 +161,7 @@ class WaveWidget extends StatelessWidget {
             height: 5,
           ),
           Text(
-            getFormattedTime(elapsedTime!),
+            elapsedTime!.formattedTime(),
           ),
         ],
         if (progressList != null && progressList!.isNotEmpty)

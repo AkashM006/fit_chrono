@@ -44,7 +44,7 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
   int _currentIndex = 0;
 
   /// List of logs to be shown and storted
-  List<WorkoutWithWorkoutMeasureLogDto> _logs = [];
+  WaveRunnerLogDto _log = WaveRunnerLogDto.init();
 
   @override
   void initState() {
@@ -55,6 +55,10 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
       0,
       (value, workoutWithMeasure) =>
           value + (workoutWithMeasure.workout.isRest ? 0 : 1),
+    );
+
+    _log = _log.copyWith(
+      workoutWaveWithWorkoutsMeasure: widget.workoutWaveWithWorkouts,
     );
   }
 
@@ -79,30 +83,34 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
       // logging all workouts when the currentIndex is not 0
       // 0 Indicates the start and not a workout
       // To account for this -1 is used
-      _logs = [
-        ..._logs,
-        WorkoutWithWorkoutMeasureLogDto.init().copyWith(
-          workoutWithMeasure: widget
-              .workoutWaveWithWorkouts.workoutsWithMeasure[_currentWorkout - 1],
-          elapsedTime: elapsedTime.inSeconds,
-          wasSkipped: wasSkipped,
-        )
-      ];
+      _log = _log.copyWith(
+        workoutWithWorkoutMeasureLogs: [
+          ..._log.workoutWithWorkoutMeasureLogs,
+          WorkoutWithWorkoutMeasureLogDto(
+            workoutWithMeasure: widget
+                .workoutWaveWithWorkouts.workoutsWithMeasure[_currentIndex - 1],
+            elapsedTime: elapsedTime.inSeconds,
+            wasSkipped: wasSkipped,
+          ),
+        ],
+      );
     }
 
     _totalTimeElapsed += elapsedTime;
     _currentIndex += 1;
+    _log = _log.copyWith(
+      totalTimeElapsed: _totalTimeElapsed.inSeconds,
+    );
     _pageController.nextPage(
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeInOut,
     );
+
     if (isCompletePage) {
-      final log = WaveRunnerLogDto.init().copyWith(
-        workoutWaveWithWorkoutsMeasure: widget.workoutWaveWithWorkouts,
-      );
-      ref.read(waveRunnerLogProvider.notifier).go(log);
+      ref.read(waveRunnerLogProvider.notifier).go(_log);
       return;
     }
+
     final workoutsWithMeasure =
         widget.workoutWaveWithWorkouts.workoutsWithMeasure;
 
@@ -156,9 +164,7 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
 
             if (isLastScreen) {
               return WaveCompleteWidget(
-                timeTaken: _totalTimeElapsed,
-                workoutsCompleted: _totalWorkouts,
-                logs: _logs,
+                log: _log,
               );
             }
 

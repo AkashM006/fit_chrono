@@ -58,7 +58,11 @@ class WorkoutWaveDto {
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ times.hashCode;
+  int get hashCode => Object.hash(
+        id,
+        name,
+        times,
+      );
 }
 
 class WorkoutWaveWithWorkoutsMeasureDto {
@@ -126,13 +130,6 @@ class WorkoutWaveWithWorkoutsMeasureDto {
   }
 
   @override
-  int get hashCode {
-    var result = workoutWave.hashCode;
-
-    for (var workout in workoutsWithMeasure) {
-      result ^= workout.hashCode;
-    }
-
-    return result;
-  }
+  int get hashCode =>
+      Object.hash(workoutWave, Object.hashAll(workoutsWithMeasure));
 }

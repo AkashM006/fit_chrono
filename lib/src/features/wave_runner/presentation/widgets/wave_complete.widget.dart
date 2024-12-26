@@ -1,36 +1,31 @@
 import 'package:fit_chrono/src/core/constants/extensions.dart';
-import 'package:fit_chrono/src/core/utils/formatter.util.dart';
+import 'package:fit_chrono/src/core/constants/size.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/dto/wave_runner_log.dto.dart';
+import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/log_detail.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class WaveCompleteWidget extends StatelessWidget {
   const WaveCompleteWidget({
     super.key,
-    required this.timeTaken,
-    required this.workoutsCompleted,
-    required this.logs,
+    required this.log,
   });
 
-  final Duration timeTaken;
-  final int workoutsCompleted;
-  final List<WorkoutWithWorkoutMeasureLogDto> logs;
+  final WaveRunnerLogDto log;
 
   @override
   Widget build(BuildContext context) {
-    final statsFont = context.textTheme.headlineSmall;
-
-    print("Logs: ${logs.length}");
-
     void onComplete() {
       context.pop();
     }
 
-    return Center(
+    return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(
+          horizontal: 25,
+          vertical: SizeConfig.safeBlockVertical * 5,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("🌊", style: context.textTheme.displayLarge),
             const SizedBox(
@@ -49,20 +44,6 @@ class WaveCompleteWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Time Elapsed: ${getFormattedTime(timeTaken)}",
-              style: statsFont,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Workouts Completed: $workoutsCompleted/$workoutsCompleted",
-              style: statsFont,
-            ),
-            const SizedBox(
               height: 20,
             ),
             TextButton(
@@ -71,6 +52,21 @@ class WaveCompleteWidget extends StatelessWidget {
                   TextButton.styleFrom(textStyle: context.textTheme.bodyLarge),
               child: const Text("Back to Waves 🌊"),
             ),
+            const SizedBox(
+              height: 25,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 25,
+            ),
+            Text("Wave Log", style: context.textTheme.displaySmall),
+            const SizedBox(
+              height: 40,
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: LogDetailWidget(log: log),
+            )
           ],
         ),
       ),

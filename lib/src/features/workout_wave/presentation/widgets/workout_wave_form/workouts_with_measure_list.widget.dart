@@ -56,9 +56,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
       final index = workoutWithMeasureEntry.key;
       final workoutCount =
           workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.time
-              ? getFormattedTime(Duration(
-                  seconds: workoutWithMeasure.count,
-                ))
+              ? workoutWithMeasure.count.formattedTime()
               : '${workoutWithMeasure.count}x';
       return ListTile(
         key: ValueKey(workoutWithMeasure.uniqueId),

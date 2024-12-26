@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:fit_chrono/src/features/wave_runner/domain/entity/wave_runner_log.entity.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
@@ -5,31 +6,48 @@ import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wa
 class WaveRunnerLogDto {
   final int _id;
   final WorkoutWaveWithWorkoutsMeasureDto _workoutWaveWithWorkoutsMeasure;
+  final List<WorkoutWithWorkoutMeasureLogDto> _workoutWithWorkoutMeasureLogs;
+  final int _totalTimeElapsed;
 
   int get id => _id;
   WorkoutWaveWithWorkoutsMeasureDto get workoutWaveWithWorkoutsMeasure =>
       _workoutWaveWithWorkoutsMeasure;
+  List<WorkoutWithWorkoutMeasureLogDto> get workoutWithWorkoutMeasureLogs =>
+      _workoutWithWorkoutMeasureLogs;
+  int get totalTimeElapsed => _totalTimeElapsed;
 
   WaveRunnerLogDto({
     int id = -1,
     required WorkoutWaveWithWorkoutsMeasureDto workoutWaveWithWorkoutsMeasure,
+    required List<WorkoutWithWorkoutMeasureLogDto>
+        workoutWithWorkoutMeasureLogs,
+    required int totalTimeElapsed,
   })  : _id = id,
-        _workoutWaveWithWorkoutsMeasure = workoutWaveWithWorkoutsMeasure;
+        _workoutWaveWithWorkoutsMeasure = workoutWaveWithWorkoutsMeasure,
+        _workoutWithWorkoutMeasureLogs = workoutWithWorkoutMeasureLogs,
+        _totalTimeElapsed = totalTimeElapsed;
 
   WaveRunnerLogDto copyWith({
     int? id,
     WorkoutWaveWithWorkoutsMeasureDto? workoutWaveWithWorkoutsMeasure,
+    List<WorkoutWithWorkoutMeasureLogDto>? workoutWithWorkoutMeasureLogs,
+    int? totalTimeElapsed,
   }) {
     return WaveRunnerLogDto(
       id: id ?? this.id,
       workoutWaveWithWorkoutsMeasure:
           workoutWaveWithWorkoutsMeasure ?? this.workoutWaveWithWorkoutsMeasure,
+      workoutWithWorkoutMeasureLogs:
+          workoutWithWorkoutMeasureLogs ?? this.workoutWithWorkoutMeasureLogs,
+      totalTimeElapsed: totalTimeElapsed ?? this.totalTimeElapsed,
     );
   }
 
   factory WaveRunnerLogDto.init() {
     return WaveRunnerLogDto(
       workoutWaveWithWorkoutsMeasure: WorkoutWaveWithWorkoutsMeasureDto.init(),
+      workoutWithWorkoutMeasureLogs: [],
+      totalTimeElapsed: 0,
     );
   }
 
@@ -40,6 +58,10 @@ class WaveRunnerLogDto {
           WorkoutWaveWithWorkoutsMeasureDto.fromEntity(
         entity.workoutWaveWithWorkoutsMeasure,
       ),
+      workoutWithWorkoutMeasureLogs: entity.workoutWithWorkoutMeasureLogs
+          .map((e) => WorkoutWithWorkoutMeasureLogDto.fromEntity(e))
+          .toList(),
+      totalTimeElapsed: entity.totalTimeElapsed,
     );
   }
 
@@ -47,17 +69,31 @@ class WaveRunnerLogDto {
     return WaveRunnerLogEntity(
       id: id,
       workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure.toEntity(),
+      workoutWithWorkoutMeasureLogs:
+          workoutWithWorkoutMeasureLogs.map((e) => e.toEntity()).toList(),
+      totalTimeElapsed: totalTimeElapsed,
     );
   }
 
   @override
   bool operator ==(covariant WaveRunnerLogDto other) {
     return id == other.id &&
-        workoutWaveWithWorkoutsMeasure == other.workoutWaveWithWorkoutsMeasure;
+        workoutWaveWithWorkoutsMeasure ==
+            other.workoutWaveWithWorkoutsMeasure &&
+        const ListEquality().equals(
+          workoutWithWorkoutMeasureLogs,
+          other.workoutWithWorkoutMeasureLogs,
+        ) &&
+        totalTimeElapsed == other.totalTimeElapsed;
   }
 
   @override
-  int get hashCode => id.hashCode ^ workoutWaveWithWorkoutsMeasure.hashCode;
+  int get hashCode => Object.hash(
+        id,
+        workoutWaveWithWorkoutsMeasure,
+        Object.hashAll(workoutWithWorkoutMeasureLogs),
+        totalTimeElapsed,
+      );
 }
 
 class WorkoutWithWorkoutMeasureLogDto {
@@ -124,6 +160,9 @@ class WorkoutWithWorkoutMeasureLogDto {
   }
 
   @override
-  int get hashCode =>
-      workoutWithMeasure.hashCode ^ elapsedTime.hashCode ^ wasSkipped.hashCode;
+  int get hashCode => Object.hash(
+        workoutWithMeasure,
+        elapsedTime,
+        wasSkipped,
+      );
 }
