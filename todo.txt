@@ -6,10 +6,9 @@
 40. Account for skipping workout instead of completing it during logs
 43. Get from the user after workout the intensity level
 48. Increment the amount of times the workout wave completed after workout complete
-51. Logs list screen
+51. Logs list screen ( IN PROGRESS )
 52. Log detail screen
 53. Log even when workout is quit in the middle
-54. Change submit logic in muscle map form and test - must not create MuscleMapDto object directly ( IN PROGRESS )
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
@@ -52,3 +51,4 @@ DONE:
 55. Load all workout by default in the log when the workout wave is started. ( DONE )
 56. Log integration in workout wave ( DONE )
 57. Migrate all enums to follow WorkoutStatus ( DONE )
+54. Change submit logic in muscle map form and test - must not create MuscleMapDto object directly ( DONE )

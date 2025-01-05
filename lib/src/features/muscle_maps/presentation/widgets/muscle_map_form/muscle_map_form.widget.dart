@@ -24,7 +24,7 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
 
-  MuscleMapDto _muscleMap = MuscleMapDto.init();
+  late MuscleMapDto _muscleMap;
 
   bool get isEditMode => widget.muscleMap != null;
   bool get hasEdited {
@@ -52,14 +52,11 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
     _formKey.currentState!.save();
 
     if (isEditMode) {
-      final newMuscleMap = widget.muscleMap!.copyWith(name: _muscleMap.name);
-      ref.read(editMuscleMapProvider.notifier).go(newMuscleMap);
+      ref.read(editMuscleMapProvider.notifier).go(_muscleMap);
       return;
     }
 
-    final newMuscleMap = MuscleMapDto(name: _muscleMap.name);
-
-    ref.read(addMuscleMapProvider.notifier).go(newMuscleMap);
+    ref.read(addMuscleMapProvider.notifier).go(_muscleMap);
   }
 
   void setName(String value) {
@@ -73,10 +70,12 @@ class _MuscleMapFormWidgetState extends ConsumerState<MuscleMapFormWidget> {
   @override
   void initState() {
     super.initState();
-    _muscleMap = _muscleMap.copyWith(
-      name: isEditMode ? widget.muscleMap!.name : "",
-    );
-    _nameController.text = isEditMode ? widget.muscleMap!.name : "";
+    if (isEditMode) {
+      _muscleMap = widget.muscleMap!;
+      _nameController.text = widget.muscleMap!.name;
+      return;
+    }
+    _muscleMap = MuscleMapDto.init();
   }
 
   @override
