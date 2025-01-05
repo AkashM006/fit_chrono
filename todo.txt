@@ -12,6 +12,7 @@
 54. Change submit logic in muscle map form and test - must not create MuscleMapDto object directly
 55. Load all workout by default in the log when the workout wave is started. ( IN PROGRESS )
 56. Log integration in workout wave ( IN PROGRESS - 2 )
+57. Migrate all enums to follow WorkoutStatus
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)

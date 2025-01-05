@@ -44,11 +44,12 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
   int _currentIndex = 0;
 
   /// List of logs to be shown and storted
-  WaveRunnerLogDto _log = WaveRunnerLogDto.init();
+  late WaveRunnerLogDto _log;
 
   @override
   void initState() {
     super.initState();
+    _log = WaveRunnerLogDto.init(widget.workoutWaveWithWorkouts);
     _pagesLength =
         widget.workoutWaveWithWorkouts.workoutsWithMeasure.length + 2;
     _totalWorkouts = widget.workoutWaveWithWorkouts.workoutsWithMeasure.fold(

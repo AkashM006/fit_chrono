@@ -49,9 +49,10 @@ class WaveRunnerLogDto {
     );
   }
 
-  factory WaveRunnerLogDto.init() {
+  factory WaveRunnerLogDto.init(
+      WorkoutWaveWithWorkoutsMeasureDto workoutWaveWithWorkoutsMeasure) {
     return WaveRunnerLogDto(
-      workoutWaveWithWorkoutsMeasure: WorkoutWaveWithWorkoutsMeasureDto.init(),
+      workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure,
       workoutWithWorkoutMeasureLogs: [],
       totalTimeElapsed: 0,
       createdAt: DateTime.now(),
