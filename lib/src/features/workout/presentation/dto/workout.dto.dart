@@ -112,7 +112,7 @@ class WorkoutWithMeasureDto {
   ) =>
       WorkoutWithMeasureDto(
         workout: WorkoutDto.fromEntity(workoutWithMeasure.workout),
-        workoutMeasure: WorkoutMeasureDtoMapper.fromEntity(
+        workoutMeasure: WorkoutMeasureDto.fromEntity(
           workoutWithMeasure.workoutMeasure,
         ),
         count: workoutWithMeasure.count,
@@ -124,7 +124,7 @@ class WorkoutWithMeasureDto {
     return WorkoutWithMeasureEntity(
       id: id,
       workout: workout.toEntity(),
-      workoutMeasure: WorkoutMeasureDtoMapper.toEntity(workoutMeasure),
+      workoutMeasure: workoutMeasure.toEntity(),
       count: count,
       position: position,
     );
@@ -175,34 +175,25 @@ enum WorkoutMeasureDto {
   time,
   reps;
 
-  @override
-  String toString() {
-    return switch (this) {
-      WorkoutMeasureDto.time => "Time",
-      WorkoutMeasureDto.reps => "Reps",
-    };
-  }
-
   bool get isTime => this == WorkoutMeasureDto.time;
-}
 
-Map<String, WorkoutMeasureDto> stringMappedtoMeasure = {
-  "WorkoutMeasureDto.time": WorkoutMeasureDto.time,
-  "WorkoutMeasureDto.reps": WorkoutMeasureDto.reps,
-};
+  static Map<String, WorkoutMeasureDto> _map = {
+    for (var value in WorkoutMeasureDto.values) value.toString(): value
+  };
 
-class WorkoutMeasureDtoMapper {
-  static WorkoutMeasureDto fromEntity(WorkoutMeasureEntity measure) {
-    return switch (measure) {
-      WorkoutMeasureEntity.time => WorkoutMeasureDto.time,
-      WorkoutMeasureEntity.reps => WorkoutMeasureDto.reps,
-    };
-  }
+  @override
+  String toString() => name;
 
-  static WorkoutMeasureEntity toEntity(WorkoutMeasureDto measure) {
-    return switch (measure) {
-      WorkoutMeasureDto.reps => WorkoutMeasureEntity.reps,
-      WorkoutMeasureDto.time => WorkoutMeasureEntity.time,
-    };
-  }
+  static WorkoutMeasureDto fromString(String key) => _map[key]!;
+
+  WorkoutMeasureEntity toEntity() => switch (this) {
+        WorkoutMeasureDto.time => WorkoutMeasureEntity.time,
+        WorkoutMeasureDto.reps => WorkoutMeasureEntity.reps,
+      };
+
+  static WorkoutMeasureDto fromEntity(WorkoutMeasureEntity entity) =>
+      switch (entity) {
+        WorkoutMeasureEntity.time => WorkoutMeasureDto.time,
+        WorkoutMeasureEntity.reps => WorkoutMeasureDto.reps,
+      };
 }

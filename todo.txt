@@ -9,10 +9,7 @@
 51. Logs list screen
 52. Log detail screen
 53. Log even when workout is quit in the middle
-54. Change submit logic in muscle map form and test - must not create MuscleMapDto object directly
-55. Load all workout by default in the log when the workout wave is started. ( IN PROGRESS )
-56. Log integration in workout wave ( IN PROGRESS - 2 )
-57. Migrate all enums to follow WorkoutStatus
+54. Change submit logic in muscle map form and test - must not create MuscleMapDto object directly ( IN PROGRESS )
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
@@ -52,3 +49,6 @@ DONE:
 47. Display the workout log in the complete screen ( DONE )
 49. Store the updated logs in db ( DONE )
 50. Add performed date to the WaveRunnerLog ( DONE )
+55. Load all workout by default in the log when the workout wave is started. ( DONE )
+56. Log integration in workout wave ( DONE )
+57. Migrate all enums to follow WorkoutStatus ( DONE )

@@ -126,7 +126,7 @@ class WorkoutWithMeasureModel {
     return WorkoutWithMeasureModel(
       id: workoutWithMeasure.id,
       workout: WorkoutModel.fromEntity(workoutWithMeasure.workout),
-      measure: WorkoutMeasureModelMapper.fromEntity(
+      measure: WorkoutMeasureModel.fromEntity(
         workoutWithMeasure.workoutMeasure,
       ),
       count: workoutWithMeasure.count,
@@ -142,7 +142,7 @@ class WorkoutWithMeasureModel {
     return WorkoutWithMeasureModel(
       id: workoutWithMeasure.id,
       workout: WorkoutModel.fromDbModel(workout),
-      measure: WorkoutMeasureModelMapper.fromString(
+      measure: WorkoutMeasureModel.fromString(
         workoutWithMeasure.repititionType,
       ),
       count: workoutWithMeasure.repitition,
@@ -154,7 +154,7 @@ class WorkoutWithMeasureModel {
     return WorkoutWithMeasureEntity(
       id: id,
       workout: workout.toEntity(),
-      workoutMeasure: WorkoutMeasureModelMapper.toEntity(measure),
+      workoutMeasure: measure.toEntity(),
       count: count,
       position: position,
     );
@@ -204,7 +204,7 @@ class WorkoutWithMeasureModel {
     return WorkoutWithMeasureModel(
       id: json['id'] as int,
       workout: WorkoutModel.fromJson(json['workout'] as Map<String, dynamic>),
-      measure: WorkoutMeasureModelJson.fromJson(json['measure'] as String),
+      measure: WorkoutMeasureModel.fromJson(json['measure'] as String),
       count: json['count'] as int,
       position: json['position'] as int,
     );
@@ -223,47 +223,76 @@ class WorkoutWithMeasureModel {
 
 enum WorkoutMeasureModel {
   time,
-  reps,
+  reps;
+
+  static Map<String, WorkoutMeasureModel> _map = {
+    for (var value in WorkoutMeasureModel.values) value.toString(): value
+  };
+
+  @override
+  String toString() => name;
+
+  String toJson() => toString();
+
+  WorkoutMeasureEntity toEntity() => switch (this) {
+        WorkoutMeasureModel.time => WorkoutMeasureEntity.time,
+        WorkoutMeasureModel.reps => WorkoutMeasureEntity.reps,
+      };
+
+  static WorkoutMeasureModel fromString(String key) => _map[key]!;
+
+  static WorkoutMeasureModel fromJson(String key) => _map[key]!;
+
+  static WorkoutMeasureModel fromEntity(WorkoutMeasureEntity entity) =>
+      switch (entity) {
+        WorkoutMeasureEntity.time => WorkoutMeasureModel.time,
+        WorkoutMeasureEntity.reps => WorkoutMeasureModel.reps,
+      };
 }
 
-extension WorkoutMeasureModelJson on WorkoutMeasureModel {
-  String toJson() {
-    return name;
-  }
+// enum WorkoutMeasureModel {
+//   time,
+//   reps,
+// }
 
-  static WorkoutMeasureModel fromJson(String json) {
-    return WorkoutMeasureModel.values
-        .firstWhere((measure) => measure.name == json);
-  }
-}
+// extension WorkoutMeasureModelJson on WorkoutMeasureModel {
+//   String toJson() {
+//     return name;
+//   }
 
-Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
-  "WorkoutMeasureModel.time": WorkoutMeasureModel.time,
-  "WorkoutMeasureModel.reps": WorkoutMeasureModel.reps,
-};
+//   static WorkoutMeasureModel fromJson(String json) {
+//     return WorkoutMeasureModel.values
+//         .firstWhere((measure) => measure.name == json);
+//   }
+// }
 
-class WorkoutMeasureModelMapper {
-  static WorkoutMeasureModel fromEntity(WorkoutMeasureEntity measure) {
-    switch (measure) {
-      case WorkoutMeasureEntity.time:
-        return WorkoutMeasureModel.time;
-      case WorkoutMeasureEntity.reps:
-        return WorkoutMeasureModel.reps;
-    }
-  }
+// Map<String, WorkoutMeasureModel> stringMappedtoMeasure = {
+//   "WorkoutMeasureModel.time": WorkoutMeasureModel.time,
+//   "WorkoutMeasureModel.reps": WorkoutMeasureModel.reps,
+// };
 
-  static WorkoutMeasureEntity toEntity(WorkoutMeasureModel measure) {
-    switch (measure) {
-      case WorkoutMeasureModel.reps:
-        return WorkoutMeasureEntity.reps;
-      case WorkoutMeasureModel.time:
-        return WorkoutMeasureEntity.time;
-    }
-  }
+// class WorkoutMeasureModelMapper {
+//   static WorkoutMeasureModel fromEntity(WorkoutMeasureEntity measure) {
+//     switch (measure) {
+//       case WorkoutMeasureEntity.time:
+//         return WorkoutMeasureModel.time;
+//       case WorkoutMeasureEntity.reps:
+//         return WorkoutMeasureModel.reps;
+//     }
+//   }
 
-  static WorkoutMeasureModel fromString(String text) {
-    final result = stringMappedtoMeasure[text];
+//   static WorkoutMeasureEntity toEntity(WorkoutMeasureModel measure) {
+//     switch (measure) {
+//       case WorkoutMeasureModel.reps:
+//         return WorkoutMeasureEntity.reps;
+//       case WorkoutMeasureModel.time:
+//         return WorkoutMeasureEntity.time;
+//     }
+//   }
 
-    return result ?? WorkoutMeasureModel.reps;
-  }
-}
+//   static WorkoutMeasureModel fromString(String text) {
+//     final result = stringMappedtoMeasure[text];
+
+//     return result ?? WorkoutMeasureModel.reps;
+//   }
+// }
