@@ -8,6 +8,7 @@ class WaveRunnerLogDto {
   final WorkoutWaveWithWorkoutsMeasureDto _workoutWaveWithWorkoutsMeasure;
   final List<WorkoutWithWorkoutMeasureLogDto> _workoutWithWorkoutMeasureLogs;
   final int _totalTimeElapsed;
+  final DateTime _createdAt;
 
   int get id => _id;
   WorkoutWaveWithWorkoutsMeasureDto get workoutWaveWithWorkoutsMeasure =>
@@ -15,6 +16,7 @@ class WaveRunnerLogDto {
   List<WorkoutWithWorkoutMeasureLogDto> get workoutWithWorkoutMeasureLogs =>
       _workoutWithWorkoutMeasureLogs;
   int get totalTimeElapsed => _totalTimeElapsed;
+  DateTime get createdAt => _createdAt;
 
   WaveRunnerLogDto({
     int id = -1,
@@ -22,16 +24,19 @@ class WaveRunnerLogDto {
     required List<WorkoutWithWorkoutMeasureLogDto>
         workoutWithWorkoutMeasureLogs,
     required int totalTimeElapsed,
+    required DateTime createdAt,
   })  : _id = id,
         _workoutWaveWithWorkoutsMeasure = workoutWaveWithWorkoutsMeasure,
         _workoutWithWorkoutMeasureLogs = workoutWithWorkoutMeasureLogs,
-        _totalTimeElapsed = totalTimeElapsed;
+        _totalTimeElapsed = totalTimeElapsed,
+        _createdAt = createdAt;
 
   WaveRunnerLogDto copyWith({
     int? id,
     WorkoutWaveWithWorkoutsMeasureDto? workoutWaveWithWorkoutsMeasure,
     List<WorkoutWithWorkoutMeasureLogDto>? workoutWithWorkoutMeasureLogs,
     int? totalTimeElapsed,
+    DateTime? createdAt,
   }) {
     return WaveRunnerLogDto(
       id: id ?? this.id,
@@ -40,6 +45,7 @@ class WaveRunnerLogDto {
       workoutWithWorkoutMeasureLogs:
           workoutWithWorkoutMeasureLogs ?? this.workoutWithWorkoutMeasureLogs,
       totalTimeElapsed: totalTimeElapsed ?? this.totalTimeElapsed,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -48,6 +54,7 @@ class WaveRunnerLogDto {
       workoutWaveWithWorkoutsMeasure: WorkoutWaveWithWorkoutsMeasureDto.init(),
       workoutWithWorkoutMeasureLogs: [],
       totalTimeElapsed: 0,
+      createdAt: DateTime.now(),
     );
   }
 
@@ -62,6 +69,7 @@ class WaveRunnerLogDto {
           .map((e) => WorkoutWithWorkoutMeasureLogDto.fromEntity(e))
           .toList(),
       totalTimeElapsed: entity.totalTimeElapsed,
+      createdAt: entity.createdAt,
     );
   }
 
@@ -72,6 +80,7 @@ class WaveRunnerLogDto {
       workoutWithWorkoutMeasureLogs:
           workoutWithWorkoutMeasureLogs.map((e) => e.toEntity()).toList(),
       totalTimeElapsed: totalTimeElapsed,
+      createdAt: _createdAt,
     );
   }
 

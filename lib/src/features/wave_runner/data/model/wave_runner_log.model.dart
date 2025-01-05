@@ -11,6 +11,7 @@ class WaveRunnerLogModel {
   final WorkoutWaveWithWorkoutsMeasureModel _workoutWaveWithWorkoutsMeasure;
   final List<WorkoutWithWorkoutMeasureLogModel> _workoutWithWorkoutMeasureLogs;
   final int _totalTimeElapsed;
+  final DateTime _createdAt;
 
   const WaveRunnerLogModel({
     required int id,
@@ -18,10 +19,12 @@ class WaveRunnerLogModel {
     required List<WorkoutWithWorkoutMeasureLogModel>
         workoutWithWorkoutMeasureLogs,
     required int totalTimeElapsed,
+    required DateTime createdAt,
   })  : _id = id,
         _workoutWaveWithWorkoutsMeasure = workoutWaveWithWorkoutsMeasure,
         _workoutWithWorkoutMeasureLogs = workoutWithWorkoutMeasureLogs,
-        _totalTimeElapsed = totalTimeElapsed;
+        _totalTimeElapsed = totalTimeElapsed,
+        _createdAt = createdAt;
 
   int get id => _id;
   WorkoutWaveWithWorkoutsMeasureModel get workoutWaveWithWorkoutsMeasure =>
@@ -29,6 +32,7 @@ class WaveRunnerLogModel {
   List<WorkoutWithWorkoutMeasureLogModel> get workoutWithWorkoutMeasureLogs =>
       _workoutWithWorkoutMeasureLogs;
   int get totalTimeElapsed => _totalTimeElapsed;
+  DateTime get createdAt => _createdAt;
 
   factory WaveRunnerLogModel.fromEntity(WaveRunnerLogEntity waveRunnerLog) {
     return WaveRunnerLogModel(
@@ -41,6 +45,7 @@ class WaveRunnerLogModel {
           .map((e) => WorkoutWithWorkoutMeasureLogModel.fromEntity(e))
           .toList(),
       totalTimeElapsed: waveRunnerLog.totalTimeElapsed,
+      createdAt: waveRunnerLog.createdAt,
     );
   }
 
@@ -64,6 +69,7 @@ class WaveRunnerLogModel {
       workoutWithWorkoutMeasureLogs:
           workoutWithWorkoutMeasureLogs.map((e) => e.toEntity()).toList(),
       totalTimeElapsed: totalTimeElapsed,
+      createdAt: createdAt,
     );
   }
 
@@ -85,6 +91,7 @@ class WaveRunnerLogModel {
         workoutWaveWithWorkoutsMeasure,
         totalTimeElapsed,
         Object.hashAll(workoutWithWorkoutMeasureLogs),
+        createdAt,
       );
 
   factory WaveRunnerLogModel.fromJson(Map<String, dynamic> json) {
@@ -103,6 +110,7 @@ class WaveRunnerLogModel {
               )
               .toList(),
       totalTimeElapsed: json['totalTimeElapsed'] as int,
+      createdAt: DateTime.parse(json['createdAt'] as String),
     );
   }
 
@@ -113,6 +121,7 @@ class WaveRunnerLogModel {
       'workoutWithWorkoutMeasureLogs':
           workoutWithWorkoutMeasureLogs.map((e) => e.toJson()).toList(),
       'totalTimeElapsed': totalTimeElapsed,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 
@@ -121,6 +130,7 @@ class WaveRunnerLogModel {
     WorkoutWaveWithWorkoutsMeasureModel? workoutWaveWithWorkoutsMeasure,
     List<WorkoutWithWorkoutMeasureLogModel>? workoutWithWorkoutMeasureLogs,
     int? totalTimeElapsed,
+    DateTime? createdAt,
   }) {
     return WaveRunnerLogModel(
       id: id ?? this.id,
@@ -129,6 +139,7 @@ class WaveRunnerLogModel {
       workoutWithWorkoutMeasureLogs:
           workoutWithWorkoutMeasureLogs ?? this.workoutWithWorkoutMeasureLogs,
       totalTimeElapsed: totalTimeElapsed ?? this.totalTimeElapsed,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }
