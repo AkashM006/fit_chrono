@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:fit_chrono/src/features/wave_runner/domain/entity/wave_runner_log.entity.dart';
+import 'package:fit_chrono/src/features/logs/domain/entity/logs.entity.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
 

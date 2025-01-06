@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart';
+import 'package:fit_chrono/src/features/logs/domain/entity/logs.entity.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
-import 'package:fit_chrono/src/features/wave_runner/domain/entity/wave_runner_log.entity.dart';
 import 'package:fit_chrono/src/features/workout/data/model/workout.model.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/model/workout_wave.model.dart';
 
@@ -49,15 +49,15 @@ class WaveRunnerLogModel {
     );
   }
 
-  factory WaveRunnerLogModel.fromDbModel(WaveRunner waveRunnerLog) {
+  factory WaveRunnerLogModel.fromDbModel(WaveRunnerLog waveRunnerLog) {
     final log = jsonDecode(waveRunnerLog.log);
 
     final resultLog = WaveRunnerLogModel.fromJson(log).copyWith(id: log.id);
     return resultLog;
   }
 
-  WaveRunnersCompanion toDbModel() {
-    return WaveRunnersCompanion(
+  WaveRunnerLogsCompanion toDbModel() {
+    return WaveRunnerLogsCompanion(
       log: Value(jsonEncode(toJson())),
     );
   }
@@ -73,8 +73,8 @@ class WaveRunnerLogModel {
     );
   }
 
-  WaveRunnersCompanion toCompanion() {
-    return WaveRunnersCompanion(
+  WaveRunnerLogsCompanion toCompanion() {
+    return WaveRunnerLogsCompanion(
       log: Value(jsonEncode(workoutWaveWithWorkoutsMeasure.toJson())),
     );
   }

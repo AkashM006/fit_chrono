@@ -1,7 +1,7 @@
 import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/core/utils/formatter.util.dart';
+import 'package:fit_chrono/src/features/logs/presentation/dto/logs.dto.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_card/custom_card.widget.dart';
-import 'package:fit_chrono/src/features/wave_runner/presentation/dto/wave_runner_log.dto.dart';
 import 'package:flutter/material.dart';
 
 class LogDetailWidget extends StatelessWidget {

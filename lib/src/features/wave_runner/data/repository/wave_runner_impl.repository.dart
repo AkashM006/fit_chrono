@@ -1,7 +1,7 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
+import 'package:fit_chrono/src/features/logs/domain/entity/logs.entity.dart';
 import 'package:fit_chrono/src/features/shared/data/repository/base.repository.dart';
 import 'package:fit_chrono/src/features/wave_runner/data/data_sources/service/wave_runner.service.dart';
-import 'package:fit_chrono/src/features/wave_runner/domain/entity/wave_runner_log.entity.dart';
 import 'package:fit_chrono/src/features/wave_runner/domain/repository/wave_runner.repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

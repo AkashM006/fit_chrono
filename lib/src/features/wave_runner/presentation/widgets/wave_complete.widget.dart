@@ -1,6 +1,6 @@
 import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
-import 'package:fit_chrono/src/features/wave_runner/presentation/dto/wave_runner_log.dto.dart';
+import 'package:fit_chrono/src/features/logs/presentation/dto/logs.dto.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/log_detail.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

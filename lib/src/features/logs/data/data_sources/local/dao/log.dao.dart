@@ -1,33 +1,48 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart';
+import 'package:fit_chrono/src/core/utils/custom_error.util.dart';
 import 'package:fit_chrono/src/core/utils/error_handler.util.dart';
+import 'package:fit_chrono/src/core/utils/error_msg.util.dart';
+import 'package:fit_chrono/src/features/logs/data/data_sources/local/schema/logs.schema.dart';
+import 'package:fit_chrono/src/features/logs/data/model/logs.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
-import 'package:fit_chrono/src/features/wave_runner/data/data_sources/local/schema/wave_runner.schema.dart';
-import 'package:fit_chrono/src/features/wave_runner/data/model/wave_runner_log.model.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 
-part 'wave_runner.dao.g.dart';
+part 'log.dao.g.dart';
 
 @DriftAccessor(tables: [
-  WaveRunners,
+  WaveRunnerLogs,
   WorkoutWaves,
 ])
-class WaveRunnerDao extends DatabaseAccessor<AppDatabase>
-    with _$WaveRunnerDaoMixin {
+class LogDao extends DatabaseAccessor<AppDatabase> with _$LogDaoMixin {
   final AppDatabase db;
 
-  WaveRunnerDao(this.db) : super(db);
+  LogDao(this.db) : super(db);
+
+  Stream<List<WaveRunnerLogModel>> watchLogs() {
+    return select(waveRunnerLogs)
+        .watch()
+        .map(
+          (logList) => logList
+              .map((log) => WaveRunnerLogModel.fromDbModel(log))
+              .toList(),
+        )
+        .handleError((error) {
+      final errorMsg = somethingWentWrongMsg("getting you logs");
+      throw AppError(message: errorMsg);
+    });
+  }
 
   Future<void> log(WaveRunnerLogModel logModel) async {
     return handleError(
       () {
         return transaction(() async {
-          final waveRunnerLog = WaveRunnersCompanion(
+          final waveRunnerLog = WaveRunnerLogsCompanion(
             log: Value(jsonEncode(logModel.toJson())),
           );
 
-          await into(waveRunners).insert(waveRunnerLog);
+          await into(waveRunnerLogs).insert(waveRunnerLog);
 
           // increment the respective workout wave the count done
           final workoutWaveId =

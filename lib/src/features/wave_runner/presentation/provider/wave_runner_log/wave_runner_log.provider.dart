@@ -1,6 +1,6 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
+import 'package:fit_chrono/src/features/logs/presentation/dto/logs.dto.dart';
 import 'package:fit_chrono/src/features/wave_runner/data/repository/wave_runner_impl.repository.dart';
-import 'package:fit_chrono/src/features/wave_runner/presentation/dto/wave_runner_log.dto.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'wave_runner_log.provider.g.dart';

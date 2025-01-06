@@ -1,6 +1,6 @@
 import 'package:fit_chrono/src/core/utils/data_state.util.dart';
+import 'package:fit_chrono/src/features/logs/presentation/dto/logs.dto.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
-import 'package:fit_chrono/src/features/wave_runner/presentation/dto/wave_runner_log.dto.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/provider/wave_runner_log/wave_runner_log.provider.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_complete.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_with_count.widget.dart';
