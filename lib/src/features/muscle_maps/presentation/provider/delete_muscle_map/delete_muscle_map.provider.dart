@@ -8,9 +8,7 @@ part 'delete_muscle_map.provider.g.dart';
 @riverpod
 class DeleteMuscleMap extends _$DeleteMuscleMap {
   @override
-  DataState<String>? build() {
-    return null;
-  }
+  DataState<String>? build() => null;
 
   void go(int id) async {
     state = DataLoading();

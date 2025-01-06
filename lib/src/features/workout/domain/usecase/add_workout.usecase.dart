@@ -10,7 +10,6 @@ class AddWorkoutUsecase
   const AddWorkoutUsecase(this._workoutRepository);
 
   @override
-  Future<DataState<void>> call({required WorkoutEntity params}) {
-    return _workoutRepository.addWorkout(params);
-  }
+  Future<DataState<void>> call({required WorkoutEntity params}) =>
+      _workoutRepository.addWorkout(params);
 }

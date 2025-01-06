@@ -19,43 +19,36 @@ class WorkoutWaveDto {
   String get name => _name;
   int get times => _times;
 
-  factory WorkoutWaveDto.init() {
-    return const WorkoutWaveDto(
-      name: "",
-    );
-  }
+  factory WorkoutWaveDto.init() => const WorkoutWaveDto(
+        name: "",
+      );
 
-  factory WorkoutWaveDto.fromEntity(WorkoutWaveEntity workoutWaveEntity) {
-    return WorkoutWaveDto(
-      id: workoutWaveEntity.id,
-      name: workoutWaveEntity.name,
-      times: workoutWaveEntity.times,
-    );
-  }
+  factory WorkoutWaveDto.fromEntity(WorkoutWaveEntity workoutWaveEntity) =>
+      WorkoutWaveDto(
+        id: workoutWaveEntity.id,
+        name: workoutWaveEntity.name,
+        times: workoutWaveEntity.times,
+      );
 
-  WorkoutWaveEntity toEntity() {
-    return WorkoutWaveEntity(
-      id: id,
-      name: name,
-      times: times,
-    );
-  }
+  WorkoutWaveEntity toEntity() => WorkoutWaveEntity(
+        id: id,
+        name: name,
+        times: times,
+      );
 
   WorkoutWaveDto copyWith({
     String? name,
     int? times,
-  }) {
-    return WorkoutWaveDto(
-      id: id,
-      name: name ?? this.name,
-      times: times ?? this.times,
-    );
-  }
+  }) =>
+      WorkoutWaveDto(
+        id: id,
+        name: name ?? this.name,
+        times: times ?? this.times,
+      );
 
   @override
-  bool operator ==(covariant WorkoutWaveDto other) {
-    return other.id == _id && other.name == _name && other.times == _times;
-  }
+  bool operator ==(covariant WorkoutWaveDto other) =>
+      other.id == _id && other.name == _name && other.times == _times;
 
   @override
   int get hashCode => Object.hash(
@@ -80,54 +73,48 @@ class WorkoutWaveWithWorkoutsMeasureDto {
 
   factory WorkoutWaveWithWorkoutsMeasureDto.fromEntity(
     WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutMeasureEntity,
-  ) {
-    return WorkoutWaveWithWorkoutsMeasureDto(
-      workoutWave: WorkoutWaveDto.fromEntity(
-        workoutWaveWithWorkoutMeasureEntity.workoutWave,
-      ),
-      workoutsWithMeasure:
-          workoutWaveWithWorkoutMeasureEntity.workoutsWithMeasure
-              .map(
-                (workoutWithMeasureEntity) =>
-                    WorkoutWithMeasureDto.fromEntity(workoutWithMeasureEntity),
-              )
-              .toList(),
-    );
-  }
+  ) =>
+      WorkoutWaveWithWorkoutsMeasureDto(
+        workoutWave: WorkoutWaveDto.fromEntity(
+          workoutWaveWithWorkoutMeasureEntity.workoutWave,
+        ),
+        workoutsWithMeasure: workoutWaveWithWorkoutMeasureEntity
+            .workoutsWithMeasure
+            .map(
+              (workoutWithMeasureEntity) =>
+                  WorkoutWithMeasureDto.fromEntity(workoutWithMeasureEntity),
+            )
+            .toList(),
+      );
 
-  WorkoutWaveWithWorkoutsMeasureEntity toEntity() {
-    return WorkoutWaveWithWorkoutsMeasureEntity(
-      workoutWave: workoutWave.toEntity(),
-      workoutsWithMeasure: workoutsWithMeasure
-          .map((workoutWithMeasure) => workoutWithMeasure.toEntity())
-          .toList(),
-    );
-  }
+  WorkoutWaveWithWorkoutsMeasureEntity toEntity() =>
+      WorkoutWaveWithWorkoutsMeasureEntity(
+        workoutWave: workoutWave.toEntity(),
+        workoutsWithMeasure: workoutsWithMeasure
+            .map((workoutWithMeasure) => workoutWithMeasure.toEntity())
+            .toList(),
+      );
 
   WorkoutWaveWithWorkoutsMeasureDto copyWith({
     WorkoutWaveDto? workoutWave,
     List<WorkoutWithMeasureDto>? workoutsWithMeasure,
-  }) {
-    return WorkoutWaveWithWorkoutsMeasureDto(
-      workoutWave: workoutWave ?? this.workoutWave,
-      workoutsWithMeasure: workoutsWithMeasure ?? this.workoutsWithMeasure,
-    );
-  }
+  }) =>
+      WorkoutWaveWithWorkoutsMeasureDto(
+        workoutWave: workoutWave ?? this.workoutWave,
+        workoutsWithMeasure: workoutsWithMeasure ?? this.workoutsWithMeasure,
+      );
 
-  factory WorkoutWaveWithWorkoutsMeasureDto.init() {
-    return WorkoutWaveWithWorkoutsMeasureDto(
-      workoutWave: WorkoutWaveDto.init(),
-      workoutsWithMeasure: [],
-    );
-  }
+  factory WorkoutWaveWithWorkoutsMeasureDto.init() =>
+      WorkoutWaveWithWorkoutsMeasureDto(
+        workoutWave: WorkoutWaveDto.init(),
+        workoutsWithMeasure: [],
+      );
 
   @override
-  bool operator ==(covariant WorkoutWaveWithWorkoutsMeasureDto other) {
-    if (workoutWave != other.workoutWave) return false;
-
-    return const ListEquality()
-        .equals(workoutsWithMeasure, other.workoutsWithMeasure);
-  }
+  bool operator ==(covariant WorkoutWaveWithWorkoutsMeasureDto other) =>
+      workoutWave == other.workoutWave &&
+      const ListEquality()
+          .equals(workoutsWithMeasure, other.workoutsWithMeasure);
 
   @override
   int get hashCode =>

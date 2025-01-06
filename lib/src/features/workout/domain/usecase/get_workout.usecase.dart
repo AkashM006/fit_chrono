@@ -9,7 +9,6 @@ class GetWorkoutUsecase extends Usecase<Future<DataState<WorkoutEntity>>, int> {
   const GetWorkoutUsecase(this._workoutRepository);
 
   @override
-  Future<DataState<WorkoutEntity>> call({required int params}) {
-    return _workoutRepository.getWorkout(params);
-  }
+  Future<DataState<WorkoutEntity>> call({required int params}) =>
+      _workoutRepository.getWorkout(params);
 }

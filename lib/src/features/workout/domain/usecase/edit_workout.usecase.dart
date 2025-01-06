@@ -9,7 +9,6 @@ class EditWorkoutUsecase
 
   const EditWorkoutUsecase(this._workoutRepository);
   @override
-  Future<DataState<void>> call({required WorkoutEntity params}) {
-    return _workoutRepository.editWorkout(params);
-  }
+  Future<DataState<void>> call({required WorkoutEntity params}) =>
+      _workoutRepository.editWorkout(params);
 }

@@ -33,7 +33,10 @@ class WorkoutWaveImplRepository extends BaseRepository
 
   @override
   Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>>
-      getWorkoutWaveWithWorkouts(int id) => safeExecute(
+      getWorkoutWaveWithWorkouts(
+    int id,
+  ) =>
+          safeExecute(
             () => _workoutWaveService.getWorkoutWaveWithWorkouts(id),
           );
 

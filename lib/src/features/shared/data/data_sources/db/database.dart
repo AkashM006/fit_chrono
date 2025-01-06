@@ -108,6 +108,4 @@ LazyDatabase _openConnection() {
 }
 
 @Riverpod(keepAlive: true)
-AppDatabase db(Ref ref) {
-  return AppDatabase();
-}
+AppDatabase db(Ref ref) => AppDatabase();

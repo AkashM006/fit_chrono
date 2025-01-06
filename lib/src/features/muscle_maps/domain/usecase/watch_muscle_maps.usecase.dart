@@ -9,7 +9,6 @@ class WatchMuscleMapsUsecase
   const WatchMuscleMapsUsecase(this._muscleMapRepository);
 
   @override
-  Stream<List<MuscleMapEntity>> call({void params}) {
-    return _muscleMapRepository.watchMuscleMaps();
-  }
+  Stream<List<MuscleMapEntity>> call({void params}) =>
+      _muscleMapRepository.watchMuscleMaps();
 }

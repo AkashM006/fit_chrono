@@ -13,113 +13,104 @@ class MuscleMapDao extends DatabaseAccessor<AppDatabase>
     with _$MuscleMapDaoMixin {
   MuscleMapDao(super.key);
 
-  Stream<List<MuscleMapModel>> watchMuscleMaps() {
-    return select(muscleMaps)
-        .watch()
-        .map(
-          (muscleMapList) => muscleMapList
-              .map(
-                (muscleMap) => MuscleMapModel.fromDbModel(muscleMap),
-              )
-              .toList(),
-        )
-        .handleError((error) {
-      final errorMsg = somethingWentWrongMsg("getting you workouts");
-      throw AppError(message: errorMsg);
-    });
-  }
+  Stream<List<MuscleMapModel>> watchMuscleMaps() => select(muscleMaps)
+          .watch()
+          .map(
+            (muscleMapList) => muscleMapList
+                .map(
+                  (muscleMap) => MuscleMapModel.fromDbModel(muscleMap),
+                )
+                .toList(),
+          )
+          .handleError((error) {
+        final errorMsg = somethingWentWrongMsg("getting you workouts");
+        throw AppError(message: errorMsg);
+      });
 
-  Future<void> addMuscleMap(MuscleMapModel muscleMap) async {
-    return handleError(
-      () async {
-        await into(muscleMaps).insert(muscleMap.toCompanion());
-      },
-      "addding your muscle map",
-    );
-  }
+  Future<void> addMuscleMap(MuscleMapModel muscleMap) async => handleError(
+        () async {
+          await into(muscleMaps).insert(muscleMap.toCompanion());
+        },
+        "addding your muscle map",
+      );
 
-  Future<MuscleMapModel> getMuscleMap(int id) async {
-    return handleError(
-      () async {
-        final query = (select(muscleMaps)
-          ..where(
-            (tbl) => tbl.id.equals(id),
-          ));
+  Future<MuscleMapModel> getMuscleMap(int id) async => handleError(
+        () async {
+          final query = (select(muscleMaps)
+            ..where(
+              (tbl) => tbl.id.equals(id),
+            ));
 
-        final muscleMap = await query.getSingleOrNull();
+          final muscleMap = await query.getSingleOrNull();
 
-        if (muscleMap == null) {
-          final errorMsg = doesNotExistMsg("muscle map you're trying to get");
-          throw AppError(
-            message: errorMsg,
-          );
-        }
+          if (muscleMap == null) {
+            final errorMsg = doesNotExistMsg("muscle map you're trying to get");
+            throw AppError(
+              message: errorMsg,
+            );
+          }
 
-        return MuscleMapModel.fromDbModel(muscleMap);
-      },
-      "getting your muscle map",
-    );
-  }
+          return MuscleMapModel.fromDbModel(muscleMap);
+        },
+        "getting your muscle map",
+      );
 
-  Future<void> editMuscleMap(int id, MuscleMapModel muscleMap) async {
-    return handleError(
-      () async {
-        final query = (select(muscleMaps)
-          ..where(
-            (tbl) => tbl.id.equals(id),
-          ));
+  Future<void> editMuscleMap(int id, MuscleMapModel muscleMap) async =>
+      handleError(
+        () async {
+          final query = (select(muscleMaps)
+            ..where(
+              (tbl) => tbl.id.equals(id),
+            ));
 
-        final result = await query.getSingleOrNull();
+          final result = await query.getSingleOrNull();
 
-        if (result == null) {
-          final errorMsg = doesNotExistMsg("muscle map you're trying edit");
-          throw AppError(
-            message: errorMsg,
-          );
-        }
+          if (result == null) {
+            final errorMsg = doesNotExistMsg("muscle map you're trying edit");
+            throw AppError(
+              message: errorMsg,
+            );
+          }
 
-        await (update(muscleMaps)
-              ..where(
-                (tbl) => tbl.id.equals(id),
-              ))
-            .write(muscleMap.toCompanion());
-      },
-      "updating your muscle map",
-    );
-  }
+          await (update(muscleMaps)
+                ..where(
+                  (tbl) => tbl.id.equals(id),
+                ))
+              .write(muscleMap.toCompanion());
+        },
+        "updating your muscle map",
+      );
 
-  Future<void> deleteMuscleMap(int id) async {
-    return handleError(
-      () async {
-        final query = (select(muscleMaps)
-          ..where(
-            (tbl) => tbl.id.equals(id),
-          ));
+  Future<void> deleteMuscleMap(int id) async => handleError(
+        () async {
+          final query = (select(muscleMaps)
+            ..where(
+              (tbl) => tbl.id.equals(id),
+            ));
 
-        final result = await query.get();
+          final result = await query.get();
 
-        if (result.length > 1) {
-          final errorMsg = multipleRecordsFound("delete your muscle map");
-          throw AppError(
-            message: errorMsg,
-          );
-        }
+          if (result.length > 1) {
+            final errorMsg = multipleRecordsFound("delete your muscle map");
+            throw AppError(
+              message: errorMsg,
+            );
+          }
 
-        if (result.isEmpty) {
-          final errorMsg =
-              doesNotExistMsg("muscle map you're trying to delete");
-          throw AppError(
-            message: errorMsg,
-          );
-        }
+          if (result.isEmpty) {
+            final errorMsg =
+                doesNotExistMsg("muscle map you're trying to delete");
+            throw AppError(
+              message: errorMsg,
+            );
+          }
 
-        await (delete(muscleMaps)
-              ..where(
-                (tbl) => tbl.id.equals(id),
-              ))
-            .go();
-      },
-      "deleting your muscle map",
-    );
-  }
+          await (delete(muscleMaps)
+                ..where(
+                  (tbl) => tbl.id.equals(id),
+                ))
+              .go();
+        },
+        "deleting your muscle map",
+      );
 }

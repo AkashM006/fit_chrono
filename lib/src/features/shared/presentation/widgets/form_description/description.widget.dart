@@ -11,22 +11,20 @@ class DescriptionWidget extends StatelessWidget {
   final String subtitle;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Text(
-          subtitle,
-          style: Theme.of(context).textTheme.bodyLarge,
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Column(
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.bodyLarge,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      );
 }

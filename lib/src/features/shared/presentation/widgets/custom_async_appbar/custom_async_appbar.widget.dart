@@ -13,17 +13,15 @@ class CustomAsyncAppBar<T> extends StatelessWidget
   final PreferredSizeWidget Function(BuildContext context, T data) builder;
 
   @override
-  Widget build(BuildContext context) {
-    return asyncData.when(
-      data: (data) => builder(context, data),
-      error: (error, stackTrace) => AppBar(
-        title: const Text("Error"),
-      ),
-      loading: () => AppBar(
-        title: const Text("Loading..."),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => asyncData.when(
+        data: (data) => builder(context, data),
+        error: (error, stackTrace) => AppBar(
+          title: const Text("Error"),
+        ),
+        loading: () => AppBar(
+          title: const Text("Loading..."),
+        ),
+      );
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

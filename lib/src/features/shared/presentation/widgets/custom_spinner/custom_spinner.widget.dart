@@ -4,9 +4,7 @@ class CustomSpinnerWidget extends StatelessWidget {
   const CustomSpinnerWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const CircularProgressIndicator(
-      strokeWidth: 2,
-    );
-  }
+  Widget build(BuildContext context) => const CircularProgressIndicator(
+        strokeWidth: 2,
+      );
 }

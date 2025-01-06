@@ -11,13 +11,11 @@ class MuscleMapsEmptyWidget extends StatelessWidget {
   final bool hideButton;
 
   @override
-  Widget build(BuildContext context) {
-    return EmptyListWidget(
-      text:
-          "Your journey starts here! 🏋️‍♂️💥 Add your first muscle map to crush those goals!",
-      buttonText: "Add Muscle Map",
-      targetPage: PAGES.muscleMapForm,
-      hideButton: hideButton,
-    );
-  }
+  Widget build(BuildContext context) => EmptyListWidget(
+        text:
+            "Your journey starts here! 🏋️‍♂️💥 Add your first muscle map to crush those goals!",
+        buttonText: "Add Muscle Map",
+        targetPage: PAGES.muscleMapForm,
+        hideButton: hideButton,
+      );
 }

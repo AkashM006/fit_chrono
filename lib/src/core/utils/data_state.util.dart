@@ -7,9 +7,7 @@ class DataSuccess<T> extends DataState<T> {
   DataSuccess(this.data);
 
   @override
-  String toString() {
-    return data.toString();
-  }
+  String toString() => data.toString();
 }
 
 class DataFailure<T> extends DataState<T> {
@@ -17,9 +15,7 @@ class DataFailure<T> extends DataState<T> {
   DataFailure(this.error);
 
   @override
-  String toString() {
-    return error.toString();
-  }
+  String toString() => error.toString();
 }
 
 class DataLoading<T> extends DataState<T> {}
@@ -30,12 +26,10 @@ extension DataStateExtension<T> on DataState<T> {
   R fold<R>({
     required R Function(T data) onSuccess,
     required R Function(CustomError error) onFailure,
-  }) {
-    if (this is DataSuccess<T>) {
-      return onSuccess((this as DataSuccess<T>).data);
-    }
-    return onFailure((this as DataFailure<T>).error);
-  }
+  }) =>
+      this is DataSuccess<T>
+          ? onSuccess((this as DataSuccess<T>).data)
+          : onFailure((this as DataFailure<T>).error);
 
   void on({
     required void Function(T data) success,

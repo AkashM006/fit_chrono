@@ -12,7 +12,8 @@ Stream<List<WorkoutWaveWithWorkoutsMeasureDto>> workoutWaves(Ref ref) {
 
   final result =
       WatchWorkoutWavesWithWorkoutMeasuresUsecase(workoutWaveRepository)(
-          params: null);
+    params: null,
+  );
 
   return result
       .map((workoutWavesWithWorkoutMeasure) => workoutWavesWithWorkoutMeasure

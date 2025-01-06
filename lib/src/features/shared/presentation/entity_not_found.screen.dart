@@ -16,40 +16,38 @@ class EntityNotFoundScreen extends StatelessWidget {
   final List<Widget> actions;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appBarTitle),
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: AppOffsets.messageWidthConstaint,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                content,
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: actions,
-              ),
-            ],
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(appBarTitle),
+        ),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: AppOffsets.messageWidthConstaint,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  content,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: actions,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

@@ -11,15 +11,14 @@ class WorkoutWaveService {
 
   const WorkoutWaveService(this._database);
 
-  Stream<List<WorkoutWaveEntity>> watchWorkoutWaves() {
-    return _database.workoutWaveDao.watchWorkoutWaves().map(
-          (workoutWaves) => workoutWaves
-              .map(
-                (workoutWave) => workoutWave.toEntity(),
-              )
-              .toList(),
-        );
-  }
+  Stream<List<WorkoutWaveEntity>> watchWorkoutWaves() =>
+      _database.workoutWaveDao.watchWorkoutWaves().map(
+            (workoutWaves) => workoutWaves
+                .map(
+                  (workoutWave) => workoutWave.toEntity(),
+                )
+                .toList(),
+          );
 
   Stream<List<WorkoutWaveWithWorkoutsMeasureEntity>>
       watchWorkoutWaveWithWorkoutMeasures() => _database.workoutWaveDao

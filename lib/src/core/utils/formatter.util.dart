@@ -1,17 +1,13 @@
-String getFormattedTimeFromDuration(Duration duration) {
-  return '${duration.inMinutes.toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-}
+String getFormattedTimeFromDuration(Duration duration) =>
+    '${duration.inMinutes.toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
 
 extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
-  }
+  String capitalize() =>
+      "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
 }
 
 extension DurationExtension on Duration {
-  String formattedTime() {
-    return getFormattedTimeFromDuration(this);
-  }
+  String formattedTime() => getFormattedTimeFromDuration(this);
 }
 
 extension IntExtension on int {

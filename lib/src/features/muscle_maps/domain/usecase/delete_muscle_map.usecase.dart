@@ -8,7 +8,6 @@ class DeleteMuscleMapUsecase extends Usecase<Future<DataState<void>>, int> {
   const DeleteMuscleMapUsecase(this._muscleMapRepository);
 
   @override
-  Future<DataState<void>> call({required int params}) {
-    return _muscleMapRepository.deleteMuscleMap(params);
-  }
+  Future<DataState<void>> call({required int params}) =>
+      _muscleMapRepository.deleteMuscleMap(params);
 }

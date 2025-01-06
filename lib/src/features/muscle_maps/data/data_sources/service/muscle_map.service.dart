@@ -11,20 +11,18 @@ class MuscleMapService {
 
   MuscleMapService(this._appDatabase);
 
-  Stream<List<MuscleMapEntity>> watchMuscleMaps() {
-    return _appDatabase.muscleMapDao.watchMuscleMaps().map(
-          (muscleMapList) => muscleMapList
-              .map(
-                (muscleMap) => muscleMap.toEntity(),
-              )
-              .toList(),
-        );
-  }
+  Stream<List<MuscleMapEntity>> watchMuscleMaps() =>
+      _appDatabase.muscleMapDao.watchMuscleMaps().map(
+            (muscleMapList) => muscleMapList
+                .map(
+                  (muscleMap) => muscleMap.toEntity(),
+                )
+                .toList(),
+          );
 
-  Future<void> addMuscleMap(MuscleMapEntity muscleMap) {
-    return _appDatabase.muscleMapDao
-        .addMuscleMap(MuscleMapModel.fromEntity(muscleMap));
-  }
+  Future<void> addMuscleMap(MuscleMapEntity muscleMap) =>
+      _appDatabase.muscleMapDao
+          .addMuscleMap(MuscleMapModel.fromEntity(muscleMap));
 
   Future<MuscleMapEntity> getMuscleMap(int id) async {
     final result = await _appDatabase.muscleMapDao.getMuscleMap(id);
@@ -32,16 +30,14 @@ class MuscleMapService {
     return result.toEntity();
   }
 
-  Future<void> editMuscleMap(MuscleMapEntity muscleMap) async {
-    await _appDatabase.muscleMapDao.editMuscleMap(
-      muscleMap.id,
-      MuscleMapModel.fromEntity(muscleMap),
-    );
-  }
+  Future<void> editMuscleMap(MuscleMapEntity muscleMap) async =>
+      await _appDatabase.muscleMapDao.editMuscleMap(
+        muscleMap.id,
+        MuscleMapModel.fromEntity(muscleMap),
+      );
 
-  Future<void> deleteMuscleMap(int id) {
-    return _appDatabase.muscleMapDao.deleteMuscleMap(id);
-  }
+  Future<void> deleteMuscleMap(int id) =>
+      _appDatabase.muscleMapDao.deleteMuscleMap(id);
 }
 
 @riverpod

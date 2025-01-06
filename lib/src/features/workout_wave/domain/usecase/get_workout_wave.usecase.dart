@@ -12,7 +12,6 @@ class GetWorkoutWaveUsecase extends Usecase<
   @override
   Future<DataState<WorkoutWaveWithWorkoutsMeasureEntity>> call({
     required int params,
-  }) {
-    return _workoutWaveRepostiory.getWorkoutWaveWithWorkouts(params);
-  }
+  }) =>
+      _workoutWaveRepostiory.getWorkoutWaveWithWorkouts(params);
 }

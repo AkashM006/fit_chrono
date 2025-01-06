@@ -21,78 +21,59 @@ class WorkoutModel {
   String get name => _name;
   List<MuscleMapModel> get muscles => _muscles;
 
-  factory WorkoutModel.fromEntity(WorkoutEntity workout) {
-    return WorkoutModel(
-      id: workout.id,
-      name: workout.name,
-      muscles: workout.muscles
-          .map((muscle) => MuscleMapModel.fromEntity(muscle))
-          .toList(),
-    );
-  }
+  factory WorkoutModel.fromEntity(WorkoutEntity workout) => WorkoutModel(
+        id: workout.id,
+        name: workout.name,
+        muscles: workout.muscles
+            .map((muscle) => MuscleMapModel.fromEntity(muscle))
+            .toList(),
+      );
 
-  factory WorkoutModel.fromDbModel(Workout workout) {
-    return WorkoutModel(
-      id: workout.id,
-      name: workout.name,
-      muscles: [],
-    );
-  }
+  factory WorkoutModel.fromDbModel(Workout workout) => WorkoutModel(
+        id: workout.id,
+        name: workout.name,
+        muscles: [],
+      );
 
-  WorkoutEntity toEntity() {
-    return WorkoutEntity(
-      id: id,
-      name: name,
-      muscles: muscles.map((muscle) => muscle.toEntity()).toList(),
-    );
-  }
+  WorkoutEntity toEntity() => WorkoutEntity(
+        id: id,
+        name: name,
+        muscles: muscles.map((muscle) => muscle.toEntity()).toList(),
+      );
 
-  WorkoutsCompanion toCompanion() {
-    return WorkoutsCompanion(
-      name: Value(name),
-    );
-  }
+  WorkoutsCompanion toCompanion() => WorkoutsCompanion(
+        name: Value(name),
+      );
 
   void setMuscles(List<MuscleMapModel> muscles) {
     _muscles = muscles;
   }
 
   @override
-  bool operator ==(covariant WorkoutModel other) {
-    if (name != other.name) return false;
-
-    return const ListEquality().equals(muscles, other.muscles);
-  }
+  bool operator ==(covariant WorkoutModel other) =>
+      (name == other.name) &&
+      const ListEquality().equals(muscles, other.muscles);
 
   @override
-  int get hashCode {
-    int hashCode = name.hashCode;
+  int get hashCode => Object.hash(
+        name,
+        Object.hashAll(_muscles),
+      );
 
-    for (var muscle in muscles) {
-      hashCode = hashCode ^ muscle.hashCode;
-    }
+  factory WorkoutModel.fromJson(Map<String, dynamic> json) => WorkoutModel(
+        id: json['id'] as int,
+        name: json['name'] as String,
+        muscles: (json['muscles'] as List)
+            .map((muscle) =>
+                MuscleMapModel.fromJson(muscle as Map<String, dynamic>))
+            .toList(),
+      );
 
-    return hashCode;
-  }
-
-  factory WorkoutModel.fromJson(Map<String, dynamic> json) {
-    return WorkoutModel(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      muscles: (json['muscles'] as List)
-          .map((muscle) =>
-              MuscleMapModel.fromJson(muscle as Map<String, dynamic>))
-          .toList(),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'muscles': muscles.map((muscle) => muscle.toJson()).toList(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'muscles': muscles.map((muscle) => muscle.toJson()).toList(),
+      };
 }
 
 class WorkoutWithMeasureModel {

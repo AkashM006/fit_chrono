@@ -10,7 +10,6 @@ class EditMuscleMapUsecase
   const EditMuscleMapUsecase(this._muscleMapRepository);
 
   @override
-  Future<DataState<void>> call({required MuscleMapEntity params}) {
-    return _muscleMapRepository.editMuscleMap(params);
-  }
+  Future<DataState<void>> call({required MuscleMapEntity params}) =>
+      _muscleMapRepository.editMuscleMap(params);
 }

@@ -16,23 +16,21 @@ class AsyncValueBuilderWidget<T> extends StatelessWidget {
   final bool isSliver;
 
   @override
-  Widget build(BuildContext context) {
-    return asyncValue.when(
-      data: (data) => builder(context, data),
-      error: (error, stackTrace) => !isSliver
-          ? Center(
-              child: CustomErrorWidget(text: error.toString()),
-            )
-          : SliverToBoxAdapter(
-              child: CustomErrorWidget(text: error.toString()),
-            ),
-      loading: () => !isSliver
-          ? const Center(
-              child: LoaderWidget(),
-            )
-          : const SliverToBoxAdapter(
-              child: LoaderWidget(),
-            ),
-    );
-  }
+  Widget build(BuildContext context) => asyncValue.when(
+        data: (data) => builder(context, data),
+        error: (error, stackTrace) => !isSliver
+            ? Center(
+                child: CustomErrorWidget(text: error.toString()),
+              )
+            : SliverToBoxAdapter(
+                child: CustomErrorWidget(text: error.toString()),
+              ),
+        loading: () => !isSliver
+            ? const Center(
+                child: LoaderWidget(),
+              )
+            : const SliverToBoxAdapter(
+                child: LoaderWidget(),
+              ),
+      );
 }

@@ -20,47 +20,43 @@ class LogDao extends DatabaseAccessor<AppDatabase> with _$LogDaoMixin {
 
   LogDao(this.db) : super(db);
 
-  Stream<List<WaveRunnerLogModel>> watchLogs() {
-    return select(waveRunnerLogs)
-        .watch()
-        .map(
-          (logList) => logList
-              .map((log) => WaveRunnerLogModel.fromDbModel(log))
-              .toList(),
-        )
-        .handleError((error) {
-      final errorMsg = somethingWentWrongMsg("getting you logs");
-      throw AppError(message: errorMsg);
-    });
-  }
+  Stream<List<WaveRunnerLogModel>> watchLogs() => select(waveRunnerLogs)
+          .watch()
+          .map(
+            (logList) => logList
+                .map((log) => WaveRunnerLogModel.fromDbModel(log))
+                .toList(),
+          )
+          .handleError((error) {
+        final errorMsg = somethingWentWrongMsg("getting you logs");
+        throw AppError(message: errorMsg);
+      });
 
-  Future<void> log(WaveRunnerLogModel logModel) async {
-    return handleError(
-      () {
-        return transaction(() async {
-          final waveRunnerLog = WaveRunnerLogsCompanion(
-            log: Value(jsonEncode(logModel.toJson())),
-          );
+  Future<void> log(WaveRunnerLogModel logModel) async => handleError(
+        () {
+          return transaction(() async {
+            final waveRunnerLog = WaveRunnerLogsCompanion(
+              log: Value(jsonEncode(logModel.toJson())),
+            );
 
-          await into(waveRunnerLogs).insert(waveRunnerLog);
+            await into(waveRunnerLogs).insert(waveRunnerLog);
 
-          // increment the respective workout wave the count done
-          final workoutWaveId =
-              logModel.workoutWaveWithWorkoutsMeasure.workoutWave.id;
+            // increment the respective workout wave the count done
+            final workoutWaveId =
+                logModel.workoutWaveWithWorkoutsMeasure.workoutWave.id;
 
-          final workoutWave =
-              logModel.workoutWaveWithWorkoutsMeasure.workoutWave;
+            final workoutWave =
+                logModel.workoutWaveWithWorkoutsMeasure.workoutWave;
 
-          await (update(workoutWaves)
-                ..where((tbl) => tbl.id.equals(workoutWaveId)))
-              .write(
-            WorkoutWavesCompanion(
-              times: Value(workoutWave.times + 1),
-            ),
-          );
-        });
-      },
-      "logging your workout session",
-    );
-  }
+            await (update(workoutWaves)
+                  ..where((tbl) => tbl.id.equals(workoutWaveId)))
+                .write(
+              WorkoutWavesCompanion(
+                times: Value(workoutWave.times + 1),
+              ),
+            );
+          });
+        },
+        "logging your workout session",
+      );
 }

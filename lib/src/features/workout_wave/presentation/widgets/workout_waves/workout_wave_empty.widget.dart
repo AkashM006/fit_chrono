@@ -11,13 +11,11 @@ class WorkoutWaveEmptywidget extends StatelessWidget {
   final bool hideButton;
 
   @override
-  Widget build(BuildContext context) {
-    return EmptyListWidget(
-      text:
-          "🌊 No Workout Waves yet! Start surfing those workout waves and crush your goals!",
-      buttonText: "Add Workout Wave",
-      targetPage: PAGES.workoutWavesForm,
-      hideButton: hideButton,
-    );
-  }
+  Widget build(BuildContext context) => EmptyListWidget(
+        text:
+            "🌊 No Workout Waves yet! Start surfing those workout waves and crush your goals!",
+        buttonText: "Add Workout Wave",
+        targetPage: PAGES.workoutWavesForm,
+        hideButton: hideButton,
+      );
 }

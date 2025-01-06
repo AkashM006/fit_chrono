@@ -38,146 +38,103 @@ enum PAGES {
 }
 
 extension AppRoutesExtension on PAGES {
-  String get path {
-    switch (this) {
-      case PAGES.home:
-        return '/';
-      case PAGES.muscleMaps:
-        return '/muscle-map';
-      case PAGES.muscleMapForm:
-        return '/muscle-map-form';
-      case PAGES.muscleMapDetail:
-        return '/muscle-map-detail';
-      case PAGES.workouts:
-        return '/workouts';
-      case PAGES.workoutForm:
-        return '/workout-form';
-      case PAGES.workoutDetail:
-        return '/workout-detail';
-      case PAGES.workoutWaves:
-        return '/workout-waves';
-      case PAGES.workoutWavesForm:
-        return '/workout-waves-form';
-      case PAGES.workoutWaveDetail:
-        return '/workout-wave-detail';
-      case PAGES.waveRunner:
-        return '/wave-runner';
-      case PAGES.driftDebug:
-        return '/drift-debug';
-      case PAGES.notFound:
-        return '/*';
-    }
-  }
+  String get path => switch (this) {
+        PAGES.home => '/',
+        PAGES.muscleMaps => '/muscle-map',
+        PAGES.muscleMapForm => '/muscle-map-form',
+        PAGES.muscleMapDetail => '/muscle-map-detail',
+        PAGES.workouts => '/workouts',
+        PAGES.workoutForm => '/workout-form',
+        PAGES.workoutDetail => '/workout-detail',
+        PAGES.workoutWaves => '/workout-waves',
+        PAGES.workoutWavesForm => '/workout-waves-form',
+        PAGES.workoutWaveDetail => '/workout-wave-detail',
+        PAGES.waveRunner => '/wave-runner',
+        PAGES.driftDebug => '/drift-debug',
+        PAGES.notFound => '/*',
+      };
 
-  String get name {
-    switch (this) {
-      case PAGES.home:
-        return "Home";
-      case PAGES.muscleMaps:
-        return "Muscle Maps";
-      case PAGES.muscleMapForm:
-        return "Muscle Map Form";
-      case PAGES.muscleMapDetail:
-        return "Muscle Map Detail";
-      case PAGES.workouts:
-        return "Workouts";
-      case PAGES.workoutForm:
-        return "Workout Form";
-      case PAGES.workoutDetail:
-        return "Workout Detail";
-      case PAGES.workoutWaves:
-        return "Workout Waves";
-      case PAGES.workoutWavesForm:
-        return "Workout Waves Form";
-      case PAGES.workoutWaveDetail:
-        return "Workout Wave Detail";
-      case PAGES.waveRunner:
-        return "Wave Runner";
-      case PAGES.driftDebug:
-        return "Drift Debug";
-      case PAGES.notFound:
-        return "Not Found";
-    }
-  }
+  String get name => switch (this) {
+        PAGES.home => "Home",
+        PAGES.muscleMaps => "Muscle Maps",
+        PAGES.muscleMapForm => "Muscle Map Form",
+        PAGES.muscleMapDetail => "Muscle Map Detail",
+        PAGES.workouts => "Workouts",
+        PAGES.workoutForm => "Workout Form",
+        PAGES.workoutDetail => "Workout Detail",
+        PAGES.workoutWaves => "Workout Waves",
+        PAGES.workoutWavesForm => "Workout Waves Form",
+        PAGES.workoutWaveDetail => "Workout Wave Detail",
+        PAGES.waveRunner => "Wave Runner",
+        PAGES.driftDebug => "Drift Debug",
+        PAGES.notFound => "Not Found",
+      };
 
-  Widget Function(BuildContext context, GoRouterState routerState) get builder {
-    switch (this) {
-      case PAGES.home:
-        return (context, routerState) => const HomeScreen();
-      case PAGES.muscleMaps:
-        return (context, routerState) => const MuscleMapScreen();
-      case PAGES.muscleMapForm:
-        return (context, routerState) => const MuscleMapFormScreen();
-      case PAGES.muscleMapDetail:
-        return (context, routerState) {
-          final id = routerState.uri.queryParameters['id'];
-          int? resultId;
+  Widget Function(BuildContext context, GoRouterState routerState)
+      get builder => switch (this) {
+            PAGES.home => (context, routerState) => const HomeScreen(),
+            PAGES.muscleMaps => (context, routerState) =>
+                const MuscleMapScreen(),
+            PAGES.muscleMapForm => (context, routerState) =>
+                const MuscleMapFormScreen(),
+            PAGES.muscleMapDetail => (context, routerState) {
+                final id = routerState.uri.queryParameters['id'];
+                int? resultId;
 
-          if (id != null) resultId = int.tryParse(id);
+                if (id != null) resultId = int.tryParse(id);
 
-          return MuscleMapDetailScreen(
-            id: resultId,
-          );
-        };
-      case PAGES.workouts:
-        return (context, routerState) => const WorkoutsScreen();
-      case PAGES.workoutForm:
-        return (context, routerState) {
-          WorkoutDto? workout = routerState.extra as WorkoutDto?;
-          return WorkoutFormScreen(
-            workout: workout,
-          );
-        };
-      case PAGES.workoutDetail:
-        return (context, routerState) {
-          final id = routerState.uri.queryParameters['id'];
-          int? resultId;
+                return MuscleMapDetailScreen(
+                  id: resultId,
+                );
+              },
+            PAGES.workouts => (context, routerState) => const WorkoutsScreen(),
+            PAGES.workoutForm => (context, routerState) {
+                WorkoutDto? workout = routerState.extra as WorkoutDto?;
+                return WorkoutFormScreen(
+                  workout: workout,
+                );
+              },
+            PAGES.workoutDetail => (context, routerState) {
+                final id = routerState.uri.queryParameters['id'];
+                int? resultId;
 
-          if (id != null) resultId = int.tryParse(id);
+                if (id != null) resultId = int.tryParse(id);
 
-          return WorkoutDetailScreen(
-            id: resultId,
-          );
-        };
-      case PAGES.workoutWaves:
-        return (context, routerState) => const WorkoutWavesScreen();
-      case PAGES.workoutWaveDetail:
-        return (context, routerState) {
-          final id = routerState.uri.queryParameters['id'];
-          int? resultId;
-          if (id != null) resultId = int.tryParse(id);
+                return WorkoutDetailScreen(
+                  id: resultId,
+                );
+              },
+            PAGES.workoutWaves => (context, routerState) =>
+                const WorkoutWavesScreen(),
+            PAGES.workoutWaveDetail => (context, routerState) {
+                final id = routerState.uri.queryParameters['id'];
+                int? resultId;
+                if (id != null) resultId = int.tryParse(id);
 
-          return WorkoutWaveDetailScreen(id: resultId);
-        };
-      case PAGES.workoutWavesForm:
-        return (context, routerState) => const WorkoutWaveFormScreen();
-      case PAGES.waveRunner:
-        return (context, routerState) {
-          final workoutWaveWithWorkouts =
-              routerState.extra as WorkoutWaveWithWorkoutsMeasureDto;
-          return WaveRunnerScreen(
-            workoutWaveWithWorkouts: workoutWaveWithWorkouts,
-          );
-        };
-      case PAGES.driftDebug:
-        return (context, routerState) => const DriftDebugScreen();
-      case PAGES.notFound:
-        return (context, routerState) => const NotFoundScreen();
-    }
-  }
+                return WorkoutWaveDetailScreen(id: resultId);
+              },
+            PAGES.workoutWavesForm => (context, routerState) =>
+                const WorkoutWaveFormScreen(),
+            PAGES.waveRunner => (context, routerState) {
+                final workoutWaveWithWorkouts =
+                    routerState.extra as WorkoutWaveWithWorkoutsMeasureDto;
+                return WaveRunnerScreen(
+                  workoutWaveWithWorkouts: workoutWaveWithWorkouts,
+                );
+              },
+            PAGES.driftDebug => (context, routerState) =>
+                const DriftDebugScreen(),
+            PAGES.notFound => (context, routerState) => const NotFoundScreen(),
+          };
 
   FutureOr<String?> Function(BuildContext context, GoRouterState state)
-      get redirect {
-    switch (this) {
-      case PAGES.driftDebug:
-        return (context, routerState) {
-          if (!kDebugMode && !kHideDebugDb) return PAGES.notFound.path;
-          return null;
-        };
-      default:
-        return (context, routerState) => null;
-    }
-  }
+      get redirect => switch (this) {
+            PAGES.driftDebug => (context, routerState) {
+                if (!kDebugMode && !kHideDebugDb) return PAGES.notFound.path;
+                return null;
+              },
+            _ => (context, routerState) => null,
+          };
 }
 
 final List<RouteBase> routes = PAGES.values

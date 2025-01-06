@@ -5,7 +5,6 @@
 39. When app goes to background during workout, handle those cases
 40. Account for skipping workout instead of completing it during logs
 43. Get from the user after workout the intensity level
-
 51. Logs list screen ( IN PROGRESS )
 52. Log detail screen
 53. Log even when workout is quit in the middle

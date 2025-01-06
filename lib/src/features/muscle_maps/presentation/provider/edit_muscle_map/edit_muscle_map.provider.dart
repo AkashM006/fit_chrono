@@ -9,9 +9,7 @@ part 'edit_muscle_map.provider.g.dart';
 @riverpod
 class EditMuscleMap extends _$EditMuscleMap {
   @override
-  DataState<String>? build() {
-    return null;
-  }
+  DataState<String>? build() => null;
 
   void go(MuscleMapDto newMuscleMap) async {
     state = DataLoading();

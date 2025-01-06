@@ -37,65 +37,60 @@ class WaveRunnerLogDto {
     List<WorkoutWithWorkoutMeasureLogDto>? workoutWithWorkoutMeasureLogs,
     int? totalTimeElapsed,
     DateTime? createdAt,
-  }) {
-    return WaveRunnerLogDto(
-      id: id ?? this.id,
-      workoutWaveWithWorkoutsMeasure:
-          workoutWaveWithWorkoutsMeasure ?? this.workoutWaveWithWorkoutsMeasure,
-      workoutWithWorkoutMeasureLogs:
-          workoutWithWorkoutMeasureLogs ?? this.workoutWithWorkoutMeasureLogs,
-      totalTimeElapsed: totalTimeElapsed ?? this.totalTimeElapsed,
-      createdAt: createdAt ?? this.createdAt,
-    );
-  }
+  }) =>
+      WaveRunnerLogDto(
+        id: id ?? this.id,
+        workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure ??
+            this.workoutWaveWithWorkoutsMeasure,
+        workoutWithWorkoutMeasureLogs:
+            workoutWithWorkoutMeasureLogs ?? this.workoutWithWorkoutMeasureLogs,
+        totalTimeElapsed: totalTimeElapsed ?? this.totalTimeElapsed,
+        createdAt: createdAt ?? this.createdAt,
+      );
 
   factory WaveRunnerLogDto.init(
-      WorkoutWaveWithWorkoutsMeasureDto workoutWaveWithWorkoutsMeasure) {
-    return WaveRunnerLogDto(
-      workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure,
-      workoutWithWorkoutMeasureLogs: [],
-      totalTimeElapsed: 0,
-      createdAt: DateTime.now(),
-    );
-  }
+    WorkoutWaveWithWorkoutsMeasureDto workoutWaveWithWorkoutsMeasure,
+  ) =>
+      WaveRunnerLogDto(
+        workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure,
+        workoutWithWorkoutMeasureLogs: [],
+        totalTimeElapsed: 0,
+        createdAt: DateTime.now(),
+      );
 
-  factory WaveRunnerLogDto.fromEntity(WaveRunnerLogEntity entity) {
-    return WaveRunnerLogDto(
-      id: entity.id,
-      workoutWaveWithWorkoutsMeasure:
-          WorkoutWaveWithWorkoutsMeasureDto.fromEntity(
-        entity.workoutWaveWithWorkoutsMeasure,
-      ),
-      workoutWithWorkoutMeasureLogs: entity.workoutWithWorkoutMeasureLogs
-          .map((e) => WorkoutWithWorkoutMeasureLogDto.fromEntity(e))
-          .toList(),
-      totalTimeElapsed: entity.totalTimeElapsed,
-      createdAt: entity.createdAt,
-    );
-  }
+  factory WaveRunnerLogDto.fromEntity(WaveRunnerLogEntity entity) =>
+      WaveRunnerLogDto(
+        id: entity.id,
+        workoutWaveWithWorkoutsMeasure:
+            WorkoutWaveWithWorkoutsMeasureDto.fromEntity(
+          entity.workoutWaveWithWorkoutsMeasure,
+        ),
+        workoutWithWorkoutMeasureLogs: entity.workoutWithWorkoutMeasureLogs
+            .map((e) => WorkoutWithWorkoutMeasureLogDto.fromEntity(e))
+            .toList(),
+        totalTimeElapsed: entity.totalTimeElapsed,
+        createdAt: entity.createdAt,
+      );
 
-  WaveRunnerLogEntity toEntity() {
-    return WaveRunnerLogEntity(
-      id: id,
-      workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure.toEntity(),
-      workoutWithWorkoutMeasureLogs:
-          workoutWithWorkoutMeasureLogs.map((e) => e.toEntity()).toList(),
-      totalTimeElapsed: totalTimeElapsed,
-      createdAt: _createdAt,
-    );
-  }
+  WaveRunnerLogEntity toEntity() => WaveRunnerLogEntity(
+        id: id,
+        workoutWaveWithWorkoutsMeasure:
+            workoutWaveWithWorkoutsMeasure.toEntity(),
+        workoutWithWorkoutMeasureLogs:
+            workoutWithWorkoutMeasureLogs.map((e) => e.toEntity()).toList(),
+        totalTimeElapsed: totalTimeElapsed,
+        createdAt: _createdAt,
+      );
 
   @override
-  bool operator ==(covariant WaveRunnerLogDto other) {
-    return id == other.id &&
-        workoutWaveWithWorkoutsMeasure ==
-            other.workoutWaveWithWorkoutsMeasure &&
-        const ListEquality().equals(
-          workoutWithWorkoutMeasureLogs,
-          other.workoutWithWorkoutMeasureLogs,
-        ) &&
-        totalTimeElapsed == other.totalTimeElapsed;
-  }
+  bool operator ==(covariant WaveRunnerLogDto other) =>
+      id == other.id &&
+      workoutWaveWithWorkoutsMeasure == other.workoutWaveWithWorkoutsMeasure &&
+      const ListEquality().equals(
+        workoutWithWorkoutMeasureLogs,
+        other.workoutWithWorkoutMeasureLogs,
+      ) &&
+      totalTimeElapsed == other.totalTimeElapsed;
 
   @override
   int get hashCode => Object.hash(
@@ -127,47 +122,42 @@ class WorkoutWithWorkoutMeasureLogDto {
     WorkoutWithMeasureDto? workoutWithMeasure,
     int? elapsedTime,
     bool? wasSkipped,
-  }) {
-    return WorkoutWithWorkoutMeasureLogDto(
-      workoutWithMeasure: workoutWithMeasure ?? this.workoutWithMeasure,
-      elapsedTime: elapsedTime ?? this.elapsedTime,
-      wasSkipped: wasSkipped ?? this.wasSkipped,
-    );
-  }
+  }) =>
+      WorkoutWithWorkoutMeasureLogDto(
+        workoutWithMeasure: workoutWithMeasure ?? this.workoutWithMeasure,
+        elapsedTime: elapsedTime ?? this.elapsedTime,
+        wasSkipped: wasSkipped ?? this.wasSkipped,
+      );
 
-  factory WorkoutWithWorkoutMeasureLogDto.init() {
-    return WorkoutWithWorkoutMeasureLogDto(
-      workoutWithMeasure: WorkoutWithMeasureDto.init(),
-      elapsedTime: 0,
-      wasSkipped: false,
-    );
-  }
+  factory WorkoutWithWorkoutMeasureLogDto.init() =>
+      WorkoutWithWorkoutMeasureLogDto(
+        workoutWithMeasure: WorkoutWithMeasureDto.init(),
+        elapsedTime: 0,
+        wasSkipped: false,
+      );
 
   factory WorkoutWithWorkoutMeasureLogDto.fromEntity(
     WorkoutWithWorkoutMeasureLogEntity entity,
-  ) {
-    return WorkoutWithWorkoutMeasureLogDto(
-      workoutWithMeasure:
-          WorkoutWithMeasureDto.fromEntity(entity.workoutWithMeasure),
-      elapsedTime: entity.elapsedTime,
-      wasSkipped: entity.wasSkipped,
-    );
-  }
+  ) =>
+      WorkoutWithWorkoutMeasureLogDto(
+        workoutWithMeasure:
+            WorkoutWithMeasureDto.fromEntity(entity.workoutWithMeasure),
+        elapsedTime: entity.elapsedTime,
+        wasSkipped: entity.wasSkipped,
+      );
 
-  WorkoutWithWorkoutMeasureLogEntity toEntity() {
-    return WorkoutWithWorkoutMeasureLogEntity(
-      workoutWithMeasure: workoutWithMeasure.toEntity(),
-      elapsedTime: elapsedTime,
-      wasSkipped: wasSkipped,
-    );
-  }
+  WorkoutWithWorkoutMeasureLogEntity toEntity() =>
+      WorkoutWithWorkoutMeasureLogEntity(
+        workoutWithMeasure: workoutWithMeasure.toEntity(),
+        elapsedTime: elapsedTime,
+        wasSkipped: wasSkipped,
+      );
 
   @override
-  bool operator ==(covariant WorkoutWithWorkoutMeasureLogDto other) {
-    return workoutWithMeasure == other.workoutWithMeasure &&
-        elapsedTime == other.elapsedTime &&
-        wasSkipped == other.wasSkipped;
-  }
+  bool operator ==(covariant WorkoutWithWorkoutMeasureLogDto other) =>
+      workoutWithMeasure == other.workoutWithMeasure &&
+      elapsedTime == other.elapsedTime &&
+      wasSkipped == other.wasSkipped;
 
   @override
   int get hashCode => Object.hash(

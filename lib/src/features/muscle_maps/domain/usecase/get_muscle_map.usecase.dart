@@ -10,7 +10,6 @@ class GetMuscleMapUsecase
   const GetMuscleMapUsecase(this._muscleMapRepository);
 
   @override
-  Future<DataState<MuscleMapEntity>> call({required int params}) {
-    return _muscleMapRepository.getMuscleMap(params);
-  }
+  Future<DataState<MuscleMapEntity>> call({required int params}) =>
+      _muscleMapRepository.getMuscleMap(params);
 }

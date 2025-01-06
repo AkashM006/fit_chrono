@@ -11,11 +11,8 @@ class WaveRunnerService {
 
   const WaveRunnerService(this._db);
 
-  Future<void> log(WaveRunnerLogEntity log) async {
-    final logModel = WaveRunnerLogModel.fromEntity(log);
-
-    return _db.logDao.log(logModel);
-  }
+  Future<void> log(WaveRunnerLogEntity log) async =>
+      _db.logDao.log(WaveRunnerLogModel.fromEntity(log));
 }
 
 @riverpod

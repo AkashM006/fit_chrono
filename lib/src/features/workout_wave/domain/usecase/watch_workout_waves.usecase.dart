@@ -9,7 +9,6 @@ class WatchWorkoutWavesUsecase
   const WatchWorkoutWavesUsecase(this._workoutWaveRepostiory);
 
   @override
-  Stream<List<WorkoutWaveEntity>> call({void params}) {
-    return _workoutWaveRepostiory.watchWorkoutWaves();
-  }
+  Stream<List<WorkoutWaveEntity>> call({void params}) =>
+      _workoutWaveRepostiory.watchWorkoutWaves();
 }

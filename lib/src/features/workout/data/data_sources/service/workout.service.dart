@@ -14,9 +14,9 @@ class WorkoutService {
   Stream<List<WorkoutEntity>> watchWorkouts() =>
       _appDatabase.workoutDao.watchWorkouts().map(modelListToEntityList);
 
-  Future<void> addWorkout(WorkoutEntity workout) async {
-    await _appDatabase.workoutDao.addWorkout(WorkoutModel.fromEntity(workout));
-  }
+  Future<void> addWorkout(WorkoutEntity workout) async =>
+      await _appDatabase.workoutDao
+          .addWorkout(WorkoutModel.fromEntity(workout));
 
   Future<WorkoutEntity> getWorkout(int id) async {
     final result = await _appDatabase.workoutDao.getWorkout(id);

@@ -10,24 +10,22 @@ class LoaderWidget extends StatelessWidget {
   final String? text;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: SizeConfig.safeBlockVertical * 3.5,
-          child: const AspectRatio(
-            aspectRatio: 1,
-            child: CustomSpinnerWidget(),
-          ),
-        ),
-        if (text != null)
+  Widget build(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
           SizedBox(
-            height: SizeConfig.safeBlockVertical * 1.5,
+            height: SizeConfig.safeBlockVertical * 3.5,
+            child: const AspectRatio(
+              aspectRatio: 1,
+              child: CustomSpinnerWidget(),
+            ),
           ),
-        if (text != null) Text(text!)
-      ],
-    );
-  }
+          if (text != null)
+            SizedBox(
+              height: SizeConfig.safeBlockVertical * 1.5,
+            ),
+          if (text != null) Text(text!)
+        ],
+      );
 }

@@ -34,20 +34,20 @@ class WaveRunnerLogModel {
   int get totalTimeElapsed => _totalTimeElapsed;
   DateTime get createdAt => _createdAt;
 
-  factory WaveRunnerLogModel.fromEntity(WaveRunnerLogEntity waveRunnerLog) {
-    return WaveRunnerLogModel(
-      id: waveRunnerLog.id,
-      workoutWaveWithWorkoutsMeasure:
-          WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
-        waveRunnerLog.workoutWaveWithWorkoutsMeasure,
-      ),
-      workoutWithWorkoutMeasureLogs: waveRunnerLog.workoutWithWorkoutMeasureLogs
-          .map((e) => WorkoutWithWorkoutMeasureLogModel.fromEntity(e))
-          .toList(),
-      totalTimeElapsed: waveRunnerLog.totalTimeElapsed,
-      createdAt: waveRunnerLog.createdAt,
-    );
-  }
+  factory WaveRunnerLogModel.fromEntity(WaveRunnerLogEntity waveRunnerLog) =>
+      WaveRunnerLogModel(
+        id: waveRunnerLog.id,
+        workoutWaveWithWorkoutsMeasure:
+            WorkoutWaveWithWorkoutsMeasureModel.fromEntity(
+          waveRunnerLog.workoutWaveWithWorkoutsMeasure,
+        ),
+        workoutWithWorkoutMeasureLogs: waveRunnerLog
+            .workoutWithWorkoutMeasureLogs
+            .map((e) => WorkoutWithWorkoutMeasureLogModel.fromEntity(e))
+            .toList(),
+        totalTimeElapsed: waveRunnerLog.totalTimeElapsed,
+        createdAt: waveRunnerLog.createdAt,
+      );
 
   factory WaveRunnerLogModel.fromDbModel(WaveRunnerLog waveRunnerLog) {
     final log = jsonDecode(waveRunnerLog.log);
@@ -56,34 +56,27 @@ class WaveRunnerLogModel {
     return resultLog;
   }
 
-  WaveRunnerLogsCompanion toDbModel() {
-    return WaveRunnerLogsCompanion(
-      log: Value(jsonEncode(toJson())),
-    );
-  }
+  WaveRunnerLogsCompanion toDbModel() => WaveRunnerLogsCompanion(
+        log: Value(jsonEncode(toJson())),
+      );
 
-  WaveRunnerLogEntity toEntity() {
-    return WaveRunnerLogEntity(
-      id: id,
-      workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure.toEntity(),
-      workoutWithWorkoutMeasureLogs:
-          workoutWithWorkoutMeasureLogs.map((e) => e.toEntity()).toList(),
-      totalTimeElapsed: totalTimeElapsed,
-      createdAt: createdAt,
-    );
-  }
+  WaveRunnerLogEntity toEntity() => WaveRunnerLogEntity(
+        id: id,
+        workoutWaveWithWorkoutsMeasure:
+            workoutWaveWithWorkoutsMeasure.toEntity(),
+        workoutWithWorkoutMeasureLogs:
+            workoutWithWorkoutMeasureLogs.map((e) => e.toEntity()).toList(),
+        totalTimeElapsed: totalTimeElapsed,
+        createdAt: createdAt,
+      );
 
-  WaveRunnerLogsCompanion toCompanion() {
-    return WaveRunnerLogsCompanion(
-      log: Value(jsonEncode(workoutWaveWithWorkoutsMeasure.toJson())),
-    );
-  }
+  WaveRunnerLogsCompanion toCompanion() => WaveRunnerLogsCompanion(
+        log: Value(jsonEncode(workoutWaveWithWorkoutsMeasure.toJson())),
+      );
 
   @override
-  bool operator ==(covariant WaveRunnerLogModel other) {
-    return workoutWaveWithWorkoutsMeasure ==
-        other.workoutWaveWithWorkoutsMeasure;
-  }
+  bool operator ==(covariant WaveRunnerLogModel other) =>
+      workoutWaveWithWorkoutsMeasure == other.workoutWaveWithWorkoutsMeasure;
 
   @override
   int get hashCode => Object.hash(
@@ -94,36 +87,34 @@ class WaveRunnerLogModel {
         createdAt,
       );
 
-  factory WaveRunnerLogModel.fromJson(Map<String, dynamic> json) {
-    return WaveRunnerLogModel(
-      id: json['id'] as int,
-      workoutWaveWithWorkoutsMeasure:
-          WorkoutWaveWithWorkoutsMeasureModel.fromJson(
-        json['workoutWaveWithWorkoutsMeasure'] as Map<String, dynamic>,
-      ),
-      workoutWithWorkoutMeasureLogs:
-          (json['workoutWithWorkoutMeasureLogs'] as List<dynamic>)
-              .map(
-                (e) => WorkoutWithWorkoutMeasureLogModel.fromJson(
-                  e as Map<String, dynamic>,
-                ),
-              )
-              .toList(),
-      totalTimeElapsed: json['totalTimeElapsed'] as int,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-    );
-  }
+  factory WaveRunnerLogModel.fromJson(Map<String, dynamic> json) =>
+      WaveRunnerLogModel(
+        id: json['id'] as int,
+        workoutWaveWithWorkoutsMeasure:
+            WorkoutWaveWithWorkoutsMeasureModel.fromJson(
+          json['workoutWaveWithWorkoutsMeasure'] as Map<String, dynamic>,
+        ),
+        workoutWithWorkoutMeasureLogs:
+            (json['workoutWithWorkoutMeasureLogs'] as List<dynamic>)
+                .map(
+                  (e) => WorkoutWithWorkoutMeasureLogModel.fromJson(
+                    e as Map<String, dynamic>,
+                  ),
+                )
+                .toList(),
+        totalTimeElapsed: json['totalTimeElapsed'] as int,
+        createdAt: DateTime.parse(json['createdAt'] as String),
+      );
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'workoutWaveWithWorkoutsMeasure': workoutWaveWithWorkoutsMeasure.toJson(),
-      'workoutWithWorkoutMeasureLogs':
-          workoutWithWorkoutMeasureLogs.map((e) => e.toJson()).toList(),
-      'totalTimeElapsed': totalTimeElapsed,
-      'createdAt': createdAt.toIso8601String(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'workoutWaveWithWorkoutsMeasure':
+            workoutWaveWithWorkoutsMeasure.toJson(),
+        'workoutWithWorkoutMeasureLogs':
+            workoutWithWorkoutMeasureLogs.map((e) => e.toJson()).toList(),
+        'totalTimeElapsed': totalTimeElapsed,
+        'createdAt': createdAt.toIso8601String(),
+      };
 
   WaveRunnerLogModel copyWith({
     int? id,
@@ -131,17 +122,16 @@ class WaveRunnerLogModel {
     List<WorkoutWithWorkoutMeasureLogModel>? workoutWithWorkoutMeasureLogs,
     int? totalTimeElapsed,
     DateTime? createdAt,
-  }) {
-    return WaveRunnerLogModel(
-      id: id ?? this.id,
-      workoutWaveWithWorkoutsMeasure:
-          workoutWaveWithWorkoutsMeasure ?? this.workoutWaveWithWorkoutsMeasure,
-      workoutWithWorkoutMeasureLogs:
-          workoutWithWorkoutMeasureLogs ?? this.workoutWithWorkoutMeasureLogs,
-      totalTimeElapsed: totalTimeElapsed ?? this.totalTimeElapsed,
-      createdAt: createdAt ?? this.createdAt,
-    );
-  }
+  }) =>
+      WaveRunnerLogModel(
+        id: id ?? this.id,
+        workoutWaveWithWorkoutsMeasure: workoutWaveWithWorkoutsMeasure ??
+            this.workoutWaveWithWorkoutsMeasure,
+        workoutWithWorkoutMeasureLogs:
+            workoutWithWorkoutMeasureLogs ?? this.workoutWithWorkoutMeasureLogs,
+        totalTimeElapsed: totalTimeElapsed ?? this.totalTimeElapsed,
+        createdAt: createdAt ?? this.createdAt,
+      );
 }
 
 class WorkoutWithWorkoutMeasureLogModel {
@@ -163,60 +153,53 @@ class WorkoutWithWorkoutMeasureLogModel {
 
   factory WorkoutWithWorkoutMeasureLogModel.fromEntity(
     WorkoutWithWorkoutMeasureLogEntity entity,
-  ) {
-    return WorkoutWithWorkoutMeasureLogModel(
-      workoutWithMeasure:
-          WorkoutWithMeasureModel.fromEntity(entity.workoutWithMeasure),
-      elapsedTime: entity.elapsedTime,
-      wasSkipped: entity.wasSkipped,
-    );
-  }
+  ) =>
+      WorkoutWithWorkoutMeasureLogModel(
+        workoutWithMeasure:
+            WorkoutWithMeasureModel.fromEntity(entity.workoutWithMeasure),
+        elapsedTime: entity.elapsedTime,
+        wasSkipped: entity.wasSkipped,
+      );
 
   factory WorkoutWithWorkoutMeasureLogModel.fromJson(
     Map<String, dynamic> json,
-  ) {
-    return WorkoutWithWorkoutMeasureLogModel(
-      workoutWithMeasure:
-          WorkoutWithMeasureModel.fromJson(json['workoutWithMeasure']),
-      elapsedTime: json['elapsedTime'] as int,
-      wasSkipped: json['wasSkipped'] as bool,
-    );
-  }
+  ) =>
+      WorkoutWithWorkoutMeasureLogModel(
+        workoutWithMeasure:
+            WorkoutWithMeasureModel.fromJson(json['workoutWithMeasure']),
+        elapsedTime: json['elapsedTime'] as int,
+        wasSkipped: json['wasSkipped'] as bool,
+      );
 
-  WorkoutWithWorkoutMeasureLogEntity toEntity() {
-    return WorkoutWithWorkoutMeasureLogEntity(
-      workoutWithMeasure: workoutWithMeasure.toEntity(),
-      elapsedTime: elapsedTime,
-      wasSkipped: wasSkipped,
-    );
-  }
+  WorkoutWithWorkoutMeasureLogEntity toEntity() =>
+      WorkoutWithWorkoutMeasureLogEntity(
+        workoutWithMeasure: workoutWithMeasure.toEntity(),
+        elapsedTime: elapsedTime,
+        wasSkipped: wasSkipped,
+      );
 
-  Map<String, dynamic> toJson() {
-    return {
-      'workoutWithMeasure': workoutWithMeasure.toJson(),
-      'elapsedTime': elapsedTime,
-      'wasSkipped': wasSkipped,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'workoutWithMeasure': workoutWithMeasure.toJson(),
+        'elapsedTime': elapsedTime,
+        'wasSkipped': wasSkipped,
+      };
 
   WorkoutWithWorkoutMeasureLogModel copyWith({
     WorkoutWithMeasureModel? workoutWithMeasure,
     int? elapsedTime,
     bool? wasSkipped,
-  }) {
-    return WorkoutWithWorkoutMeasureLogModel(
-      workoutWithMeasure: workoutWithMeasure ?? this.workoutWithMeasure,
-      elapsedTime: elapsedTime ?? this.elapsedTime,
-      wasSkipped: wasSkipped ?? this.wasSkipped,
-    );
-  }
+  }) =>
+      WorkoutWithWorkoutMeasureLogModel(
+        workoutWithMeasure: workoutWithMeasure ?? this.workoutWithMeasure,
+        elapsedTime: elapsedTime ?? this.elapsedTime,
+        wasSkipped: wasSkipped ?? this.wasSkipped,
+      );
 
   @override
-  bool operator ==(covariant WorkoutWithWorkoutMeasureLogModel other) {
-    return workoutWithMeasure == other.workoutWithMeasure &&
-        elapsedTime == other.elapsedTime &&
-        wasSkipped == other.wasSkipped;
-  }
+  bool operator ==(covariant WorkoutWithWorkoutMeasureLogModel other) =>
+      workoutWithMeasure == other.workoutWithMeasure &&
+      elapsedTime == other.elapsedTime &&
+      wasSkipped == other.wasSkipped;
 
   @override
   int get hashCode => Object.hash(

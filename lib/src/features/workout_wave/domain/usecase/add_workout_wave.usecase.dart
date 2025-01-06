@@ -12,7 +12,6 @@ class AddWorkoutWaveUsecase extends Usecase<Future<DataState<void>>,
   @override
   Future<DataState<void>> call({
     required WorkoutWaveWithWorkoutsMeasureEntity params,
-  }) {
-    return _workoutWaveRepostiory.addWorkoutWave(params);
-  }
+  }) =>
+      _workoutWaveRepostiory.addWorkoutWave(params);
 }

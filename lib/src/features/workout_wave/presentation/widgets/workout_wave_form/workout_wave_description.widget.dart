@@ -5,11 +5,9 @@ class WorkoutWaveDescriptionWidget extends StatelessWidget {
   const WorkoutWaveDescriptionWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const DescriptionWidget(
-      title: 'Workout Wave',
-      subtitle:
-          'Build your workout wave by adding multiple workouts. Set your reps and timing, and get ready to train like never before!',
-    );
-  }
+  Widget build(BuildContext context) => const DescriptionWidget(
+        title: 'Workout Wave',
+        subtitle:
+            'Build your workout wave by adding multiple workouts. Set your reps and timing, and get ready to train like never before!',
+      );
 }

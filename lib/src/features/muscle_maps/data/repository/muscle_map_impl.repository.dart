@@ -14,37 +14,31 @@ class MuscleMapImpl extends BaseRepository implements MuscleMapRepository {
   const MuscleMapImpl(this._muscleMapService);
 
   @override
-  Stream<List<MuscleMapEntity>> watchMuscleMaps() {
-    return _muscleMapService.watchMuscleMaps();
-  }
+  Stream<List<MuscleMapEntity>> watchMuscleMaps() =>
+      _muscleMapService.watchMuscleMaps();
 
   @override
-  Future<DataState<void>> addMuscleMap(MuscleMapEntity muscleMap) {
-    return safeExecute(
-      () => _muscleMapService.addMuscleMap(muscleMap),
-    );
-  }
+  Future<DataState<void>> addMuscleMap(MuscleMapEntity muscleMap) =>
+      safeExecute(
+        () => _muscleMapService.addMuscleMap(muscleMap),
+      );
 
   @override
-  Future<DataState<MuscleMapEntity>> getMuscleMap(int id) {
-    return safeExecute(() => _muscleMapService.getMuscleMap(id));
-  }
+  Future<DataState<MuscleMapEntity>> getMuscleMap(int id) =>
+      safeExecute(() => _muscleMapService.getMuscleMap(id));
 
   @override
-  Future<DataState<void>> editMuscleMap(MuscleMapEntity newMuscleMap) {
-    return safeExecute(
-      () => _muscleMapService.editMuscleMap(
-        newMuscleMap,
-      ),
-    );
-  }
+  Future<DataState<void>> editMuscleMap(MuscleMapEntity newMuscleMap) =>
+      safeExecute(
+        () => _muscleMapService.editMuscleMap(
+          newMuscleMap,
+        ),
+      );
 
   @override
-  Future<DataState<void>> deleteMuscleMap(int id) {
-    return safeExecute(
-      () => _muscleMapService.deleteMuscleMap(id),
-    );
-  }
+  Future<DataState<void>> deleteMuscleMap(int id) => safeExecute(
+        () => _muscleMapService.deleteMuscleMap(id),
+      );
 }
 
 @riverpod

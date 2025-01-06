@@ -16,52 +16,39 @@ class MuscleMapModel {
 
   String get name => _name;
 
-  factory MuscleMapModel.fromEntity(MuscleMapEntity muscleMap) {
-    return MuscleMapModel(
-      id: muscleMap.id,
-      name: muscleMap.name,
-    );
-  }
+  factory MuscleMapModel.fromEntity(MuscleMapEntity muscleMap) =>
+      MuscleMapModel(
+        id: muscleMap.id,
+        name: muscleMap.name,
+      );
 
-  factory MuscleMapModel.fromDbModel(MuscleMap muscleMap) {
-    return MuscleMapModel(
-      id: muscleMap.id,
-      name: muscleMap.name,
-    );
-  }
+  factory MuscleMapModel.fromDbModel(MuscleMap muscleMap) => MuscleMapModel(
+        id: muscleMap.id,
+        name: muscleMap.name,
+      );
 
-  factory MuscleMapModel.fromJson(Map<String, dynamic> json) {
-    return MuscleMapModel(
-      id: json['id'] as int,
-      name: json['name'] as String,
-    );
-  }
+  factory MuscleMapModel.fromJson(Map<String, dynamic> json) => MuscleMapModel(
+        id: json['id'] as int,
+        name: json['name'] as String,
+      );
 
-  MuscleMapEntity toEntity() {
-    return MuscleMapEntity(
-      id: id,
-      name: name,
-    );
-  }
+  MuscleMapEntity toEntity() => MuscleMapEntity(
+        id: id,
+        name: name,
+      );
 
-  MuscleMapsCompanion toCompanion() {
-    return MuscleMapsCompanion(
-      name: Value(name),
-    );
-  }
+  MuscleMapsCompanion toCompanion() => MuscleMapsCompanion(
+        name: Value(name),
+      );
 
   @override
-  bool operator ==(covariant MuscleMapModel other) {
-    return name == other.name;
-  }
+  bool operator ==(covariant MuscleMapModel other) => name == other.name;
 
   @override
   int get hashCode => name.hashCode;
 
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "name": name,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+      };
 }

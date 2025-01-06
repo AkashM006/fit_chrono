@@ -22,21 +22,19 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
     with _$WorkoutWaveDaoMixin {
   WorkoutWaveDao(super.key);
 
-  Stream<List<WorkoutWaveModel>> watchWorkoutWaves() {
-    return select(workoutWaves)
-        .watch()
-        .map(
-          (workoutWaves) => workoutWaves
-              .map(
-                (workoutWave) => WorkoutWaveModel.fromDbModel(workoutWave),
-              )
-              .toList(),
-        )
-        .handleError((error) {
-      final errorMsg = somethingWentWrongMsg("getting your workout waves");
-      throw AppError(message: errorMsg);
-    });
-  }
+  Stream<List<WorkoutWaveModel>> watchWorkoutWaves() => select(workoutWaves)
+          .watch()
+          .map(
+            (workoutWaves) => workoutWaves
+                .map(
+                  (workoutWave) => WorkoutWaveModel.fromDbModel(workoutWave),
+                )
+                .toList(),
+          )
+          .handleError((error) {
+        final errorMsg = somethingWentWrongMsg("getting your workout waves");
+        throw AppError(message: errorMsg);
+      });
 
   Future<WorkoutWaveModel> getWorkoutWave(int id) => handleError(() async {
         final workoutWave = await (select(workoutWaves)
@@ -87,7 +85,9 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
 
             if (positionDetail == null ||
                 countDetail == null ||
-                workoutDetail == null) continue;
+                workoutDetail == null) {
+              continue;
+            }
             final id = positionDetail.workoutWaveId;
 
             idToPosition.putIfAbsent(id, () => []).add(positionDetail);
@@ -119,37 +119,36 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> addWorkoutWave(
     WorkoutWaveWithWorkoutsMeasureModel workoutWaveWithWorkoutMeasures,
-  ) async {
-    return handleError(() async {
-      await transaction(() async {
-        // 1. first insert the workout wave and get the id
-        final workoutWaveId = await (into(workoutWaves)
-            .insert(workoutWaveWithWorkoutMeasures.workoutWave.toCompanion()));
+  ) async =>
+      handleError(() async {
+        await transaction(() async {
+          // 1. first insert the workout wave and get the id
+          final workoutWaveId = await (into(workoutWaves).insert(
+              workoutWaveWithWorkoutMeasures.workoutWave.toCompanion()));
 
-        // 2. Get all the existing workoutWithMeasures
-        final existingWorkoutsWithMeasures = await _getExistingWorkout(
-          workoutWaveWithWorkoutMeasures.workoutsWithMeasure,
-        );
+          // 2. Get all the existing workoutWithMeasures
+          final existingWorkoutsWithMeasures = await _getExistingWorkout(
+            workoutWaveWithWorkoutMeasures.workoutsWithMeasure,
+          );
 
-        final workoutsWithMeasure =
-            workoutWaveWithWorkoutMeasures.workoutsWithMeasure;
+          final workoutsWithMeasure =
+              workoutWaveWithWorkoutMeasures.workoutsWithMeasure;
 
-        // 3. Insert any new workoutWithMeasure and return everything that needs to be inserted
-        final workoutsWithMeasureWithId =
-            await _insertNewWorkoutWithMeasureReturning(
-          workoutWaveId,
-          existingWorkoutsWithMeasures,
-          workoutsWithMeasure,
-        );
+          // 3. Insert any new workoutWithMeasure and return everything that needs to be inserted
+          final workoutsWithMeasureWithId =
+              await _insertNewWorkoutWithMeasureReturning(
+            workoutWaveId,
+            existingWorkoutsWithMeasures,
+            workoutsWithMeasure,
+          );
 
-        // 4. Map all workoutWithMeasures to workoutWave
-        await _mapWorkoutsWithMeasureToWorkoutWave(
-          workoutWaveId,
-          workoutsWithMeasureWithId,
-        );
-      });
-    }, "adding your workout wave");
-  }
+          // 4. Map all workoutWithMeasures to workoutWave
+          await _mapWorkoutsWithMeasureToWorkoutWave(
+            workoutWaveId,
+            workoutsWithMeasureWithId,
+          );
+        });
+      }, "adding your workout wave");
 
   Future<WorkoutWaveWithWorkoutsMeasureModel> getWorkoutWaveWithWorkouts(
     int id,
@@ -389,9 +388,8 @@ class WorkoutWaveDao extends DatabaseAccessor<AppDatabase>
         });
       }, "trying to delete your workout wave");
 
-  Future<void> _deleteWorkoutsInWavesMapping(int workoutWaveId) async {
-    await (delete(workoutsInWaves)
-          ..where((tbl) => tbl.workoutWaveId.equals(workoutWaveId)))
-        .go();
-  }
+  Future<void> _deleteWorkoutsInWavesMapping(int workoutWaveId) async =>
+      await (delete(workoutsInWaves)
+            ..where((tbl) => tbl.workoutWaveId.equals(workoutWaveId)))
+          .go();
 }

@@ -16,37 +16,29 @@ class MuscleMapDto {
   MuscleMapDto copyWith({
     int? id,
     String? name,
-  }) {
-    return MuscleMapDto(
-      id: id ?? this.id,
-      name: name ?? this.name,
-    );
-  }
+  }) =>
+      MuscleMapDto(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
 
-  factory MuscleMapDto.init() {
-    return MuscleMapDto(
-      name: "",
-    );
-  }
+  factory MuscleMapDto.init() => MuscleMapDto(
+        name: "",
+      );
 
-  factory MuscleMapDto.fromEntity(MuscleMapEntity entity) {
-    return MuscleMapDto(
-      id: entity.id,
-      name: entity.name,
-    );
-  }
+  factory MuscleMapDto.fromEntity(MuscleMapEntity entity) => MuscleMapDto(
+        id: entity.id,
+        name: entity.name,
+      );
 
-  MuscleMapEntity toEntity() {
-    return MuscleMapEntity(
-      id: id,
-      name: name,
-    );
-  }
+  MuscleMapEntity toEntity() => MuscleMapEntity(
+        id: id,
+        name: name,
+      );
 
   @override
-  bool operator ==(covariant MuscleMapDto other) {
-    return id == other.id && name == other.name;
-  }
+  bool operator ==(covariant MuscleMapDto other) =>
+      id == other.id && name == other.name;
 
   @override
   int get hashCode => Object.hash(id, name);
