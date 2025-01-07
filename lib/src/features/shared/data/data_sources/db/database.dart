@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:drift/native.dart';
 import 'package:drift/drift.dart';
-import 'package:fit_chrono/src/features/logs/data/data_sources/local/dao/log.dao.dart';
+import 'package:fit_chrono/src/features/logs/data/data_sources/local/dao/logs.dao.dart';
 import 'package:fit_chrono/src/features/logs/data/data_sources/local/schema/logs.schema.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/dao/muscle_map.dao.dart';
 import 'package:fit_chrono/src/features/muscle_maps/data/data_sources/local/init/muscle_map.data.dart';

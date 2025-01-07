@@ -17,6 +17,11 @@ final routeItems = [
     'emoji': "🌊",
     'title': "Workout Waves",
     'path': PAGES.workoutWaves.path,
+  },
+  {
+    'emoji': "📝",
+    'title': "Logs",
+    'path': PAGES.logs.path,
   }
 ];
 

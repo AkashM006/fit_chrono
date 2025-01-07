@@ -6,7 +6,7 @@ part of 'delete_muscle_map.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deleteMuscleMapHash() => r'ac52c322bbceff692541fcfdd7f9662cf697d2fb';
+String _$deleteMuscleMapHash() => r'31ed1f08999f314cfa6b5983332144f92bdc2197';
 
 /// See also [DeleteMuscleMap].
 @ProviderFor(DeleteMuscleMap)

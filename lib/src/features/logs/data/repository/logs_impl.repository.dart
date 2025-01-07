@@ -5,6 +5,8 @@ import 'package:fit_chrono/src/features/shared/data/repository/base.repository.d
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+part 'logs_impl.repository.g.dart';
+
 class LogsImplRepository extends BaseRepository implements LogsRepository {
   final LogsService _logsService;
 
@@ -15,7 +17,7 @@ class LogsImplRepository extends BaseRepository implements LogsRepository {
 }
 
 @riverpod
-LogsImplRepository logsImplRepository(Ref ref) {
+LogsImplRepository logsImpl(Ref ref) {
   final logsService = ref.watch(logsServiceProvider);
 
   return LogsImplRepository(logsService);

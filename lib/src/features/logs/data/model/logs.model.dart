@@ -52,7 +52,8 @@ class WaveRunnerLogModel {
   factory WaveRunnerLogModel.fromDbModel(WaveRunnerLog waveRunnerLog) {
     final log = jsonDecode(waveRunnerLog.log);
 
-    final resultLog = WaveRunnerLogModel.fromJson(log).copyWith(id: log.id);
+    final resultLog =
+        WaveRunnerLogModel.fromJson(log).copyWith(id: waveRunnerLog.id);
     return resultLog;
   }
 

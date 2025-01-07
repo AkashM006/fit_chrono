@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fit_chrono/src/core/constants/settings.dart';
 import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
+import 'package:fit_chrono/src/features/logs/presentation/logs.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_detail.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_form.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_maps.screen.dart';
@@ -22,6 +23,8 @@ import 'package:go_router/go_router.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/workout_wave_detail.screen.dart';
 
 enum PAGES {
+  driftDebug,
+  notFound,
   home,
   muscleMaps,
   muscleMapForm,
@@ -32,13 +35,14 @@ enum PAGES {
   workoutWaves,
   workoutWavesForm,
   workoutWaveDetail,
-  driftDebug,
-  notFound,
   waveRunner,
+  logs,
 }
 
 extension AppRoutesExtension on PAGES {
   String get path => switch (this) {
+        PAGES.driftDebug => '/drift-debug',
+        PAGES.notFound => '/*',
         PAGES.home => '/',
         PAGES.muscleMaps => '/muscle-map',
         PAGES.muscleMapForm => '/muscle-map-form',
@@ -50,11 +54,12 @@ extension AppRoutesExtension on PAGES {
         PAGES.workoutWavesForm => '/workout-waves-form',
         PAGES.workoutWaveDetail => '/workout-wave-detail',
         PAGES.waveRunner => '/wave-runner',
-        PAGES.driftDebug => '/drift-debug',
-        PAGES.notFound => '/*',
+        PAGES.logs => '/logs',
       };
 
   String get name => switch (this) {
+        PAGES.driftDebug => "Drift Debug",
+        PAGES.notFound => "Not Found",
         PAGES.home => "Home",
         PAGES.muscleMaps => "Muscle Maps",
         PAGES.muscleMapForm => "Muscle Map Form",
@@ -66,12 +71,14 @@ extension AppRoutesExtension on PAGES {
         PAGES.workoutWavesForm => "Workout Waves Form",
         PAGES.workoutWaveDetail => "Workout Wave Detail",
         PAGES.waveRunner => "Wave Runner",
-        PAGES.driftDebug => "Drift Debug",
-        PAGES.notFound => "Not Found",
+        PAGES.logs => "Logs",
       };
 
   Widget Function(BuildContext context, GoRouterState routerState)
       get builder => switch (this) {
+            PAGES.driftDebug => (context, routerState) =>
+                const DriftDebugScreen(),
+            PAGES.notFound => (context, routerState) => const NotFoundScreen(),
             PAGES.home => (context, routerState) => const HomeScreen(),
             PAGES.muscleMaps => (context, routerState) =>
                 const MuscleMapScreen(),
@@ -122,9 +129,7 @@ extension AppRoutesExtension on PAGES {
                   workoutWaveWithWorkouts: workoutWaveWithWorkouts,
                 );
               },
-            PAGES.driftDebug => (context, routerState) =>
-                const DriftDebugScreen(),
-            PAGES.notFound => (context, routerState) => const NotFoundScreen(),
+            PAGES.logs => (context, routerState) => const LogsScreen(),
           };
 
   FutureOr<String?> Function(BuildContext context, GoRouterState state)

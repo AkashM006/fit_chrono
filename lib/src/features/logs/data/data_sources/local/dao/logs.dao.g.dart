@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'log.dao.dart';
+part of 'logs.dao.dart';
 
 // ignore_for_file: type=lint
 mixin _$LogDaoMixin on DatabaseAccessor<AppDatabase> {

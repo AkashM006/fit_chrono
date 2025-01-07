@@ -1,25 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'add_muscle_map.provider.dart';
+part of 'logs_impl.repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addMuscleMapHash() => r'3764206bf7759e253603d77e3995f6750dcd7dbb';
+String _$logsImplHash() => r'008a6d4abd89bf4f5dfd0a9004aa05455497662a';
 
-/// See also [AddMuscleMap].
-@ProviderFor(AddMuscleMap)
-final addMuscleMapProvider =
-    AutoDisposeNotifierProvider<AddMuscleMap, DataState<String>?>.internal(
-  AddMuscleMap.new,
-  name: r'addMuscleMapProvider',
+/// See also [logsImpl].
+@ProviderFor(logsImpl)
+final logsImplProvider = AutoDisposeProvider<LogsImplRepository>.internal(
+  logsImpl,
+  name: r'logsImplProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$addMuscleMapHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$logsImplHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AddMuscleMap = AutoDisposeNotifier<DataState<String>?>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef LogsImplRef = AutoDisposeProviderRef<LogsImplRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

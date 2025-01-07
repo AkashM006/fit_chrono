@@ -9,7 +9,7 @@ import 'package:fit_chrono/src/features/logs/data/model/logs.model.dart';
 import 'package:fit_chrono/src/features/shared/data/data_sources/db/database.dart';
 import 'package:fit_chrono/src/features/workout_wave/data/data_sources/local/schema/workout_wave.schema.dart';
 
-part 'log.dao.g.dart';
+part 'logs.dao.g.dart';
 
 @DriftAccessor(tables: [
   WaveRunnerLogs,
@@ -20,15 +20,13 @@ class LogDao extends DatabaseAccessor<AppDatabase> with _$LogDaoMixin {
 
   LogDao(this.db) : super(db);
 
-  Stream<List<WaveRunnerLogModel>> watchLogs() => select(waveRunnerLogs)
-          .watch()
-          .map(
-            (logList) => logList
-                .map((log) => WaveRunnerLogModel.fromDbModel(log))
-                .toList(),
-          )
-          .handleError((error) {
-        final errorMsg = somethingWentWrongMsg("getting you logs");
+  Stream<List<WaveRunnerLogModel>> watchLogs() =>
+      select(waveRunnerLogs).watch().map((logList) {
+        return logList
+            .map((log) => WaveRunnerLogModel.fromDbModel(log))
+            .toList();
+      }).handleError((error) {
+        final errorMsg = somethingWentWrongMsg("getting your logs");
         throw AppError(message: errorMsg);
       });
 
