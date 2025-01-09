@@ -1,5 +1,5 @@
+import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/core/constants/size.dart';
-import 'package:fit_chrono/src/core/utils/formatter.util.dart';
 import 'package:flutter/material.dart';
 
 class TimerDisplayWidget extends StatelessWidget {
@@ -54,7 +54,7 @@ class TimerDisplayWidget extends StatelessWidget {
     return Column(
       children: [
         Text(
-          time.formattedTime(),
+          time.formattedTime,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(

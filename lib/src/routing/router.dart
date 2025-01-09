@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fit_chrono/src/core/constants/settings.dart';
 import 'package:fit_chrono/src/features/home/presentation/home.screen.dart';
+import 'package:fit_chrono/src/features/logs/presentation/log_detail.screen.dart';
 import 'package:fit_chrono/src/features/logs/presentation/logs.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_detail.screen.dart';
 import 'package:fit_chrono/src/features/muscle_maps/presentation/muscle_map_form.screen.dart';
@@ -37,6 +38,7 @@ enum PAGES {
   workoutWaveDetail,
   waveRunner,
   logs,
+  logDetail,
 }
 
 extension AppRoutesExtension on PAGES {
@@ -55,6 +57,7 @@ extension AppRoutesExtension on PAGES {
         PAGES.workoutWaveDetail => '/workout-wave-detail',
         PAGES.waveRunner => '/wave-runner',
         PAGES.logs => '/logs',
+        PAGES.logDetail => '/log-detail',
       };
 
   String get name => switch (this) {
@@ -72,6 +75,7 @@ extension AppRoutesExtension on PAGES {
         PAGES.workoutWaveDetail => "Workout Wave Detail",
         PAGES.waveRunner => "Wave Runner",
         PAGES.logs => "Logs",
+        PAGES.logDetail => "Log Detail",
       };
 
   Widget Function(BuildContext context, GoRouterState routerState)
@@ -130,6 +134,16 @@ extension AppRoutesExtension on PAGES {
                 );
               },
             PAGES.logs => (context, routerState) => const LogsScreen(),
+            PAGES.logDetail => (context, routerState) {
+                final id = routerState.uri.queryParameters['id'];
+                int? resultId;
+
+                if (id != null) resultId = int.tryParse(id);
+
+                return LogDetailScreen(
+                  id: resultId,
+                );
+              },
           };
 
   FutureOr<String?> Function(BuildContext context, GoRouterState state)

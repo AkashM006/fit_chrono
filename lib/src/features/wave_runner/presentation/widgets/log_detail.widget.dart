@@ -1,5 +1,4 @@
 import 'package:fit_chrono/src/core/constants/extensions.dart';
-import 'package:fit_chrono/src/core/utils/formatter.util.dart';
 import 'package:fit_chrono/src/features/logs/presentation/dto/logs.dto.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_card/custom_card.widget.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +43,7 @@ class LogDetailWidget extends StatelessWidget {
           height: 10,
         ),
         Text(
-          "Total Time Elapsed: ${log.totalTimeElapsed.formattedTime()}",
+          "Total Time Elapsed: ${log.totalTimeElapsed.formattedTime}",
           style: context.textTheme.bodyLarge,
         ),
         const SizedBox(
@@ -99,7 +98,7 @@ class LogDetailWidget extends StatelessWidget {
               ),
               Text(
                 workoutLog.workoutWithMeasure.workoutMeasure.isTime
-                    ? workoutLog.workoutWithMeasure.count.formattedTime()
+                    ? workoutLog.workoutWithMeasure.count.formattedTime
                     : "x${workoutLog.workoutWithMeasure.count}",
                 style: context.textTheme.bodyMedium,
               ),
@@ -107,7 +106,7 @@ class LogDetailWidget extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text("Elapsed Time: ${workoutLog.elapsedTime.formattedTime()}"),
+            Text("Elapsed Time: ${workoutLog.elapsedTime.formattedTime}"),
             const SizedBox(
               height: 5,
             ),

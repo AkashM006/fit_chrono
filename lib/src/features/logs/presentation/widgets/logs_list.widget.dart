@@ -58,14 +58,49 @@ class LogsListWidget extends StatelessWidget {
       );
     }
 
+    void onRedirect(int id) {
+      context.pushNamed(PAGES.logDetail.name, queryParameters: {
+        'id': id.toString(),
+      });
+    }
+
     return ListView.builder(
-        itemCount: logs.length,
-        itemBuilder: (context, index) {
-          final log = logs[index];
-          // todo: Start styling
-          return CustomCardWidget(
-            child: Text(log.workoutWaveWithWorkoutsMeasure.workoutWave.name),
-          );
-        });
+      itemCount: logs.length,
+      itemBuilder: (context, index) {
+        final log = logs[index];
+        return CustomCardWidget(
+          onTap: () => onRedirect(log.id),
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      log.workoutWaveWithWorkoutsMeasure.workoutWave.name,
+                      style: textTheme.titleLarge,
+                    ),
+                    const Icon(Icons.arrow_right),
+                  ],
+                ),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Text(log.createdAt.formattedDate),
+                    Text(
+                      "\u2022",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(log.totalTimeElapsed.formattedTime)
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

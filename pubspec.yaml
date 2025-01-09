@@ -44,6 +44,7 @@ dependencies:
   collection: ^1.18.0
   uuid: ^4.5.1
   rxdart: ^0.28.0
+  intl: ^0.20.1
 
 dev_dependencies:
   drift_db_viewer: ^2.1.0

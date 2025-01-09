@@ -54,7 +54,7 @@ class WorkoutWaveListWidget extends StatelessWidget {
                   children: [
                     Text(
                       workoutWave.name,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Icon(Icons.arrow_right),
                   ],

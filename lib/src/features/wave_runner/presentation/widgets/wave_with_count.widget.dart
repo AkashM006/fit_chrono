@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fit_chrono/src/core/utils/formatter.util.dart';
+import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/workout_wave_exit.dialog.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
@@ -215,7 +215,7 @@ class _WaveWithCountWidgetState extends State<WaveWithCountWidget> {
 
     if (nextWorkout != null) {
       if (nextWorkout.workoutMeasure.isTime) {
-        nextWorkoutCount = nextWorkout.count.formattedTime();
+        nextWorkoutCount = nextWorkout.count.formattedTime;
       } else {
         nextWorkoutCount = '${nextWorkout.count}x';
       }

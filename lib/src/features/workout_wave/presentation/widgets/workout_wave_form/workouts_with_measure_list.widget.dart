@@ -1,4 +1,4 @@
-import 'package:fit_chrono/src/core/utils/formatter.util.dart';
+import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/features/workout/presentation/dto/workout.dto.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/widgets/workout_wave_form/workout_form_dialog.widget.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class WorkoutsWithMeasureListWidget extends StatelessWidget {
       final index = workoutWithMeasureEntry.key;
       final workoutCount =
           workoutWithMeasure.workoutMeasure == WorkoutMeasureDto.time
-              ? workoutWithMeasure.count.formattedTime()
+              ? workoutWithMeasure.count.formattedTime
               : '${workoutWithMeasure.count}x';
       return ListTile(
         key: ValueKey(workoutWithMeasure.uniqueId),

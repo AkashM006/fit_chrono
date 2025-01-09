@@ -1,4 +1,4 @@
-import 'package:fit_chrono/src/core/utils/formatter.util.dart';
+import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/timer_display.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -161,7 +161,7 @@ class WaveWidget extends StatelessWidget {
             height: 5,
           ),
           Text(
-            elapsedTime!.formattedTime(),
+            elapsedTime!.formattedTime,
           ),
         ],
         if (progressList != null && progressList!.isNotEmpty)
