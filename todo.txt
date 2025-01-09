@@ -1,3 +1,5 @@
+CURRENT branch: features/logs-list
+
 20. Find out a neat way to chain validators
 24. Implement debouncing when searching
 37. Restrict reps to be within 2 digit range
