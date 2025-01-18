@@ -18,6 +18,9 @@ class LogsService {
                 )
                 .toList(),
           );
+
+  Stream<WaveRunnerLogEntity> watchLog(int id) =>
+      _appDatabase.logDao.watchLog(id).map((log) => log.toEntity());
 }
 
 @riverpod

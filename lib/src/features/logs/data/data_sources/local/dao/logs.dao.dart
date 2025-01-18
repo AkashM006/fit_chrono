@@ -30,6 +30,15 @@ class LogDao extends DatabaseAccessor<AppDatabase> with _$LogDaoMixin {
         throw AppError(message: errorMsg);
       });
 
+  Stream<WaveRunnerLogModel> watchLog(int id) =>
+      (select(waveRunnerLogs)..where((tbl) => tbl.id.equals(id)))
+          .watchSingle()
+          .map((item) => WaveRunnerLogModel.fromDbModel(item))
+          .handleError((error) {
+        final errorMsg = somethingWentWrongMsg("getting your log");
+        throw AppError(message: errorMsg);
+      });
+
   Future<void> log(WaveRunnerLogModel logModel) async => handleError(
         () {
           return transaction(() async {

@@ -14,6 +14,9 @@ class LogsImplRepository extends BaseRepository implements LogsRepository {
 
   @override
   Stream<List<WaveRunnerLogEntity>> watchLogs() => _logsService.watchLogs();
+
+  @override
+  Stream<WaveRunnerLogEntity> watchLog(int id) => _logsService.watchLog(id);
 }
 
 @riverpod
