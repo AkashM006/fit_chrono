@@ -2,20 +2,19 @@ CURRENT branch: features/logs-list
 
 20. Find out a neat way to chain validators
 24. Implement debouncing when searching
-37. Restrict reps to be within 2 digit range
 38. After workout wave complete and after quitting the wave show some message in the snack bar
 39. When app goes to background during workout, handle those cases
-40. Account for skipping workout instead of completing it during logs
-43. Get from the user after workout the intensity level
+43. Get from the user after workout the intensity level ( IN PROGRESS )
 53. Log even when workout is quit in the middle
-58. Get the intensity level from the user after wave runner complete and then display it in the logs list, maybe even display the muscle map the user has targeted specifically
+58. Display the muscle map the user has targeted specifically
 59. Look into warnings in the debug console
-60. Show some formatted date in workout wave log appbar
-61. 
+60. Show some formatted date in workout wave log appbar and list name as well
+62. 
 
 LATER:
 23. After implmementing custom code gen, try to change Implementation for edit workout wave, update only when required (MAYBE LATER)
 28. Change muscle map to add search ( LATER )
+61. Check for a new way to get time details along with validation ( Prefer it to be in a single touch ) 
 
 
 OVERTHINKING:
@@ -58,3 +57,5 @@ DONE:
 48. Increment the amount of times the workout wave completed after workout complete ( DONE )
 51. Logs list screen ( DONE )
 52. Log detail screen ( DONE )
+40. Account for skipping workout instead of completing it during logs ( DONE )
+37. Restrict reps to be within 2 digit range ( DONE )

@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+const maxRepCount = 100;
+
 class WorkoutFormDialogWidget extends ConsumerStatefulWidget {
   const WorkoutFormDialogWidget({
     super.key,
@@ -174,6 +176,7 @@ class _WorkoutFormDialogWidgetState
 
     final inputFormatters = [
       FilteringTextInputFormatter.digitsOnly,
+      LengthLimitingTextInputFormatter(2)
     ];
 
     final repsFormField = SizedBox(
@@ -186,6 +189,7 @@ class _WorkoutFormDialogWidgetState
             : null,
         decoration: const InputDecoration(
           label: Text("Reps"),
+          helperText: "Must not exceed $maxRepCount",
         ),
         keyboardType: const TextInputType.numberWithOptions(),
         validator: (value) => numberGreaterThanZero(measureLabel, value),
@@ -287,7 +291,7 @@ class _WorkoutFormDialogWidgetState
                 CustomRadioButtonWidget<WorkoutMeasureDto>(
                   value: WorkoutMeasureDto.reps,
                   groupValue: _workoutWithMeasure.workoutMeasure,
-                  onChanged: isRest? null: setWorkoutMeasure,
+                  onChanged: isRest ? null : setWorkoutMeasure,
                   label: const Text("Reps"),
                 ),
               ],
