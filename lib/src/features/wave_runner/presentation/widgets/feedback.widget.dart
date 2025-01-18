@@ -3,6 +3,8 @@ import 'package:fit_chrono/src/core/constants/intensity_config.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_card/custom_card.widget.dart';
 import 'package:flutter/material.dart';
 
+const animationDuration = Duration(milliseconds: 150);
+
 class FeedbackWidget extends StatefulWidget {
   const FeedbackWidget.enabled({
     super.key,
@@ -56,18 +58,29 @@ class _FeedBackWidgetState extends State<FeedbackWidget> {
     );
 
     final animatedIntensitySelectorWidget =
-        List.generate(intensityLevels, (index) => index)
-            .map(
-              (item) => InkWell(
-                onTap: !widget.editable ? null : () => onIntensitySelect(item),
-                child: AnimatedOpacity(
-                  opacity: _selectedIntensityIndex >= item ? 1 : 0.1,
-                  duration: const Duration(milliseconds: 150),
-                  child: fireText,
-                ),
-              ),
-            )
-            .toList();
+        List.generate(intensityLevels, (index) => index).map(
+      (item) {
+        final isSelected = _selectedIntensityIndex >= item;
+
+        return GestureDetector(
+          onTap: !widget.editable
+              ? null
+              : () {
+                  Feedback.forTap(context);
+                  onIntensitySelect(item);
+                },
+          child: AnimatedScale(
+            scale: isSelected ? 1 : 0.9,
+            duration: animationDuration,
+            child: AnimatedOpacity(
+              opacity: isSelected ? 1 : 0.1,
+              duration: animationDuration,
+              child: fireText,
+            ),
+          ),
+        );
+      },
+    ).toList();
 
     final fireTextListWidget = CustomCardWidget(
       child: Padding(
