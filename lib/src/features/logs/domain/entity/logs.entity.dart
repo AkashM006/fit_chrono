@@ -6,6 +6,7 @@ class WaveRunnerLogEntity {
   final WorkoutWaveWithWorkoutsMeasureEntity workoutWaveWithWorkoutsMeasure;
   final List<WorkoutWithWorkoutMeasureLogEntity> workoutWithWorkoutMeasureLogs;
   final int totalTimeElapsed;
+  final int intensity;
   final DateTime createdAt;
 
   const WaveRunnerLogEntity({
@@ -13,6 +14,7 @@ class WaveRunnerLogEntity {
     required this.workoutWaveWithWorkoutsMeasure,
     required this.workoutWithWorkoutMeasureLogs,
     required this.totalTimeElapsed,
+    required this.intensity,
     required this.createdAt,
   });
 }

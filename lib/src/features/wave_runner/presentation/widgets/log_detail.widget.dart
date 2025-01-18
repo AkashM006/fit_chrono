@@ -1,6 +1,7 @@
 import 'package:fit_chrono/src/core/constants/extensions.dart';
 import 'package:fit_chrono/src/features/logs/presentation/dto/logs.dto.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/custom_card/custom_card.widget.dart';
+import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/feedback.widget.dart';
 import 'package:flutter/material.dart';
 
 class LogDetailWidget extends StatelessWidget {
@@ -45,6 +46,13 @@ class LogDetailWidget extends StatelessWidget {
         Text(
           "Total Time Elapsed: ${log.totalTimeElapsed.formattedTime}",
           style: context.textTheme.bodyLarge,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        FeedbackWidget.disabled(
+          intensity: log.intensity,
+          fireTextStyle: context.textTheme.bodyLarge,
         ),
         const SizedBox(
           height: 10,

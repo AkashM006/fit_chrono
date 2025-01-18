@@ -2,6 +2,7 @@ import 'package:fit_chrono/src/core/utils/data_state.util.dart';
 import 'package:fit_chrono/src/features/logs/presentation/dto/logs.dto.dart';
 import 'package:fit_chrono/src/features/shared/presentation/widgets/snackbar/snackbar.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/provider/wave_runner_log/wave_runner_log.provider.dart';
+import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/feedback.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_complete.widget.dart';
 import 'package:fit_chrono/src/features/wave_runner/presentation/widgets/wave_with_count.widget.dart';
 import 'package:fit_chrono/src/features/workout_wave/presentation/dto/workout_wave.dto.dart';
@@ -19,6 +20,8 @@ class WaveRunnerScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<WaveRunnerScreen> createState() => _WaveRunnerScreenState();
 }
+
+const additionalScreens = 3;
 
 class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
   final PageController _pageController = PageController();
@@ -50,8 +53,8 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
   void initState() {
     super.initState();
     _log = WaveRunnerLogDto.init(widget.workoutWaveWithWorkouts);
-    _pagesLength =
-        widget.workoutWaveWithWorkouts.workoutsWithMeasure.length + 2;
+    _pagesLength = widget.workoutWaveWithWorkouts.workoutsWithMeasure.length +
+        additionalScreens;
     _totalWorkouts = widget.workoutWaveWithWorkouts.workoutsWithMeasure.fold(
       0,
       (value, workoutWithMeasure) =>
@@ -77,6 +80,15 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
 
   void onSkip(Duration elapsedTime) {
     _onNext(elapsedTime, true);
+  }
+
+  void onIntensityComplete(int intensity) {
+    _log = _log.copyWith(intensity: intensity);
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeInOut,
+    );
+    ref.read(waveRunnerLogProvider.notifier).go(_log);
   }
 
   void _onNext(Duration elapsedTime, bool wasSkipped) {
@@ -106,11 +118,6 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeInOut,
     );
-
-    if (isCompletePage) {
-      ref.read(waveRunnerLogProvider.notifier).go(_log);
-      return;
-    }
 
     final workoutsWithMeasure =
         widget.workoutWaveWithWorkouts.workoutsWithMeasure;
@@ -160,12 +167,20 @@ class _WaveRunnerScreenState extends ConsumerState<WaveRunnerScreen> {
 
             final isLastWorkout = index ==
                 _pagesLength -
-                    2; // in order to account for the last item which is actually complete screen
+                    additionalScreens; // in order to account for the last item which is actually complete screen
             final isLastScreen = index == _pagesLength - 1;
+            final isFeedbackScreen = index == _pagesLength - 2;
 
             if (isLastScreen) {
               return WaveCompleteWidget(
                 log: _log,
+              );
+            }
+
+            if (isFeedbackScreen) {
+              return FeedbackWidget.enabled(
+                intensity: _log.intensity,
+                onComplete: onIntensityComplete,
               );
             }
 

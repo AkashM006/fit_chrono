@@ -1,10 +1,8 @@
-CURRENT branch: features/logs-list
+CURRENT branch: fixes/todo
 
 20. Find out a neat way to chain validators
 24. Implement debouncing when searching
-38. After workout wave complete and after quitting the wave show some message in the snack bar
 39. When app goes to background during workout, handle those cases
-43. Get from the user after workout the intensity level ( IN PROGRESS )
 53. Log even when workout is quit in the middle
 58. Display the muscle map the user has targeted specifically
 59. Look into warnings in the debug console
@@ -59,3 +57,5 @@ DONE:
 52. Log detail screen ( DONE )
 40. Account for skipping workout instead of completing it during logs ( DONE )
 37. Restrict reps to be within 2 digit range ( DONE )
+43. Get from the user after workout the intensity level ( DONE )
+38. After workout wave complete and after quitting the wave show some message in the snack bar ( DONE )
