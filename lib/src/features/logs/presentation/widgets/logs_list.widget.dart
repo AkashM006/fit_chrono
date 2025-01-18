@@ -42,7 +42,7 @@ class LogsListWidget extends StatelessWidget {
               height: 20,
             ),
             Text(
-              "Your journey begins when you complete your first workout wave. Crush it, and we'll start keeping track of your triumphs!",
+              "Your journey is waiting to be written. 💪 Complete a workout wave 🏋️‍♂️ to create your first log and see your progress soar! ✨",
               textAlign: TextAlign.center,
               style: textTheme.bodyLarge,
             ),
